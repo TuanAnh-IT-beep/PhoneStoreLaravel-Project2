@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Manufacturer;
 use App\Http\Requests\StoreManufacturerRequest;
 use App\Http\Requests\UpdateManufacturerRequest;
+use Illuminate\Support\Facades\Redirect;
 
 class ManufacturerController
 {
@@ -13,7 +14,13 @@ class ManufacturerController
      */
     public function index()
     {
-        //
+        $manufacturers = Manufacturer::all();
+        return view(
+            'manufacturers.index',
+            [
+                'manufacturers' => $manufacturers
+            ]
+        );
     }
 
     /**
@@ -21,7 +28,7 @@ class ManufacturerController
      */
     public function create()
     {
-        //
+        return view('manufacturers.create');
     }
 
     /**
@@ -29,7 +36,12 @@ class ManufacturerController
      */
     public function store(StoreManufacturerRequest $request)
     {
-        //
+        Manufacturer::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'icon' => $request->icon
+        ]);
+        return Redirect::route('manufacturers.index');
     }
 
     /**
@@ -45,7 +57,12 @@ class ManufacturerController
      */
     public function edit(Manufacturer $manufacturer)
     {
-        //
+        return view(
+            'manufacturers.edit',
+            [
+                'manufacturer' => $manufacturer
+            ]
+        );
     }
 
     /**
@@ -53,7 +70,12 @@ class ManufacturerController
      */
     public function update(UpdateManufacturerRequest $request, Manufacturer $manufacturer)
     {
-        //
+        $manufacturer->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'icon' => $request->icon
+        ]);
+        return Redirect::route('manufacturers.index');
     }
 
     /**
@@ -61,6 +83,7 @@ class ManufacturerController
      */
     public function destroy(Manufacturer $manufacturer)
     {
-        //
+        $manufacturer->delete();
+        return Redirect::route('manufacturers.index');
     }
 }

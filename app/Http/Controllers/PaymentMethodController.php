@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\PaymentMethod;
 use App\Http\Requests\StorePaymentMethodRequest;
 use App\Http\Requests\UpdatePaymentMethodRequest;
+use Illuminate\Support\Facades\Redirect;
 
 class PaymentMethodController
 {
@@ -13,7 +14,13 @@ class PaymentMethodController
      */
     public function index()
     {
-        //
+        $payment_methods = PaymentMethod::all();
+        return view(
+            'payment_methods.index',
+            [
+                'payment_methods' => $payment_methods
+            ]
+        );
     }
 
     /**
@@ -21,7 +28,7 @@ class PaymentMethodController
      */
     public function create()
     {
-        //
+        return view('payment_methods.create');
     }
 
     /**
@@ -29,7 +36,12 @@ class PaymentMethodController
      */
     public function store(StorePaymentMethodRequest $request)
     {
-        //
+        PaymentMethod::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'icon' => $request->icon
+        ]);
+        return Redirect::route('payment_methods.index');
     }
 
     /**
@@ -45,7 +57,12 @@ class PaymentMethodController
      */
     public function edit(PaymentMethod $paymentMethod)
     {
-        //
+        return view(
+            'payment_methods.edit',
+            [
+                'payment_method' => $paymentMethod
+            ]
+        );
     }
 
     /**
@@ -53,7 +70,12 @@ class PaymentMethodController
      */
     public function update(UpdatePaymentMethodRequest $request, PaymentMethod $paymentMethod)
     {
-        //
+        $paymentMethod->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'icon' => $request->icon
+        ]);
+        return Redirect::route('payment_methods.index');
     }
 
     /**
@@ -61,6 +83,7 @@ class PaymentMethodController
      */
     public function destroy(PaymentMethod $paymentMethod)
     {
-        //
+        $paymentMethod->delete();
+        return Redirect::route('payment_methods.index');
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
+use Illuminate\Support\Facades\Redirect;
 
 class CustomerController
 {
@@ -13,7 +14,13 @@ class CustomerController
      */
     public function index()
     {
-        //
+        $customers = Customer::all();
+        return view(
+            'customers.index',
+            [
+                'customers' => $customers
+            ]
+        );
     }
 
     /**
@@ -21,7 +28,7 @@ class CustomerController
      */
     public function create()
     {
-        //
+        return view('customers.create');
     }
 
     /**
@@ -29,7 +36,18 @@ class CustomerController
      */
     public function store(StoreCustomerRequest $request)
     {
-        //
+        Customer::create([
+            'username' => $request->username,
+            'password_hash' => $request->password_hash,
+            'icon' => $request->icon,
+            'display_name' => $request->display_name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'gender' => $request->gender,
+            'birthday' => date('Y-m-d',strtotime($request->birthday)),
+            'address' => $request->address
+        ]);
+        return Redirect::route('customers.index');
     }
 
     /**
@@ -45,7 +63,12 @@ class CustomerController
      */
     public function edit(Customer $customer)
     {
-        //
+        return view(
+            'customers.edit',
+            [
+                'customer' => $customer
+            ]
+        );
     }
 
     /**
@@ -53,7 +76,17 @@ class CustomerController
      */
     public function update(UpdateCustomerRequest $request, Customer $customer)
     {
-        //
+        $customer->update([
+            'username' => $request->username,
+            'icon' => $request->icon,
+            'display_name' => $request->display_name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'gender' => $request->gender,
+            'birthday' => $request->birthday,
+            'address' => $request->address
+        ]);
+        return Redirect::route('customers.index');
     }
 
     /**
@@ -61,6 +94,7 @@ class CustomerController
      */
     public function destroy(Customer $customer)
     {
-        //
+        $customer->delete();
+        return Redirect::route('customers.index');
     }
 }

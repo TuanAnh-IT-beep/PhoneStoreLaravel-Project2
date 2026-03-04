@@ -24,7 +24,7 @@ return new class extends Migration
             $table->float("total_price");
             $table->dateTime("ship_expect_date");
             $table->dateTime("ship_actual_date");
-            $table->int("status");
+            $table->integer("status");
             $table->timestamps();
         });
     }

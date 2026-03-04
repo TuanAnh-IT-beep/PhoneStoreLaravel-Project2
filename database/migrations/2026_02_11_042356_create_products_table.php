@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string("description");
             $table->string("thumbnail_path");
             $table->float("overall_price");
-            $table->int("total_stock");
+            $table->integer("total_stock");
             $table->foreignId('category_id')->constrained();
             $table->foreignId('manufacturer_id')->constrained();
             $table->date("released_date");

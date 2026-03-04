@@ -5,15 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\Permission;
 use App\Http\Requests\StorePermissionRequest;
 use App\Http\Requests\UpdatePermissionRequest;
+use Illuminate\Support\Facades\Redirect;
 
 class PermissionController
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+ public function index()
     {
-        //
+        $permissions = Permission::all();
+        return view(
+            'permissions.index',
+            [
+                'permissions' => $permissions
+            ]
+        );
     }
 
     /**
@@ -21,7 +28,7 @@ class PermissionController
      */
     public function create()
     {
-        //
+        return view('permissions.create');
     }
 
     /**
@@ -29,7 +36,10 @@ class PermissionController
      */
     public function store(StorePermissionRequest $request)
     {
-        //
+        Permission::create([
+            'type' => $request->type
+        ]);
+        return Redirect::route('permissions.index');
     }
 
     /**
@@ -45,7 +55,12 @@ class PermissionController
      */
     public function edit(Permission $permission)
     {
-        //
+        return view(
+            'permissions.edit',
+            [
+                'permission' => $permission
+            ]
+        );
     }
 
     /**
@@ -53,7 +68,10 @@ class PermissionController
      */
     public function update(UpdatePermissionRequest $request, Permission $permission)
     {
-        //
+        $permission->update([
+            'type' => $request->type
+        ]);
+        return Redirect::route('permissions.index');
     }
 
     /**
@@ -61,6 +79,7 @@ class PermissionController
      */
     public function destroy(Permission $permission)
     {
-        //
+        $permission->delete();
+        return Redirect::route('permissions.index');
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Role;
 use App\Http\Requests\StoreRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
+use Illuminate\Support\Facades\Redirect;
 
 class RoleController
 {
@@ -13,7 +14,13 @@ class RoleController
      */
     public function index()
     {
-        //
+        $roles = Role::all();
+        return view(
+            'roles.index',
+            [
+                'roles' => $roles
+            ]
+        );
     }
 
     /**
@@ -21,7 +28,7 @@ class RoleController
      */
     public function create()
     {
-        //
+        return view('roles.create');
     }
 
     /**
@@ -29,7 +36,10 @@ class RoleController
      */
     public function store(StoreRoleRequest $request)
     {
-        //
+        Role::create([
+            'name' => $request->name
+        ]);
+        return Redirect::route('roles.index');
     }
 
     /**
@@ -45,7 +55,12 @@ class RoleController
      */
     public function edit(Role $role)
     {
-        //
+        return view(
+            'roles.edit',
+            [
+                'role' => $role
+            ]
+        );
     }
 
     /**
@@ -53,7 +68,10 @@ class RoleController
      */
     public function update(UpdateRoleRequest $request, Role $role)
     {
-        //
+        $role->update([
+            'name' => $request->name
+        ]);
+        return Redirect::route('roles.index');
     }
 
     /**
@@ -61,6 +79,7 @@ class RoleController
      */
     public function destroy(Role $role)
     {
-        //
+        $role->delete();
+        return Redirect::route('roles.index');
     }
 }

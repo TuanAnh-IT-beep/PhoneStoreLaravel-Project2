@@ -9,4 +9,8 @@ class Manufacturer extends Model
 {
     /** @use HasFactory<\Database\Factories\ManufacturerFactory> */
     use HasFactory;
+    protected $table = 'manufacturers';
+    protected $primaryKey = 'id';
+    protected $fillable = ['name', 'description', 'icon'];
+    public $timestamps = false;
 }

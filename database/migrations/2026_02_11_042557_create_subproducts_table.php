@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string("name");
             $table->string("thumbnail_path");
             $table->float("price");
-            $table->int("stock");
+            $table->integer("stock");
             $table->timestamps();
         });
     }

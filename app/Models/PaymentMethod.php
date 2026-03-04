@@ -9,4 +9,8 @@ class PaymentMethod extends Model
 {
     /** @use HasFactory<\Database\Factories\PaymentMethodFactory> */
     use HasFactory;
+    protected $table = 'payment_methods';
+    protected $primaryKey = 'id';
+    protected $fillable = ['name','icon'];
+    public $timestamps = false;
 }
