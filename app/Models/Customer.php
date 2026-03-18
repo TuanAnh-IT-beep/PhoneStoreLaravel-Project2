@@ -13,4 +13,7 @@ class Customer extends Model
     protected $primaryKey = 'id';
     protected $fillable = ['username', 'password_hash', 'icon', 'display_name', 'email', 'phone', 'gender', 'birthday', 'address'];
     public $timestamps = true;
+    public function orders(){
+        return $this->hasMany(Order::class,'customer_id','id');
+    }
 }
