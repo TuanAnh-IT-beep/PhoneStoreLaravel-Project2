@@ -60,3 +60,6 @@ Route::post('/specs/create', [SpecController::class, 'store'])->name('specs.stor
 Route::put('/specs/{spec}/edit', [SpecController::class, 'update'])->name('specs.update');
 Route::delete('/specs/{spec}/delete', [SpecController::class, 'destroy'])->name('specs.delete');
 
+Route::get('/', function () {
+    return view('index');
+})->name('home');
