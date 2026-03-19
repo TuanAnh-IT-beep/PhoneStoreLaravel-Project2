@@ -13,4 +13,7 @@ class Manufacturer extends Model
     protected $primaryKey = 'id';
     protected $fillable = ['name', 'description', 'icon'];
     public $timestamps = false;
+    public function products(){
+        return $this->hasMany(Manufacturer::class,'manufacturer_id','id');
+    }
 }

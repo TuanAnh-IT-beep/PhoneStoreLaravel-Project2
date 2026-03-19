@@ -13,4 +13,7 @@ class PaymentMethod extends Model
     protected $primaryKey = 'id';
     protected $fillable = ['name','icon'];
     public $timestamps = false;
+    public function orders(){
+        return $this->hasMany(Order::class,'customer_id','id');
+    }
 }
