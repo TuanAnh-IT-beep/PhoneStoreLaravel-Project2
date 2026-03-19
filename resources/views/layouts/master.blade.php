@@ -7,6 +7,38 @@
     <div class="main-content flex-1 p-6">
         <h1>Title</h1>
         <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
     </div>
 </div>
 

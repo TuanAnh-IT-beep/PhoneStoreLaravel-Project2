@@ -45,6 +45,9 @@ header a {
     gap: 8px;
     display: inline-flex;
     height: fit-content;
+    position: sticky;
+    top: 16px;
+    margin-bottom: auto;
 }
 
 .sidebar .item {
@@ -97,6 +100,7 @@ header a {
     text-decoration: none;
     color: #0A1D20;
 }
+
 .main-content h1 {
     color: black;
     font-size: 32px;
