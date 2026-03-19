@@ -19,4 +19,7 @@ class Order extends Model
     public function payment(){
         return $this->belongsTo(PaymentMethod::class);
     }
+    public function orderdetails(){
+        return $this->hasMany(OrderDetail::class,'order_id','id');
+    }
 }

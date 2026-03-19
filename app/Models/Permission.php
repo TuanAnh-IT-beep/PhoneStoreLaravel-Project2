@@ -13,4 +13,7 @@ class Permission extends Model
     protected $primaryKey = 'id';
     protected $fillable = ['type'];
     public $timestamps = false;
+    public function rolepermissions(){
+        return $this->hasMany(RolePermissions::class,'permission_id','id');
+    }
 }
