@@ -106,7 +106,7 @@ header a {
     font-family: Rubik;
     font-size: 2rem;
     font-weight: 700;
-    word-wrap: break-word
+    word-wrap: break-word;
 }
 
 .main-content p {
@@ -130,4 +130,84 @@ header a {
     display: inline-flex;
     font-family: "Rubik", sans-serif;
     color: #FFFFFF;
+}
+
+.main-content .btn.icon-only {
+    padding: 16px;
+}
+
+.main-content .btn.delete {
+    background: #f20553;
+}
+.main-content .btn.edit {
+    background: #003F62;
+}
+.main-content .btn.create {
+    background: #44B097;
+}
+.main-content .btn:hover {
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    transition: all 0.3s ease;
+}
+
+.main-content input,
+.main-content textarea {
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 8px;
+    outline: 1px #232321 solid;
+    outline-offset: -1px;
+    justify-content: flex-start;
+    align-items: center;
+    display: inline-flex;
+    font-family: "Rubik", sans-serif;
+    color: #0A1D20;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.main-content input:focus,
+.main-content textarea:focus {
+    outline: 2px #003F62 solid;
+    outline-offset: -2px;
+    transition: all 0.3s ease;
+}
+
+.main-content label {
+    color: #232321;
+    font-size: 20px;
+    font-family: "Rubik", sans-serif;
+    font-weight: 700;
+    word-wrap: break-word;
+}
+
+.main-content .main-container {
+    background-color: #FFFFFF;
+    border-radius: 16px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    padding: 16px;
+    color: #000000
+}
+
+.main-content table th {
+    color: #232321CC;
+    font-family: "Rubik", sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    word-wrap: break-word;
+    width: 1%;
+}
+
+.main-content table th.long {
+    width: auto;
+}
+
+.main-content table tr {
+    color: #232321CC;
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    word-wrap: break-word;
+    border-bottom: #23232133 solid 1px;
 }
