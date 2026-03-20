@@ -103,8 +103,8 @@ header a {
 
 .main-content h1 {
     color: black;
-    font-size: 32px;
     font-family: Rubik;
+    font-size: 2rem;
     font-weight: 700;
     word-wrap: break-word
 }
@@ -114,4 +114,20 @@ header a {
     font-size: 20px;
     font-family: "Inter", sans-serif;
     word-wrap: break-word
+}
+
+.main-content .btn {
+    align-self: stretch;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    background: #003F62;
+    border-radius: 8px;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    display: inline-flex;
+    font-family: "Rubik", sans-serif;
+    color: #FFFFFF;
 }

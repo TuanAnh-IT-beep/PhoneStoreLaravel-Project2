@@ -9,14 +9,21 @@ use \App\Http\Controllers\CategoryController;
 use \App\Http\Controllers\ManufacturerController;
 use \App\Http\Controllers\SpecController;
 use \App\Http\Controllers\OrderController;
+use \App\Http\Controllers\OrderDetailController;
+use \App\Http\Controllers\ProductController;
+use \App\Http\Controllers\ProductImageController;
+use \App\Http\Controllers\RolePermissionController;
+use \App\Http\Controllers\SubproductController;
+use \App\Http\Controllers\SubSpecController;
+use \App\Http\Controllers\UserController;
 
 
 Route::resource('permissions', PermissionController::class);
 Route::resource('roles', RoleController::class);
 Route::resource('customers', CustomerController::class);
 Route::resource('payment-methods', PaymentMethodController::class);
-Route::resource('categories', ManufacturerController::class);
-Route::resource('manufacturers', CategoryController::class);
+Route::resource('categories', CategoryController::class);
+Route::resource('manufacturers', ManufacturerController::class);
 Route::resource('specs', SpecController::class);
 Route::resource('orders',OrderController::class);
 Route::resource('orderdetails',OrderDetailController::class);
