@@ -1,13 +1,5 @@
-<!doctype html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Document</title>
-</head>
-
-<body>
+@extends("layouts.master")
+@section("main-content")
     <h3>Manufacturer List</h3>
     <a href="{{ route(name: 'manufacturers.create') }}">Add a manufacturer</a>
     <table border="1px" cellpadding="0" cellspacing="0" width="100%">
@@ -39,6 +31,4 @@
             </tr>
         @endforeach
     </table>
-</body>
-
-</html>
+@endsection
