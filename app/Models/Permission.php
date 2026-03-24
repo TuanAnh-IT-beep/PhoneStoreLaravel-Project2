@@ -14,6 +14,6 @@ class Permission extends Model
     protected $fillable = ['type'];
     public $timestamps = false;
     public function rolepermissions(){
-        return $this->hasMany(RolePermissions::class,'permission_id','id');
+        return $this->hasMany(RolePermission::class,'permission_id','id');
     }
 }

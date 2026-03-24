@@ -63,4 +63,9 @@ class UserController
     {
         //
     }
+
+    public function login(StoreUserRequest $request)
+    {
+        
+    }
 }
