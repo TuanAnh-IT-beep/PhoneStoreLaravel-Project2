@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use Illuminate\Support\Facades\Hash;
 
 class UserController
 {
@@ -13,7 +15,8 @@ class UserController
      */
     public function index()
     {
-        //
+        $users = User::with('role')->get();
+        return view('users.index', compact('users'));
     }
 
     /**
@@ -21,7 +24,8 @@ class UserController
      */
     public function create()
     {
-        //
+        $roles = Role::all();
+        return view('users.create', compact('roles'));
     }
 
     /**
@@ -29,7 +33,12 @@ class UserController
      */
     public function store(StoreUserRequest $request)
     {
-        //
+        $validated = $request->validated();
+        if (!empty($validated['password_hash'])) {
+            $validated['password_hash'] = Hash::make($validated['password_hash']);
+        }
+        User::create($validated);
+        return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
 
     /**
@@ -37,7 +46,7 @@ class UserController
      */
     public function show(User $user)
     {
-        //
+        // 
     }
 
     /**
@@ -45,7 +54,8 @@ class UserController
      */
     public function edit(User $user)
     {
-        //
+        $roles = Role::all();
+        return view('users.edit', compact('user', 'roles'));
     }
 
     /**
@@ -53,7 +63,16 @@ class UserController
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        $validated = $request->validated();
+
+        if (!empty($validated['password_hash'])) {
+            $validated['password_hash'] = Hash::make($validated['password_hash']);
+        } else {
+            unset($validated['password_hash']);
+        }
+        
+        $user->update($validated);
+        return redirect()->route('users.index')->with('success', 'User updated successfully.');
     }
 
     /**
@@ -61,7 +80,8 @@ class UserController
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return redirect()->route('users.index')->with('success', 'User deleted successfully.');
     }
 
     public function login(StoreUserRequest $request)

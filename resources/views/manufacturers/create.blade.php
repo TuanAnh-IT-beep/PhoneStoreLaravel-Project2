@@ -1,18 +1,27 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Document</title>
-</head>
-<body>
-    <h3>Add a manufacturer</h3>
-    <form method="post" action="{{ route('manufacturers.store') }}">
-        @csrf
-        Name: <input type="text" name="name"><br>
-        Description: <input type="text" name="description"><br>
-        <input type="hidden" name="icon" value="">
-        <button>Add</button>
-    </form>
-</body>
-</html>
+@extends("layouts.master")
+
+@section("main-content")
+    <div class="w-full mb-4 flex items-center justify-between">
+        <h1>Manufacturers → New</h1>
+    </div>
+    <div class="main-container">
+        <form method="post" action="{{ route('manufacturers.store') }}">
+            @csrf
+            <div class="grid grid-cols-10 gap-4">
+                <div class="col-span-4">
+                    <label for="name">Name:</label><br>
+                    <input class="mt-2 w-full" type="text" name="name" placeholder="Input name here..."><br>
+                    <div class="flex gap-2 mt-4">
+                        <button class="btn flex-1 icon-only">ADD</button>
+                        <a class="btn flex-1 icon-only negative" href="{{ route('manufacturers.index') }}">CANCEL</a>
+                    </div>
+                </div>
+                <div class="col-span-6">
+                    <label for="description">Description:</label><br>
+                    <textarea class="mt-2 w-full" name="description" placeholder="Input description here..."
+                        rows="10"></textarea><br>
+                </div>
+            </div>
+        </form>
+    </div>
+@endsection

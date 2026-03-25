@@ -1,7 +1,9 @@
 @extends("layouts.master")
 
 @section("main-content")
-    <h1>Add a category</h1>
+    <div class="w-full mb-4 flex items-center justify-between">
+        <h1>Categories → New</h1>
+    </div>
     <div class="main-container">
         <form method="post" action="{{ route('categories.store') }}">
             @csrf
@@ -10,8 +12,8 @@
                     <label for="name">Name:</label><br>
                     <input class="mt-2 w-full" type="text" name="name" placeholder="Input name here..."><br>
                     <div class="flex gap-2 mt-4">
-                        <button class="btn flex-1">Add</button>
-                        <a class="btn flex-1" href="{{ route('categories.index') }}">Cancel</a>
+                        <button class="btn flex-1 icon-only">ADD</button>
+                        <a class="btn flex-1 icon-only negative" href="{{ route('categories.index') }}">CANCEL</a>
                     </div>
                 </div>
                 <div class="col-span-6">

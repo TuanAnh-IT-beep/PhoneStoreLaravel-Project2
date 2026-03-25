@@ -5,7 +5,7 @@
         <h1 class="">Products</h1>
         <a class="btn" href="{{ route(name: 'subproducts.create') }}"><i class="fa-solid fa-plus"></i>ADD NEW ITEM</a>
     </div>
-    @if (count($subproducts)) > 0
+    @if (count(value: $subproducts)) > 0
         <table border="1px" cellpadding="0" cellspacing="0" width="100%">
             <tr>
                 <th>ID</th>

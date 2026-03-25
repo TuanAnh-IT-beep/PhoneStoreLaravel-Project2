@@ -47,7 +47,7 @@ class CustomerController
             'birthday' => date('Y-m-d',strtotime($request->birthday)),
             'address' => $request->address
         ]);
-        return Redirect::route('customers.index');
+        return redirect()->route('customers.index')->with('success', 'Customer created successfully.');
     }
 
     /**
@@ -86,7 +86,7 @@ class CustomerController
             'birthday' => $request->birthday,
             'address' => $request->address
         ]);
-        return Redirect::route('customers.index');
+        return redirect()->route('customers.index')->with('success', 'Customer updated successfully.');
     }
 
     /**
@@ -95,6 +95,6 @@ class CustomerController
     public function destroy(Customer $customer)
     {
         $customer->delete();
-        return Redirect::route('customers.index');
+        return redirect()->route('customers.index')->with('success', 'Customer deleted successfully.');
     }
 }

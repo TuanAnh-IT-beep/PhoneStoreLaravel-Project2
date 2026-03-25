@@ -18,13 +18,13 @@ return new class extends Migration
             $table->string("receiver");
             $table->string("address");
             $table->string("phone");
-            $table->string("note");
-            $table->string("ship_track_id");
-            $table->float("ship_fee");
+            $table->string("note")->nullable();
+            $table->string("ship_track_id")->nullable();
+            $table->float("ship_fee")->default(0);
             $table->float("total_price");
-            $table->dateTime("ship_expect_date");
-            $table->dateTime("ship_actual_date");
-            $table->integer("status");
+            $table->dateTime("ship_expect_date")->nullable();
+            $table->dateTime("ship_actual_date")->nullable();
+            $table->integer("status")->default(0);
             $table->timestamps();
         });
     }

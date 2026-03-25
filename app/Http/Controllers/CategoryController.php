@@ -36,7 +36,7 @@ class CategoryController
             'description' => $request->description,
             'image' => $request->image
         ]);
-        return Redirect::route('categories.index');
+        return redirect()->route('categories.index')->with('success', 'Category created successfully.');
     }
 
     /**
@@ -70,7 +70,7 @@ class CategoryController
             'description' => $request->description,
             'image' => $request->image
         ]);
-        return Redirect::route('categories.index');
+        return redirect()->route('categories.index')->with('success', 'Category updated successfully.');
     }
 
     /**
@@ -79,6 +79,6 @@ class CategoryController
     public function destroy(Category $category)
     {
         $category->delete();
-        return Redirect::route('categories.index');
+        return redirect()->route('categories.index')->with('success', 'Category deleted successfully.');
     }
 }

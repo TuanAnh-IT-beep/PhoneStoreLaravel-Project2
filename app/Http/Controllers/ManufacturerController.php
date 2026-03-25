@@ -41,7 +41,7 @@ class ManufacturerController
             'description' => $request->description,
             'icon' => $request->icon
         ]);
-        return Redirect::route('manufacturers.index');
+        return redirect()->route('manufacturers.index')->with('success', 'Manufacturer created successfully.');
     }
 
     /**
@@ -75,7 +75,7 @@ class ManufacturerController
             'description' => $request->description,
             'icon' => $request->icon
         ]);
-        return Redirect::route('manufacturers.index');
+        return redirect()->route('manufacturers.index')->with('success', 'Manufacturer updated successfully.');
     }
 
     /**
@@ -84,6 +84,6 @@ class ManufacturerController
     public function destroy(Manufacturer $manufacturer)
     {
         $manufacturer->delete();
-        return Redirect::route('manufacturers.index');
+        return redirect()->route('manufacturers.index')->with('success', 'Manufacturer deleted successfully.');
     }
 }

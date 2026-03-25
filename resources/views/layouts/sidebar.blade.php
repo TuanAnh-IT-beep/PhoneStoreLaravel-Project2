@@ -1,26 +1,26 @@
 <div class="sidebar">
-    <a class="item active" href="./">
-        <img class="icon" src="images/main/sidebar/dashboard.png" />
+    <a class="item {{ request()->is('/') ? 'active' : '' }}" href="./">
+        <img class="icon" src="/images/main/sidebar/dashboard.png" />
         <p class="text">Dashboard</p>
     </a>
-    <a class="item" href="{{ route(name:'categories.index') }}">
-        <img class="icon" src="images/main/sidebar/category.png" />
+    <a class="item {{ request()->routeIs('categories.*') ? 'active' : '' }}" href="{{ route(name:'categories.index') }}">
+        <img class="icon" src="/images/main/sidebar/category.png" />
         <p class="text">Categories</p>
     </a>
-    <a class="item" href="{{ route(name:'manufacturers.index') }}">
-        <img class="icon" src="images/main/sidebar/brand.png" />
+    <a class="item {{ request()->routeIs('manufacturers.*') ? 'active' : '' }}" href="{{ route(name:'manufacturers.index') }}">
+        <img class="icon" src="/images/main/sidebar/brand.png" />
         <p class="text">Manufacturers</p>
     </a>
-    <a class="item" href="{{ route(name:'subproducts.index') }}">
-        <img class="icon" src="images/main/sidebar/product.png" />
+    <a class="item {{ request()->routeIs('subproducts.*') ? 'active' : '' }}" href="{{ route(name:'subproducts.index') }}">
+        <img class="icon" src="/images/main/sidebar/product.png" />
         <p class="text">Products</p>
     </a>
-    <a class="item" href="{{ route(name:'orders.index') }}">
-        <img class="icon" src="images/main/sidebar/order.png" />
+    <a class="item {{ request()->routeIs('orders.*') ? 'active' : '' }}" href="{{ route(name:'orders.index') }}">
+        <img class="icon" src="/images/main/sidebar/order.png" />
         <p class="text">Orders</p>
     </a>
-    <a class="item" href="{{ route(name:'users.index') }}">
-        <img class="icon" src="images/main/sidebar/admin.png" />
-        <p class="text">Admins</p>
+    <a class="item {{ request()->routeIs('users.*') ? 'active' : '' }}" href="{{ route(name:'users.index') }}">
+        <img class="icon" src="/images/main/sidebar/admin.png" />
+        <p class="text">Users</p>
     </a>
 </div>

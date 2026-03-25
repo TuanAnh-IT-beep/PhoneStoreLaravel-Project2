@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('product_id')->constrained();
             $table->string("name");
-            $table->string("thumbnail_path");
+            $table->string("thumbnail_path")->nullable();
             $table->float("price");
-            $table->integer("stock");
+            $table->integer("stock")->default(0);
             $table->timestamps();
         });
     }

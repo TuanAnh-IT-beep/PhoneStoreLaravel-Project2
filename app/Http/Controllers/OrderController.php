@@ -13,7 +13,7 @@ class OrderController
      */
     public function index()
     {
-        $orders=Order::all();
+        $orders = Order::with(['customer', 'payment'])->get();
         return view('orders.index',compact('orders'));
     }
 
@@ -22,7 +22,7 @@ class OrderController
      */
     public function create()
     {
-        //
+        return view('orders.create');
     }
 
     /**
@@ -30,7 +30,8 @@ class OrderController
      */
     public function store(StoreOrderRequest $request)
     {
-        //
+        Order::create($request->validated());
+        return redirect()->route('orders.index')->with('success', 'Order created successfully.');
     }
 
     /**
@@ -38,7 +39,8 @@ class OrderController
      */
     public function show(Order $order)
     {
-        //
+        $order->load(['customer', 'payment', 'orderdetails']);
+        return view('orders.show', compact('order'));
     }
 
     /**
@@ -46,7 +48,7 @@ class OrderController
      */
     public function edit(Order $order)
     {
-        //
+        return view('orders.edit', compact('order'));
     }
 
     /**
@@ -54,7 +56,8 @@ class OrderController
      */
     public function update(UpdateOrderRequest $request, Order $order)
     {
-        //
+        $order->update($request->validated());
+        return redirect()->route('orders.index')->with('success', 'Order updated successfully.');
     }
 
     /**
@@ -62,6 +65,7 @@ class OrderController
      */
     public function destroy(Order $order)
     {
-        //
+        $order->delete();
+        return redirect()->route('orders.index')->with('success', 'Order deleted successfully.');
     }
 }
