@@ -13,9 +13,10 @@
         <img src="/images/login/banner.png" alt="" class="image_side">
         <div class="login_side">
             <h1>Login as Administrator</h1>
-            <form action="" method="POST">
+            <form action="" method="post">
+                @csrf
                 <div class="mt-10">
-                    <label for="username"> E-mail</label>
+                    <label for="username">E-mail</label>
                     <input type="text" name="email" placeholder="Enter your email" class="w-full bg-white mt-1">
                 </div>
                 <div class="mt-3">

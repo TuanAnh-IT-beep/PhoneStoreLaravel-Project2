@@ -3,15 +3,20 @@
         <div class="flex items-center" style="gap: 5px" id="logo">
             <a href="{{ route('home') }}">
                 <img src="{{ asset('images/main/Logo.png') }}" alt="Logo" class="logo-image">
-             </a>
+            </a>
             <a class="logo-text" href="{{ route('home') }}"><span style="color: #AFF5BF;">BMo</span>bileShop</a>
         </div>
-        @if (Route::has('users.login')&& Route::currentRouteName() !== 'users.login')
-        <div class="flex items-center" style="gap: 20px">
-            <a href="{{ route('users.login') }}" class="login-link">
-                <span>Login</span>
-            </a>
-        </div>
+        @if (Route::has('users.login') && Route::currentRouteName() !== 'users.login')
+            <div class="flex items-center" style="gap: 20px">
+                @auth('admin')
+                    <p class="login-link">{{ Auth::guard('admin')->user()->username }}</p>
+                @endauth
+                @guest('admin')
+                    <a href="{{ route('users.login') }}" class="login-link">
+                        <span>Login</span>
+                    </a>
+                @endguest
+            </div>
         @endif
     </div>
 </header>

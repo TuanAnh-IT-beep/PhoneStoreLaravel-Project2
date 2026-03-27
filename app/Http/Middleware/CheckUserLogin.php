@@ -4,6 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Symfony\Component\HttpFoundation\Response;
 
 class CheckUserLogin
@@ -15,6 +17,9 @@ class CheckUserLogin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        return $next($request);
+        if (Auth::guard('admin')->user()) {
+            return $next($request);
+        }
+        return Redirect::route('users.login');
     }
 }

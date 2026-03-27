@@ -25,12 +25,13 @@ body {
     font-family: 'Inter', sans-serif;
 }
 
-header a {
+header a, header p {
     text-decoration: none;
     color: inherit;
     cursor: pointer;
     font-family: 'BMO', sans-serif;
-    font-size: 1.5rem;
+    font-size: 1.75rem;
+    color: #FFFFFF;
 }
 
 .sidebar {
@@ -178,9 +179,20 @@ textarea {
     border-radius: 8px;
     outline: 1px #232321 solid;
     outline-offset: -1px;
-    justify-content: flex-start;
-    align-items: center;
-    display: inline-flex;
+    font-family: "Rubik", sans-serif;
+    color: #0A1D20;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+select {
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border-radius: 8px;
+    outline: 1px #232321 solid;
+    outline-offset: -1px;
     font-family: "Rubik", sans-serif;
     color: #0A1D20;
     font-size: 16px;
@@ -198,7 +210,7 @@ label {
     color: #232321;
     font-size: 20px;
     font-family: "Rubik", sans-serif;
-    font-weight: 700;
+    font-weight: 600;
     word-wrap: break-word;
 }
 
