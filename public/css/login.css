@@ -1,8 +1,11 @@
+@import 'tailwindcss';
+@import "@fortawesome/fontawesome-free/css/all.css";
 * {
   box-sizing: border-box;
 }
 body {
   font-size: 14px;
+  height: 900px;
 }
 
 .login_box {
