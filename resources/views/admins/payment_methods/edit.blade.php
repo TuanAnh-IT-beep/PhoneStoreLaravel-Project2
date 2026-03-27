@@ -1,5 +1,5 @@
 
-@extends("layouts.master")
+@extends("admins.layouts.master")
 @section("main-content")
 <div class="w-full mb-4 flex items-center justify-between">
         <h1>Update a payment_method</h1>

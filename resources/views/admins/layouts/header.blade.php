@@ -6,7 +6,7 @@
             </a>
             <a class="logo-text" href="{{ route('home') }}"><span style="color: #AFF5BF;">BMo</span>bileShop</a>
         </div>
-        @if (Route::has('users.login') && Route::currentRouteName() !== 'users.login')
+        @if (Route::has('admins.users.login') && Route::currentRouteName() !== 'admins.users.login')
             <div class="flex items-center" style="gap: 20px">
                 @auth('admin')
                     <p class="login-link">{{ Auth::guard('admin')->user()->username }}</p>
@@ -15,7 +15,7 @@
                     </a>
                 @endauth
                 @guest('admin')
-                    <a href="{{ route('users.login') }}" class="login-link">
+                    <a href="{{ route('admins.users.login') }}" class="login-link">
                         <span>Login</span>
                     </a>
                 @endguest

@@ -20,7 +20,7 @@ class UserController
     {
         $users = User::with('role')->get();
 
-        return view('users.index', compact('users'));
+        return view('admins.users.index', compact('users'));
     }
 
     /**
@@ -30,7 +30,7 @@ class UserController
     {
         $roles = Role::all();
 
-        return view('users.create', compact('roles'));
+        return view('admins.users.create', compact('roles'));
     }
 
     /**
@@ -65,7 +65,7 @@ class UserController
     {
         $roles = Role::all();
 
-        return view('users.edit', compact('user', 'roles'));
+        return view('admins.users.edit', compact('user', 'roles'));
     }
 
     /**
@@ -98,7 +98,7 @@ class UserController
 
     public function login()
     {
-        return view('users.login');
+        return view('admins.users.login');
     }
 
     public function loginProcess(Request $request)

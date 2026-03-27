@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-    @include('layouts.header')
-    @include('layouts.head')
+    @include('admins.layouts.header')
+    @include('admins.layouts.head')
     <link href="{{ asset('css/login.css') }}" rel="stylesheet">
     <title>Login</title>
 </head>

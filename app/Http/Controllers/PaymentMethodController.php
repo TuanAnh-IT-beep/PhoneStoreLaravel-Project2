@@ -16,7 +16,7 @@ class PaymentMethodController
     {
         $payment_methods = PaymentMethod::all();
         return view(
-            'payment_methods.index',
+            'admins.payment_methods.index',
             [
                 'payment_methods' => $payment_methods
             ]
@@ -28,7 +28,7 @@ class PaymentMethodController
      */
     public function create()
     {
-        return view('payment_methods.create');
+        return view('admins.payment_methods.create');
     }
 
     /**
@@ -58,7 +58,7 @@ class PaymentMethodController
     public function edit(PaymentMethod $paymentMethod)
     {
         return view(
-            'payment_methods.edit',
+            'admins.payment_methods.edit',
             [
                 'payment_method' => $paymentMethod
             ]
