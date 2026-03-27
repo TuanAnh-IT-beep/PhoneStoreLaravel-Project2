@@ -7,25 +7,36 @@
     <link href="{{ asset('css/login.css') }}" rel="stylesheet">
     <title>Login</title>
 </head>
+
 <body>
     <div class="login_box grid grid-cols-2 mx-auto">
-            <div>
-                <img src="/images/login/banner.png" alt="" style="height: 100%;">
+        <img src="/images/login/banner.png" alt="" class="image_side">
+        <div class="login_side">
+            <h1>Login as Administrator</h1>
+            <form>
+                <div class="mt-10">
+                    <label for="username">Username or E-mail</label>
+                    <input type="text" name="username" placeholder="Enter your username" class="w-full bg-white mt-1">
+                </div>
+                <div class="mt-3">
+                    <label for="password">Password</label>
+                    <input type="password" placeholder="Enter password here.." class="w-full bg-white mt-1">
+                </div>
+                <button class="btn icon-only w-full mt-10 blue">Login</button>
+            </form>
+            <div class="mt-10">
+                <hr>
+                <div
+                    style="flex-direction: column; justify-content: center; align-items: center; display: inline-flex">
+                    <img style="width: 47.99px; height: 47.99px" src="https://placehold.co/48x48" />
+                    <div style="justify-content: center; display: flex; flex-direction: column"><span
+                            style="color: #AFF5BF; font-size: 40px; font-family: Bmo_font; font-weight: 400; line-height: 58px; word-wrap: break-word">BMo</span><span
+                            style="color: white; font-size: 40px; font-family: Bmo_font; font-weight: 400; line-height: 58px; word-wrap: break-word">bileShop</span>
+                    </div>
+                </div>
             </div>
-            <div style="padding-top:40px;padding-left:30px;padding-right:40px">
-                <h1 style="font-size: 27px;color:black;font-weight:bold">Login as Administrator</h1>
-                <div style="padding-top: 40px">
-                    <h3 style="color:rgb(107, 106, 106)">Username or E-mail</h3>
-                    <input type="text" placeholder="Enter your username" class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow" style="background-color:white;color:black;border-color:rgb(169, 169, 169)">
-                </div>
-                <div style="padding-top: 20px">
-                    <h3 style="color:rgb(107, 106, 106)">Password</h3>
-                    <input type="text" placeholder="Enter password here.." class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow" style="background-color:white;color:black;border-color:rgb(169, 169, 169)">
-                </div>
-                <div style="display:flex;justify-content:center;padding-top:20px">
-                    <button style="background-color:rgb(86, 98, 234);width:100%;height:100%;border-radius:5px;padding-top:10px;padding-bottom:10px">Login</button>
-                </div>
-            </div>
+        </div>
     </div>
 </body>
+
 </html>
