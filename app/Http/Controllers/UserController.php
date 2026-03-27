@@ -8,7 +8,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth;    
 
 class UserController
 {
@@ -91,7 +91,7 @@ class UserController
         return view('users.login');
     }
     public function loginProcess(Request $request){
-        if(Auth::guard('admin')->attempt($request->only('email','password_hash'))){
+        if(Auth::guard('admin')->attempt($request->only('email','password'))){
             $request->session()->regenerated();
             return Redirect::Route('/admins');
         }else{
