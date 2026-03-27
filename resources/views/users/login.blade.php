@@ -15,12 +15,12 @@
             <h1>Login as Administrator</h1>
             <form>
                 <div class="mt-10">
-                    <label for="username">Username or E-mail</label>
-                    <input type="text" name="username" placeholder="Enter your username" class="w-full bg-white mt-1">
+                    <label for="username"> E-mail</label>
+                    <input type="text" name="email" placeholder="Enter your email" class="w-full bg-white mt-1">
                 </div>
                 <div class="mt-3">
                     <label for="password">Password</label>
-                    <input type="password" placeholder="Enter password here.." class="w-full bg-white mt-1">
+                    <input type="password" placeholder="Enter password here.." name="password"class="w-full bg-white mt-1">
                 </div>
                 <button class="btn icon-only w-full mt-10 blue">Login</button>
             </form>

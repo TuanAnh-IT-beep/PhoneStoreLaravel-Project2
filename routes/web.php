@@ -16,7 +16,25 @@ use App\Http\Controllers\SubproductController;
 use App\Http\Controllers\SubSpecController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\PermissionController;
+use \App\Http\Controllers\RoleController;
+use \App\Http\Controllers\CustomerController;
+use \App\Http\Controllers\PaymentMethodController;
+use \App\Http\Controllers\CategoryController;
+use \App\Http\Controllers\ManufacturerController;
+use \App\Http\Controllers\SpecController;
+use \App\Http\Controllers\OrderController;
+use \App\Http\Controllers\OrderDetailController;
+use \App\Http\Controllers\ProductController;
+use \App\Http\Controllers\ProductImageController;
+use \App\Http\Controllers\RolePermissionController;
+use \App\Http\Controllers\SubproductController;
+use \App\Http\Controllers\SubSpecController;
+use \App\Http\Controllers\UserController;
+use \App\Http\Controllers\Request;
 
+Route::prefix('/admins')
+->group(function(){
 Route::resource('permissions', PermissionController::class);
 Route::resource('roles', RoleController::class);
 Route::resource('customers', CustomerController::class);
@@ -35,6 +53,8 @@ Route::resource('users', UserController::class);
 Route::get('/', function () {
     return view('index');
 })->name('home');
-Route::get('login', function () {
-    return view('login');
-})->name('login');
+});
+Route::get('/login', [\App\Http\Controllers\UserController::class,'login'])
+->name('users.login');
+Route::post('/login', [\App\Http\Controllers\UserController::class,'loginProcess'])
+->name('users.login');

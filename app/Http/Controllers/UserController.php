@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;    
 
 class UserController
 {
@@ -46,7 +48,7 @@ class UserController
      */
     public function show(User $user)
     {
-        // 
+        //
     }
 
     /**
@@ -70,7 +72,7 @@ class UserController
         } else {
             unset($validated['password']);
         }
-        
+
         $user->update($validated);
         return redirect()->route('users.index')->with('success', 'User updated successfully.');
     }
@@ -84,8 +86,16 @@ class UserController
         return redirect()->route('users.index')->with('success', 'User deleted successfully.');
     }
 
-    public function login(StoreUserRequest $request)
+    public function login()
     {
-        
+        return view('users.login');
+    }
+    public function loginProcess(Request $request){
+        if(Auth::guard('admin')->attempt($request->only('email','password'))){
+            $request->session()->regenerated();
+            return Redirect::Route('/admins');
+        }else{
+            return Redirect::back();
+        }
     }
 }
