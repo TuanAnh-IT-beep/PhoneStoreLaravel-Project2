@@ -16,45 +16,31 @@ use App\Http\Controllers\SubproductController;
 use App\Http\Controllers\SubSpecController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use \App\Http\Controllers\PermissionController;
-use \App\Http\Controllers\RoleController;
-use \App\Http\Controllers\CustomerController;
-use \App\Http\Controllers\PaymentMethodController;
-use \App\Http\Controllers\CategoryController;
-use \App\Http\Controllers\ManufacturerController;
-use \App\Http\Controllers\SpecController;
-use \App\Http\Controllers\OrderController;
-use \App\Http\Controllers\OrderDetailController;
-use \App\Http\Controllers\ProductController;
-use \App\Http\Controllers\ProductImageController;
-use \App\Http\Controllers\RolePermissionController;
-use \App\Http\Controllers\SubproductController;
-use \App\Http\Controllers\SubSpecController;
-use \App\Http\Controllers\UserController;
-use \App\Http\Controllers\Request;
+use \App\Http\Middleware\CheckUserLogin;
+
 
 Route::prefix('/admins')
 ->group(function(){
-Route::resource('permissions', PermissionController::class);
-Route::resource('roles', RoleController::class);
-Route::resource('customers', CustomerController::class);
-Route::resource('payment-methods', PaymentMethodController::class);
-Route::resource('categories', CategoryController::class);
-Route::resource('manufacturers', ManufacturerController::class);
-Route::resource('specs', SpecController::class);
-Route::resource('orders', OrderController::class);
-Route::resource('orderdetails', OrderDetailController::class);
-Route::resource('products', ProductController::class);
-Route::resource('productimagies', ProductImageController::class);
-Route::resource('rolepermissions', RolePermissionController::class);
-Route::resource('subproducts', SubproductController::class);
-Route::resource('subspecs', SubSpecController::class);
-Route::resource('users', UserController::class);
+Route::resource('permissions', PermissionController::class)->middleware(CheckUserLogin::class);
+Route::resource('roles', RoleController::class)->middleware(CheckUserLogin::class);
+Route::resource('customers', CustomerController::class)->middleware(CheckUserLogin::class);
+Route::resource('payment-methods', PaymentMethodController::class)->middleware(CheckUserLogin::class);
+Route::resource('categories', CategoryController::class)->middleware(CheckUserLogin::class);
+Route::resource('manufacturers', ManufacturerController::class)->middleware(CheckUserLogin::class);
+Route::resource('specs', SpecController::class)->middleware(CheckUserLogin::class);
+Route::resource('orders', OrderController::class)->middleware(CheckUserLogin::class);
+Route::resource('orderdetails', OrderDetailController::class)->middleware(CheckUserLogin::class);
+Route::resource('products', ProductController::class)->middleware(CheckUserLogin::class);
+Route::resource('productimagies', ProductImageController::class)->middleware(CheckUserLogin::class);
+Route::resource('rolepermissions', RolePermissionController::class)->middleware(CheckUserLogin::class);
+Route::resource('subproducts', SubproductController::class)->middleware(CheckUserLogin::class);
+Route::resource('subspecs', SubSpecController::class)->middleware(CheckUserLogin::class);
+Route::resource('users', UserController::class)->middleware(CheckUserLogin::class);
 Route::get('/', function () {
     return view('index');
 })->name('home');
 });
-Route::get('/login', [\App\Http\Controllers\UserController::class,'login'])
+Route::get('/login', [UserController::class,'login'])
 ->name('users.login');
-Route::post('/login', [\App\Http\Controllers\UserController::class,'loginProcess'])
+Route::post('/login', [UserController::class,'loginProcess'])
 ->name('users.login');

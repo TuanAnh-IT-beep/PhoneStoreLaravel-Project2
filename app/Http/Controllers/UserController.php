@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
-use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use Illuminate\Support\Facades\Hash;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;    
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 
-class UserController
+class UserController 
 {
     /**
      * Display a listing of the resource.
@@ -19,6 +19,7 @@ class UserController
     public function index()
     {
         $users = User::with('role')->get();
+
         return view('users.index', compact('users'));
     }
 
@@ -28,6 +29,7 @@ class UserController
     public function create()
     {
         $roles = Role::all();
+
         return view('users.create', compact('roles'));
     }
 
@@ -36,11 +38,15 @@ class UserController
      */
     public function store(StoreUserRequest $request)
     {
-        $validated = $request->validated();
-        if (!empty($validated['password'])) {
-            $validated['password'] = Hash::make($validated['password']);
-        }
-        User::create($validated);
+        $user = User::create([
+            'username' => $request->username,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'full_name' => $request->full_name,
+            'phone' => $request->phone,
+            'role_id' => $request->role_id
+        ]);
+
         return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
 
@@ -58,6 +64,7 @@ class UserController
     public function edit(User $user)
     {
         $roles = Role::all();
+
         return view('users.edit', compact('user', 'roles'));
     }
 
@@ -68,13 +75,14 @@ class UserController
     {
         $validated = $request->validated();
 
-        if (!empty($validated['password'])) {
+        if (! empty($validated['password'])) {
             $validated['password'] = Hash::make($validated['password']);
         } else {
             unset($validated['password']);
         }
 
         $user->update($validated);
+
         return redirect()->route('users.index')->with('success', 'User updated successfully.');
     }
 
@@ -84,6 +92,7 @@ class UserController
     public function destroy(User $user)
     {
         $user->delete();
+
         return redirect()->route('users.index')->with('success', 'User deleted successfully.');
     }
 
@@ -91,11 +100,13 @@ class UserController
     {
         return view('users.login');
     }
-    public function loginProcess(Request $request){
-        if(Auth::guard('admin')->attempt($request->only('email','password'))){
+
+    public function loginProcess(Request $request)
+    {
+        if (Auth::guard('admin')->attempt($request->only('email', 'password'))) {
             $request->session()->regenerate();
-            return Redirect::Route('/admins');
-        }else{
+            return redirect()->route('home')->with('success', 'Login successful.');
+        } else {
             return Redirect::back();
         }
     }

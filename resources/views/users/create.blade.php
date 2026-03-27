@@ -14,14 +14,16 @@
                     <label for="email">Email:</label><br>
                     <input class="my-3 w-full" type="email" name="email" placeholder="Input email here..."><br>
                     <label for="password_hash">Password:</label><br>
-                    <input class="mt-3 w-full" type="password" name="password" placeholder="Input password here..."><br>
-                    <label for="name">Full name:</label><br>
+                    <input class="my-3 w-full" type="password" name="password" placeholder="Input password here..."><br>
+                    <label for="full_name">Full name:</label><br>
                     <input class="my-3 w-full" type="text" name="full_name" placeholder="Input full name here..."><br>
-                    <label for="name">Phone:</label><br>
+                    <label for="phone">Phone:</label><br>
                     <input class="my-3 w-full" type="tel" name="phone" placeholder="Input phone number here..."><br>
-                    <label for="role">Role:</label><br>
-                    <select class="my-3 w-full" name="role">
-                        @foreach()
+                    <label for="role_id">Role:</label><br>
+                    <select class="my-3 w-full" name="role_id">
+                        @foreach($roles as $role)
+                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                        @endforeach
                     </select>
                     <div class="flex gap-2 mt-4">
                         <button class="btn icon-only flex-1">CREATE</button>

@@ -11,9 +11,9 @@
                 <tr>
                     <th scope="col" class="px-6 py-3 font-medium">ID</th>
                     <th scope="col" class="px-6 py-3 font-medium">Full Name</th>
-                    <th scope="col" class="px-6 py-3 font-medium">Role</th>
                     <th scope="col" class="px-6 py-3 font-medium">Email</th>
                     <th scope="col" class="px-6 py-3 font-medium">Phone</th>
+                    <th scope="col" class="px-6 py-3 font-medium">Role</th>
                     <th scope="col" class="px-6 py-3 font-medium">Actions</th>
                 </tr>
             </thead>
@@ -24,7 +24,7 @@
                         <td class="px-6 py-4">{{ $user->full_name }}</td>
                         <td class="px-6 py-4">{{ $user->email }}</td>
                         <td class="px-6 py-4">{{ $user->phone }}</td>
-                        <td class="px-6 py-4">{{ $user->role }}</td>
+                        <td class="px-6 py-4">{{ $user->role->name }}</td>
                         <td class="px-6 py-4">
                             <a href="{{ route(name: 'users.edit', parameters: $user->id) }}" class="btn icon-only"><i
                                     class="fa-solid fa-pen-to-square"></i></a>

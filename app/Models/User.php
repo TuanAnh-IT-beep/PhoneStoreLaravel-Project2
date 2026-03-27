@@ -10,12 +10,15 @@ class User extends Model implements Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
+
     use \Illuminate\Auth\Authenticatable;
-    
+
     protected $table = 'users';
+
     protected $primaryKey = 'id';
-    protected $fillable = ['username', 'password_hash', 'icon', 'full_name', 'email', 'phone', 'role_id'];
-    
+
+    protected $fillable = ['username', 'password', 'icon', 'full_name', 'email', 'phone', 'role_id'];
+
     public function role()
     {
         return $this->belongsTo(Role::class);
@@ -26,6 +29,6 @@ class User extends Model implements Authenticatable
      */
     public function getAuthPassword()
     {
-        return $this->password_hash;
+        return $this->password;
     }
 }
