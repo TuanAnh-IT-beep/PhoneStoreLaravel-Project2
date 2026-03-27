@@ -25,6 +25,7 @@
                 <div style="display:flex;justify-content:center;padding-top:20px">
                     <button style="background-color:rgb(86, 98, 234);width:100%;height:100%;border-radius:5px;padding-top:10px;padding-bottom:10px">Login</button>
                 </div>
+                <div style="border:1px solid rgb(126, 125, 125);margin-top:30px"></div>
             </div>
     </div>
 </body>
