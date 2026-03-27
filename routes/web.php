@@ -36,3 +36,6 @@ Route::resource('users',UserController::class);
 Route::get('/', function () {
     return view('index');
 })->name('home');
+Route::get('login',function(){
+    return view('Login');
+})->name('login');
