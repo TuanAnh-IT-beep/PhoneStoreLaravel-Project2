@@ -93,7 +93,7 @@ class UserController
     }
     public function loginProcess(Request $request){
         if(Auth::guard('admin')->attempt($request->only('email','password'))){
-            $request->session()->regenerated();
+            $request->session()->regenerate();
             return Redirect::Route('/admins');
         }else{
             return Redirect::back();
