@@ -20,19 +20,19 @@
             <tbody>
                 @foreach ($users as $user)
                     <tr class="border-default">
-                        <td class="px-6 py-4">{{ $user->id }}</td>
-                        <td class="px-6 py-4">{{ $user->full_name }}</td>
+                        <th class="px-6 py-4">{{ $user->id }}</td>
+                        <td class="px-6 py-4" style="color: black">{{ $user->full_name }}</td>
                         <td class="px-6 py-4">{{ $user->email }}</td>
                         <td class="px-6 py-4">{{ $user->phone }}</td>
                         <td class="px-6 py-4">{{ $user->role->name }}</td>
                         <td class="px-6 py-4">
-                            <a href="{{ route(name: 'users.edit', parameters: $user->id) }}" class="btn icon-only"><i
+                            <a href="{{ route(name: 'users.edit', parameters: $user->id) }}" class="btn icon-only edit"><i
                                     class="fa-solid fa-pen-to-square"></i></a>
                             <form method="post" action="{{ route(name: 'users.destroy', parameters: $user->id) }}"
                                 style="display: inline-block">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn icon-only negative"><i class="fa-solid fa-trash"></i></button>
+                                <button class="btn icon-only delete"><i class="fa-solid fa-trash"></i></button>
                             </form>
                         </td>
                     </tr>

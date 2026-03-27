@@ -63,7 +63,7 @@
                     <form method="post" action="{{ route('orders.destroy', $ord->id) }}">
                         @csrf
                         @method('DELETE')
-                        <button>Cancle</button>
+                        <button>Cancel</button>
                     </form>
                 </td>
             </tr>

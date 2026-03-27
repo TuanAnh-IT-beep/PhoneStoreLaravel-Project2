@@ -18,9 +18,6 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Middleware\CheckUserLogin;
 
-
-Route::prefix('/admins')
-->group(function(){
 Route::resource('permissions', PermissionController::class)->middleware(CheckUserLogin::class);
 Route::resource('roles', RoleController::class)->middleware(CheckUserLogin::class);
 Route::resource('customers', CustomerController::class)->middleware(CheckUserLogin::class);
@@ -38,8 +35,7 @@ Route::resource('subspecs', SubSpecController::class)->middleware(CheckUserLogin
 Route::resource('users', UserController::class)->middleware(CheckUserLogin::class);
 Route::get('/', function () {
     return view('index');
-})->name('home');
-});
+})->name('home')->middleware(CheckUserLogin::class);
 Route::get('/login', [UserController::class,'login'])
 ->name('users.login');
 Route::post('/login', [UserController::class,'loginProcess'])
