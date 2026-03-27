@@ -40,3 +40,5 @@ Route::get('/login', [UserController::class,'login'])
 ->name('users.login');
 Route::post('/login', [UserController::class,'loginProcess'])
 ->name('users.login');
+Route::get('/logout',[UserController::class,'logout'])
+->name('logout');

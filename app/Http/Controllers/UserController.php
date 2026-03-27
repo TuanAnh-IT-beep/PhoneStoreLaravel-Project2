@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 
-class UserController 
+class UserController
 {
     /**
      * Display a listing of the resource.
@@ -109,5 +109,11 @@ class UserController
         } else {
             return Redirect::back();
         }
+    }
+    public function logout(Request $request){
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/login');
     }
 }
