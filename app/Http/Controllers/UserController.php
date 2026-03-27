@@ -8,7 +8,8 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;    
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;    
 
 class UserController
 {
