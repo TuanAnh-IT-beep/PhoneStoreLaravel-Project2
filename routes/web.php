@@ -16,8 +16,10 @@ use \App\Http\Controllers\RolePermissionController;
 use \App\Http\Controllers\SubproductController;
 use \App\Http\Controllers\SubSpecController;
 use \App\Http\Controllers\UserController;
+use \App\Http\Controllers\Request;
 
-
+Route::prefix('/admins')
+->group(function(){
 Route::resource('permissions', PermissionController::class);
 Route::resource('roles', RoleController::class);
 Route::resource('customers', CustomerController::class);
@@ -36,6 +38,8 @@ Route::resource('users',UserController::class);
 Route::get('/', function () {
     return view('index');
 })->name('home');
-Route::get('login',function(){
-    return view('Login');
-})->name('login');
+});
+Route::get('/login', [\App\Http\Controllers\UserController::class,'login'])
+->name('users.login');
+Route::post('/login', [\App\Http\Controllers\UserController::class,'loginProcess'])
+->name('users.login');
