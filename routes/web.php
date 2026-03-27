@@ -21,7 +21,7 @@ use \App\Http\Middleware\CheckUserLogin;
 Route::resource('permissions', PermissionController::class)->middleware(CheckUserLogin::class);
 Route::resource('roles', RoleController::class)->middleware(CheckUserLogin::class);
 Route::resource('customers', CustomerController::class)->middleware(CheckUserLogin::class);
-Route::resource('payment-methods', PaymentMethodController::class)->middleware(CheckUserLogin::class);
+Route::resource('payment_methods', PaymentMethodController::class)->middleware(CheckUserLogin::class);
 Route::resource('categories', CategoryController::class)->middleware(CheckUserLogin::class);
 Route::resource('manufacturers', ManufacturerController::class)->middleware(CheckUserLogin::class);
 Route::resource('specs', SpecController::class)->middleware(CheckUserLogin::class);
@@ -34,11 +34,11 @@ Route::resource('products', ProductController::class)->middleware(CheckUserLogin
 Route::resource('subspecs', SubSpecController::class)->middleware(CheckUserLogin::class);
 Route::resource('users', UserController::class)->middleware(CheckUserLogin::class);
 Route::get('/', function () {
-    return view('index');
+    return view('admins.index');
 })->name('home')->middleware(CheckUserLogin::class);
 Route::get('/login', [UserController::class,'login'])
-->name('users.login');
+->name('admins.users.login');
 Route::post('/login', [UserController::class,'loginProcess'])
-->name('users.login');
+->name('admins.users.login');
 Route::get('/logout',[UserController::class,'logout'])
 ->name('logout');

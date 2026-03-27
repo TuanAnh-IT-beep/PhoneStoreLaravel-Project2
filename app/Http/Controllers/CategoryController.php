@@ -15,7 +15,7 @@ class CategoryController
     public function index()
     {
         $categories = Category::all();
-        return view('categories.index',compact('categories'));
+        return view('admins.categories.index',compact('categories'));
     }
 
     /**
@@ -23,7 +23,7 @@ class CategoryController
      */
     public function create()
     {
-        return view('categories.create');
+        return view('admins.categories.create');
     }
 
     /**
@@ -53,7 +53,7 @@ class CategoryController
     public function edit(Category $category)
     {
         return view(
-            'categories.edit',
+            'admins.categories.edit',
             [
                 'category' => $category
             ]

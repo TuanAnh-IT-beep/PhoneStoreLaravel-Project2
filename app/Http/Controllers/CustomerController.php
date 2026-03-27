@@ -16,7 +16,7 @@ class CustomerController
     {
         $customers = Customer::all();
         return view(
-            'customers.index',
+            'admins.customers.index',
             [
                 'customers' => $customers
             ]
@@ -28,7 +28,7 @@ class CustomerController
      */
     public function create()
     {
-        return view('customers.create');
+        return view('admins.customers.create');
     }
 
     /**
@@ -64,7 +64,7 @@ class CustomerController
     public function edit(Customer $customer)
     {
         return view(
-            'customers.edit',
+            'admins.customers.edit',
             [
                 'customer' => $customer
             ]
