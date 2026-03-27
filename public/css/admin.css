@@ -170,7 +170,7 @@ p {
 }
 
 input,
-textarea {
+textarea, select {
     padding-left: 16px;
     padding-right: 16px;
     padding-top: 10px;
@@ -188,7 +188,7 @@ textarea {
 }
 
 input:focus,
-textarea:focus {
+textarea:focus, select:focus {
     outline: 2px #003F62 solid;
     outline-offset: -2px;
     transition: all 0.3s ease;

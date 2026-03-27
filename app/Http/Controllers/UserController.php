@@ -34,8 +34,8 @@ class UserController
     public function store(StoreUserRequest $request)
     {
         $validated = $request->validated();
-        if (!empty($validated['password_hash'])) {
-            $validated['password_hash'] = Hash::make($validated['password_hash']);
+        if (!empty($validated['password'])) {
+            $validated['password'] = Hash::make($validated['password']);
         }
         User::create($validated);
         return redirect()->route('users.index')->with('success', 'User created successfully.');
@@ -65,10 +65,10 @@ class UserController
     {
         $validated = $request->validated();
 
-        if (!empty($validated['password_hash'])) {
-            $validated['password_hash'] = Hash::make($validated['password_hash']);
+        if (!empty($validated['password'])) {
+            $validated['password'] = Hash::make($validated['password']);
         } else {
-            unset($validated['password_hash']);
+            unset($validated['password']);
         }
         
         $user->update($validated);
