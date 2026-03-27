@@ -1,17 +1,22 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Document</title>
-</head>
-<body>
-    <h3>Add a payment method</h3>
-    <form method="post" action="{{ route('payment_methods.store') }}">
-        @csrf
-        Name: <input type="text" name="name"><br>
-        <input type="hidden" name="icon" value="">
-        <button>Add</button>
-    </form>
-</body>
-</html>
+@extends("layouts.master")
+@section("main-content")
+<div class="w-full mb-4 flex items-center justify-between">
+        <h1>Add a payment method</h1>
+    </div>
+    <div class="main-container">
+        <form method="post" action="{{ route('payment_methods.store') }}">
+            @csrf
+            <div class="grid grid-cols-10 gap-4">
+                <div class="col-span-4">
+                    <label for="name">Name:</label><br>
+                    <input class="mt-2 w-full" type="text" name="name" placeholder="Input name here..."><br>
+                    <div class="flex gap-2 mt-4">
+                        <button class="btn flex-1 icon-only">ADD</button>
+                        <a class="btn flex-1 icon-only negative" href="{{ route('payment_methods.index') }}">CANCEL</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+@endsection
+

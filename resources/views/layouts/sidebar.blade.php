@@ -27,7 +27,7 @@
         <img class="icon" src="/images/main/sidebar/customer.png" />
         <p class="text">Customers</p>
     </a>
-    <a class="item {{ request()->routeIs('payment-methods.*') ? 'active' : '' }}" href="{{ route(name:'payment-methods.index') }}">
+    <a class="item {{ request()->routeIs('payment_methods.*') ? 'active' : '' }}" href="{{ route(name:'payment_methods.index') }}">
         <img class="icon" src="/images/main/sidebar/payment.png" />
         <p class="text">Payment Methods</p>
     </a>

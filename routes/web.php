@@ -21,7 +21,7 @@ use \App\Http\Middleware\CheckUserLogin;
 Route::resource('permissions', PermissionController::class)->middleware(CheckUserLogin::class);
 Route::resource('roles', RoleController::class)->middleware(CheckUserLogin::class);
 Route::resource('customers', CustomerController::class)->middleware(CheckUserLogin::class);
-Route::resource('payment-methods', PaymentMethodController::class)->middleware(CheckUserLogin::class);
+Route::resource('payment_methods', PaymentMethodController::class)->middleware(CheckUserLogin::class);
 Route::resource('categories', CategoryController::class)->middleware(CheckUserLogin::class);
 Route::resource('manufacturers', ManufacturerController::class)->middleware(CheckUserLogin::class);
 Route::resource('specs', SpecController::class)->middleware(CheckUserLogin::class);
