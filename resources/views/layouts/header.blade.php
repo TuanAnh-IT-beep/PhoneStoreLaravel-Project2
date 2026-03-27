@@ -6,10 +6,12 @@
              </a>
             <a class="logo-text" href="{{ route('home') }}"><span style="color: #AFF5BF;">BMo</span>bileShop</a>
         </div>
+        @if (Route::has('login')&& Route::currentRouteName() !== 'login')
         <div class="flex items-center" style="gap: 20px">
-            <a href="" class="login-link">
+            <a href="{{ route('login') }}" class="login-link">
                 <span>Login</span>
             </a>
         </div>
+        @endif
     </div>
 </header>
