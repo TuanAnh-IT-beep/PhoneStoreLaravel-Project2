@@ -4,16 +4,16 @@
   box-sizing: border-box;
 }
 body {
+
   font-size: 14px;
   height: 900px;
 }
 
 .login_box {
   width: 900px;
-  height: 564px;
+  height: 524px;
   background: rgba(175,245,191,1);
   opacity: 1;
-  position: absolute;
   top: 230px;
   left: 270px;
   border-top-left-radius: 10px;
