@@ -23,4 +23,12 @@
         <img class="icon" src="/images/main/sidebar/admin.png" />
         <p class="text">Users</p>
     </a>
+    <a class="item {{ request()->routeIs('customers.*') ? 'active' : '' }}" href="{{ route(name:'customers.index') }}">
+        <img class="icon" src="/images/main/sidebar/customer.png" />
+        <p class="text">Customers</p>
+    </a>
+    <a class="item {{ request()->routeIs('payment-methods.*') ? 'active' : '' }}" href="{{ route(name:'payment-methods.index') }}">
+        <img class="icon" src="/images/main/sidebar/payment.png" />
+        <p class="text">Payment Methods</p>
+    </a>
 </div>
