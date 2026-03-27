@@ -34,6 +34,7 @@
                             style="color: white; font-size: 40px; font-family: Bmo_font; font-weight: 400; line-height: 58px; word-wrap: break-word">bileShop</span>
                     </div>
                 </div>
+                <div style="border:1px solid rgb(126, 125, 125);margin-top:30px"></div>
             </div>
         </div>
     </div>
