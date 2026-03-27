@@ -13,9 +13,6 @@ class SubproductController
      */
     public function index()
     {
-         $subproducts = Subproduct::all();
-        return view('subproducts.index',compact('subproducts')
-        );
     }
 
     /**

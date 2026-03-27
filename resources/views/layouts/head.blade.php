@@ -8,3 +8,4 @@
 <link
     href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
     rel="stylesheet">
+<script src="https://cdn.tiny.cloud/1/g0go04b2a4bq8sx34keyt8zzwkyw829rhufwbixtbvr5vyis/tinymce/8/tinymce.min.js" referrerpolicy="origin" crossorigin="anonymous"></script>
