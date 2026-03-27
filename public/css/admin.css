@@ -97,12 +97,12 @@ header a {
     margin-bottom: 35px;
 }
 
-.main-content a {
+a {
     text-decoration: none;
     color: #0A1D20;
 }
 
-.main-content h1 {
+h1 {
     color: black;
     font-family: Rubik;
     font-size: 2rem;
@@ -110,14 +110,14 @@ header a {
     word-wrap: break-word;
 }
 
-.main-content p {
+p {
     color: black;
     font-size: 20px;
     font-family: "Inter", sans-serif;
     word-wrap: break-word
 }
 
-.main-content .btn {
+.btn {
     align-self: stretch;
     padding-left: 16px;
     padding-right: 16px;
@@ -133,37 +133,40 @@ header a {
     color: #FFFFFF;
 }
 
-.main-content .btn.negative {
+.btn.negative {
     background: #FFFFFFFF;
     color: #232321;
     outline: 2px #232321 solid;
 }
 
-.main-content .btn.icon-only {
+.btn.icon-only {
     padding: 16px;
     font-size: 16px;
     font-weight: medium;
 }
 
-.main-content .btn.delete {
+.btn.delete {
     background: #f20553;
 }
 
-.main-content .btn.edit {
+.btn.edit {
     background: #003F62;
 }
 
-.main-content .btn.create {
+.btn.create {
     background: #44B097;
 }
 
-.main-content .btn:hover {
+.btn.blue {
+    background: rgb(86,98,234);
+}
+
+.btn:hover {
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     transition: all 0.3s ease;
 }
 
-.main-content input,
-.main-content textarea {
+input, textarea {
     padding-left: 16px;
     padding-right: 16px;
     padding-top: 10px;
@@ -179,15 +182,13 @@ header a {
     font-size: 16px;
     font-weight: 400;
 }
-
-.main-content input:focus,
-.main-content textarea:focus {
+input:focus, textarea:focus {
     outline: 2px #003F62 solid;
     outline-offset: -2px;
     transition: all 0.3s ease;
 }
 
-.main-content label {
+label {
     color: #232321;
     font-size: 20px;
     font-family: "Rubik", sans-serif;
@@ -195,7 +196,7 @@ header a {
     word-wrap: break-word;
 }
 
-.main-content .main-container {
+.main-container {
     background-color: #FFFFFF;
     border-radius: 16px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -203,7 +204,7 @@ header a {
     color: #000000
 }
 
-.main-content table th {
+table th {
     color: #232321CC;
     font-family: "Rubik", sans-serif;
     font-size: 20px;
@@ -212,14 +213,17 @@ header a {
     width: 1%;
 }
 
-.main-content table th.long {
+table th.long {
     width: auto;
 }
-
-.main-content table tr {
+table tr {
     color: #232321CC;
     font-family: "Open Sans", sans-serif;
     font-size: 16px;
     word-wrap: break-word;
     border-bottom: #23232133 solid 1px;
+}
+
+hr {
+    color: #9A9A9A;
 }
