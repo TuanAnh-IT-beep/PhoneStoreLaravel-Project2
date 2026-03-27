@@ -11,7 +11,7 @@
         <img class="icon" src="/images/main/sidebar/brand.png" />
         <p class="text">Manufacturers</p>
     </a>
-    <a class="item {{ request()->routeIs('subproducts.*') ? 'active' : '' }}" href="{{ route(name:'subproducts.index') }}">
+    <a class="item {{ request()->routeIs('products.*') ? 'active' : '' }}" href="{{ route(name:'products.index') }}">
         <img class="icon" src="/images/main/sidebar/product.png" />
         <p class="text">Products</p>
     </a>

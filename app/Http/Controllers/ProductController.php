@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Manufacturer;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
@@ -13,7 +15,8 @@ class ProductController
      */
     public function index()
     {
-        //
+        $products = Product::with('category', 'manufacturer', 'subproducts')->get();
+        return view("products.index", compact("products"));
     }
 
     /**
@@ -21,15 +24,17 @@ class ProductController
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        $manufacturers = Manufacturer::all();
+        return view("products.create", compact("categories", "manufacturers"));
     }
-
+    
     /**
      * Store a newly created resource in storage.
      */
     public function store(StoreProductRequest $request)
     {
-        //
+        
     }
 
     /**
