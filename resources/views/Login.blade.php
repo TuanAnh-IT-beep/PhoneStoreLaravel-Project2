@@ -24,18 +24,12 @@
                 </div>
                 <button class="btn icon-only w-full mt-10 blue">Login</button>
             </form>
-            <div class="mt-10">
-                <hr>
-                <div
-                    style="flex-direction: column; justify-content: center; align-items: center; display: inline-flex">
-                    <img style="width: 47.99px; height: 47.99px" src="https://placehold.co/48x48" />
-                    <div style="justify-content: center; display: flex; flex-direction: column"><span
-                            style="color: #AFF5BF; font-size: 40px; font-family: Bmo_font; font-weight: 400; line-height: 58px; word-wrap: break-word">BMo</span><span
-                            style="color: white; font-size: 40px; font-family: Bmo_font; font-weight: 400; line-height: 58px; word-wrap: break-word">bileShop</span>
-                    </div>
-                </div>
-                <div style="border:1px solid rgb(126, 125, 125);margin-top:30px"></div>
+            <hr class="mt-10">
+            <div class="my-5 flex flex-col items-center justify-center">
+                <img src="{{ asset('images/main/Logo.png') }}" alt="Logo" class="logo-image">
+                <p class="logo-text"><span style="color: #AFF5BF;">BMo</span>bileShop</a></p>
             </div>
+            <hr>
         </div>
     </div>
 </body>
