@@ -29,6 +29,6 @@
     </a>
     <a class="item {{ request()->routeIs('payment-methods.*') ? 'active' : '' }}" href="{{ route(name:'payment-methods.index') }}">
         <img class="icon" src="/images/main/sidebar/payment.png" />
-        <p class="text">Payment Methods</p>
+        <p class="text">Payment<br>Methods</p>
     </a>
 </div>
