@@ -54,6 +54,7 @@ header a {
     background: #AFF5BF;
     border-radius: 4px;
     border: 8px #AFF5BF solid;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0);
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
