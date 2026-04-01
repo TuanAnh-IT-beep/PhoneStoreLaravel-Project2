@@ -35,11 +35,12 @@
                 <div class="col-span-6">
                     <label for="description">Description:</label><br>
                     <div class="my-3 w-full">
-                        <textarea name="description" id="description"
-                            placeholder="Input description here..." rows="10">{{ $category->description }}</textarea><br>
+                        <textarea name="description" id="description" placeholder="Input description here..."
+                            rows="10">{{ $category->description }}</textarea><br>
                         <script>
                             tinymce.init({
                                 selector: '#description',
+                                onboarding: false
                             });
                         </script>
                     </div>
@@ -47,8 +48,9 @@
             </div>
         </form>
     </div>
-    <div class="main-container">
+    {{-- <div class="main-container mt-3">
+
         <!-- Product variants and specs-->
 
-    </div>
+    </div> --}}
 @endsection
