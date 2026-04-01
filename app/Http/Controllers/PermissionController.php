@@ -16,7 +16,7 @@ class PermissionController
     {
         $permissions = Permission::all();
         return view(
-            'permissions.index',
+            'admins.permissions.index',
             [
                 'permissions' => $permissions
             ]
@@ -28,7 +28,7 @@ class PermissionController
      */
     public function create()
     {
-        return view('permissions.create');
+        return view('admins.permissions.create');
     }
 
     /**

@@ -31,6 +31,7 @@ Route::resource('products', ProductController::class)->middleware(CheckUserLogin
 Route::resource('productimagies', ProductImageController::class)->middleware(CheckUserLogin::class);
 Route::resource('rolepermissions', RolePermissionController::class)->middleware(CheckUserLogin::class);
 Route::resource('products', ProductController::class)->middleware(CheckUserLogin::class);
+Route::resource('subproducts', SubproductController::class)->middleware(CheckUserLogin::class);
 Route::resource('subspecs', SubSpecController::class)->middleware(CheckUserLogin::class);
 Route::resource('users', UserController::class)->middleware(CheckUserLogin::class);
 Route::get('/', function () {
