@@ -20,6 +20,6 @@ class CheckUserLogin
         if (Auth::guard('admin')->user()) {
             return $next($request);
         }
-        return Redirect::route('users.login');
+        return Redirect::route('admins.users.login');
     }
 }
