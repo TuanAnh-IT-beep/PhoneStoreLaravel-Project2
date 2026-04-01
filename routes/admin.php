@@ -33,7 +33,7 @@ Route::resource('rolepermissions', RolePermissionController::class)->middleware(
 Route::resource('products', ProductController::class)->middleware(CheckUserLogin::class);
 Route::resource('subspecs', SubSpecController::class)->middleware(CheckUserLogin::class);
 Route::resource('users', UserController::class)->middleware(CheckUserLogin::class);
-Route::get('/', function () {
+Route::get('/admins', function () {
     return view('admins.index');
 })->name('home')->middleware(CheckUserLogin::class);
 Route::get('/login', [UserController::class,'login'])
@@ -42,3 +42,6 @@ Route::post('/login', [UserController::class,'loginProcess'])
 ->name('admins.users.login');
 Route::get('/logout',[UserController::class,'logout'])
 ->name('logout');
+Route::get('/', function () {
+    return redirect('/admins');
+});
