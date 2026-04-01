@@ -16,7 +16,7 @@ class ProductController
     public function index()
     {
         $products = Product::with('category', 'manufacturer', 'subproducts')->get();
-        return view("products.index", compact("products"));
+        return view("admins.products.index", compact("products"));
     }
 
     /**
@@ -26,7 +26,7 @@ class ProductController
     {
         $categories = Category::all();
         $manufacturers = Manufacturer::all();
-        return view("products.create", compact("categories", "manufacturers"));
+        return view("admins.products.create", compact("categories", "manufacturers"));
     }
     
     /**
@@ -34,7 +34,8 @@ class ProductController
      */
     public function store(StoreProductRequest $request)
     {
-        
+        $product = Product::create($request->all());
+        return redirect()->route("products.index")->with("success","Product created successfully.");
     }
 
     /**
@@ -50,7 +51,9 @@ class ProductController
      */
     public function edit(Product $product)
     {
-        //
+        $categories = Category::all();
+        $manufacturers = Manufacturer::all();
+        return view("admins.products.edit", compact("product", "categories", "manufacturers"));
     }
 
     /**
@@ -58,7 +61,8 @@ class ProductController
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        //
+        $product->update($request->all());
+        return redirect()->route("products.index")->with("success","Product updated successfully.");
     }
 
     /**

@@ -12,6 +12,16 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $permissions = [
+            ["name" => "manage_users"],
+            ["name" => "manage_products"],
+            ["name" => "manage_orders"],
+            ["name" => "manage_customers"],
+            ["name" => "manage_settings"],
+        ];
+
+        foreach ($permissions as $permission) {
+            \App\Models\Permission::create($permission);
+        }
     }
 }

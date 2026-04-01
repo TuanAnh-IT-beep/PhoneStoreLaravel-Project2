@@ -16,8 +16,6 @@ return new class extends Migration
             $table->string("name");
             $table->string("description")->nullable();
             $table->string("thumbnail_path")->nullable();
-            $table->float("overall_price");
-            $table->integer("total_stock");
             $table->foreignId('category_id')->constrained();
             $table->foreignId('manufacturer_id')->constrained();
             $table->date("released_date");

@@ -12,6 +12,25 @@ class SpecSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $specs = [
+            ["name" => "RAM"],
+            ["name" => "Storage"],
+            ["name" => "Battery"],
+            ["name" => "Front Camera"],
+            ["name" => "Rear Camera"],
+            ["name" => "Display"],
+            ["name" => "CPU"],
+            ["name" => "GPU"],
+            ["name" => "Operating System"],
+            ["name" => "Weight"],
+            ["name" => "Material"],
+            ["name" => "Color"],
+            ["name" => "Size"],
+            ["name" => "Weight"],
+        ];
+
+        foreach ($specs as $spec) {
+            \App\Models\Spec::create($spec);
+        }
     }
 }
