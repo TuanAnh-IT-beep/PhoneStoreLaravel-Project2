@@ -9,8 +9,9 @@ class SubSpec extends Model
 {
     /** @use HasFactory<\Database\Factories\SubSpecFactory> */
     use HasFactory;
-    protected $table='subspecs';
-    protected $fillable=['value','spec_id','product_id'];
+    protected $table='sub_specs';
+    protected $fillable=['value','spec_id','subproduct_id'];
+    public $timestamps = false;
     public function spec(){
         return $this->belongsTo(Spec::class);
     }

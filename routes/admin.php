@@ -15,8 +15,8 @@ use App\Http\Controllers\SpecController;
 use App\Http\Controllers\SubproductController;
 use App\Http\Controllers\SubSpecController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\CheckUserLogin;
 use Illuminate\Support\Facades\Route;
-use \App\Http\Middleware\CheckUserLogin;
 
 Route::resource('permissions', PermissionController::class)->middleware(CheckUserLogin::class);
 Route::resource('roles', RoleController::class)->middleware(CheckUserLogin::class);
@@ -28,6 +28,23 @@ Route::resource('specs', SpecController::class)->middleware(CheckUserLogin::clas
 Route::resource('orders', OrderController::class)->middleware(CheckUserLogin::class);
 Route::resource('orderdetails', OrderDetailController::class)->middleware(CheckUserLogin::class);
 Route::resource('products', ProductController::class)->middleware(CheckUserLogin::class);
+Route::controller(SubproductController::class)
+    ->name('subproducts.')
+    ->prefix('/products/{product}/subproducts')
+    ->group(function () {
+        Route::get('/', 'index')
+            ->name('index');
+        Route::get('/create', 'create')
+            ->name('create');
+        Route::post('/create', 'store')
+            ->name('store');
+        Route::get('/{subproduct}/edit', 'edit')
+            ->name('edit');
+        Route::put('/{subproduct}/edit', 'update')
+            ->name('update');
+        Route::delete('/{subproduct}', 'destroy')
+            ->name('destroy');
+    });
 Route::resource('productimagies', ProductImageController::class)->middleware(CheckUserLogin::class);
 Route::resource('rolepermissions', RolePermissionController::class)->middleware(CheckUserLogin::class);
 Route::resource('products', ProductController::class)->middleware(CheckUserLogin::class);
