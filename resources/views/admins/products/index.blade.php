@@ -39,8 +39,8 @@
                                     <a class="btn edit icon-only" href="{{ route('products.edit', $pro->id) }}"><i
                                             class="fa-solid fa-pencil"></i></a>
                                     <a class="btn edit icon-only" href="{{ route('subproducts.index', $pro->id) }}"><i
-                                            class="fa-solid fa-pencil"></i></a>
-                                    <button class="btn delete icon-only"><i class="fa-solid fa-list"></i></button>
+                                            class="fa-solid fa-list"></i></a>
+                                    <button class="btn delete icon-only"><i class="fa-solid fa-trash"></i></button>
                                 </form>
                             </td>
                         </tr>

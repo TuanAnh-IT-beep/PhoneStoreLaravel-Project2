@@ -3,7 +3,7 @@
 @section("main-content")
     <div class="w-full flex mb-4 justify-between">
         <h1 class="">Products -> {{ $product->name }} -> Subproducts</h1>
-        <a class="btn" href="{{ route('subproducts.create', $product->id) }}"><i class="fa-solid fa-plus"></i>ADD NEW ITEM</a>
+        <a class="btn" href="{{ route('subproducts.create', $product) }}"><i class="fa-solid fa-plus"></i>ADD NEW ITEM</a>
     </div>
     <div class="main-container">
         <table class="table-auto w-full text-left rtl:text-right text-body">
@@ -33,12 +33,12 @@
                                 {{ $subproduct->stock }}
                             </td>
                             <td class="px-6 py-4">
-                                <form method="post" action="{{ route('subproducts.destroy', $subproduct->id) }}">
+                                <form method="post" action="{{ route('subproducts.destroy', [$product->id, $subproduct->id]) }}">
                                     @csrf
                                     @method('DELETE')
-                                    <a class="btn edit icon-only" href="{{ route('subproducts.edit', $subproduct->id) }}"><i
+                                    <a class="btn edit icon-only" href="{{ route('subproducts.edit', [$product->id, $subproduct->id]) }}"><i
                                             class="fa-solid fa-pencil"></i></a>
-                                    <button class="btn delete icon-only"><i class="fa-solid fa-list"></i></button>
+                                    <button class="btn delete icon-only"><i class="fa-solid fa-trash"></i></button>
                                 </form>
                             </td>
                         </tr>

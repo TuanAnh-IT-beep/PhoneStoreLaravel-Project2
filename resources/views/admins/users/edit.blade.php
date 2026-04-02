@@ -5,7 +5,7 @@
         <h1>Users → Edit {{ $user->username }}</h1>
     </div>
     <div class="main-container">
-        <form method="post" action="{{ route('users.store') }}">
+        <form method="post" action="{{ route('users.update', $user->id) }}">
             @csrf
             <div class="grid grid-cols-10 gap-4">
                 <div class="col-span-4">
@@ -26,7 +26,7 @@
                         @endforeach
                     </select>
                     <div class="flex gap-2 mt-4">
-                        <button class="btn icon-only flex-1">CREATE</button>
+                        <button class="btn icon-only flex-1">UPDATE</button>
                         <a class="btn icon-only negative flex-1" href="{{ route('users.index') }}">CANCEL</a>
                     </div>
                 </div>

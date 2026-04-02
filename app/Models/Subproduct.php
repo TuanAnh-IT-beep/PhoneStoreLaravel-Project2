@@ -16,7 +16,7 @@ class Subproduct extends Model
         return $this->belongsTo(Product::class);
     }
     public function sub_specs(){
-        return $this->hasMany(Subproduct::class,'product_id','id');
+        return $this->hasMany(SubSpec::class,'subproduct_id','id');
     }
     public function orderdetails(){
         return $this->hasMany(OrderDetail::class,'subproduct_id','id');
