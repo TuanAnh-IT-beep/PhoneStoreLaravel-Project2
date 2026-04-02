@@ -35,7 +35,7 @@ Route::resource('subspecs', SubSpecController::class)->middleware(CheckUserLogin
 Route::resource('users', UserController::class)->middleware(CheckUserLogin::class);
 Route::get('/admins', function () {
     return view('admins.index');
-})->name('home')->middleware(CheckUserLogin::class);
+})->name('admin')->middleware(CheckUserLogin::class);
 Route::get('/login', [UserController::class,'login'])
 ->name('admins.users.login');
 Route::post('/login', [UserController::class,'loginProcess'])

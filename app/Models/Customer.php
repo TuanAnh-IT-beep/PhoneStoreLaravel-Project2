@@ -11,7 +11,7 @@ class Customer extends Model
     use HasFactory;
     protected $table = 'customers';
     protected $primaryKey = 'id';
-    protected $fillable = ['username', 'password_hash', 'icon', 'display_name', 'email', 'phone', 'gender', 'birthday', 'address'];
+    protected $fillable = ['username', 'password', 'icon', 'display_name', 'email', 'phone', 'birthday', 'address'];
     public $timestamps = true;
     public function orders(){
         return $this->hasMany(Order::class,'customer_id','id');

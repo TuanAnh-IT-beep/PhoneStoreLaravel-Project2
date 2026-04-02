@@ -1,4 +1,5 @@
-@extends('clients.layouts.header');
+
+@extends('clients.layouts.master')
 @section('main-content')
 <body class="bg-[#48a892] p-4 md:p-8 font-sans">
     <div class="max-w-6xl mx-auto space-y-10">
@@ -7,14 +8,14 @@
                 <p class="text-orange-400 font-bold mb-2"> iPhone 17</p>
                 <h1 class="text-7xl font-black tracking-tighter mb-4 italic">PRO</h1>
                 <div class="w-64 h-40 bg-gradient-to-t from-orange-800 to-orange-400 rounded-t-full mb-6">
-                    <!-- Placeholder cho hình ảnh iPhone -->
+
                 </div>
                 <div class="bg-zinc-900 w-full py-4 space-y-2">
                     <p class="text-xs text-gray-400">Pre-order now with 0% installment up to 24 months.<br>Available on October 17, 2025 at 12:01 a.m.</p>
                     <button class="mt-2 border border-white px-6 py-1 rounded-full text-sm hover:bg-white hover:text-black transition">Pre-order</button>
                 </div>
             </div>
-            <!-- Navigation Buttons -->
+
             <button class="absolute left-4 top-1/2 -translate-y-1/2 bg-pink-600 p-3 rounded-full text-white">❮</button>
             <button class="absolute right-4 top-1/2 -translate-y-1/2 bg-pink-600 p-3 rounded-full text-white">❯</button>
         </div>
@@ -132,4 +133,4 @@
 
     </div>
 @endsection
-@include('clients.layouts.footer')
+

@@ -16,8 +16,8 @@
       </div>
 
       <!-- Thông tin gọi điện -->
-      <div class="space-y-2">
-        <p class="font-bold text-gray-200">Contact us:</p>
+      <div class="space-y-2" >
+        <p class="font-bold text-gray-200" style="color:white">Contact us:</p>
         <div class="flex items-center gap-3">
           <div class="text-gray-400">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -25,26 +25,26 @@
             </svg>
           </div>
           <div>
-            <p class="text-sm text-gray-400">Call Us</p>
-            <p class="text-lg font-medium">+1 202-918-2132</p>
+            <p class="text-sm text-gray-400" style="color:white">Call Us</p>
+            <p class="text-lg font-medium" style="color:white">+1 202-918-2132</p>
           </div>
         </div>
       </div>
 
       <!-- Mạng xã hội -->
       <div class="space-y-3">
-        <p class="font-bold text-gray-200">Our social links:</p>
+        <p class="font-bold text-gray-200" style="color:white">Our social links:</p>
         <div class="flex gap-4 items-center">
           <!-- Instagram -->
-          <a href="#" class="hover:text-[#4ade80] transition-colors">
+          <a href="#" class="hover:text-[#4ade80] transition-colors" style="color:white">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
           </a>
           <!-- LinkedIn -->
-          <a href="#" class="hover:text-[#4ade80] transition-colors">
+          <a href="#" class="hover:text-[#4ade80] transition-colors"style="color:white">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
           </a>
           <!-- X (Twitter) -->
-          <a href="#" class="hover:text-[#4ade80] transition-colors">
+          <a href="#" class="hover:text-[#4ade80] transition-colors"style="color:white">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
               <path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865l8.875 11.633Z"/>
             </svg>
@@ -57,8 +57,8 @@
     <div class="space-y-4">
       <h3 class="font-bold text-lg">Support</h3>
       <ul class="space-y-3 text-gray-300">
-        <li><a href="#" class="hover:text-[#4ade80] transition-colors">Contact</a></li>
-        <li><a href="#" class="hover:text-[#4ade80] transition-colors">Support</a></li>
+        <li><a href="#" class="hover:text-[#4ade80] transition-colors"style="color:white">Contact</a></li>
+        <li><a href="#" class="hover:text-[#4ade80] transition-colors"style="color:white">Support</a></li>
       </ul>
     </div>
 
@@ -66,11 +66,11 @@
     <div class="space-y-4">
       <h3 class="font-bold text-lg">Customer Service</h3>
       <ul class="space-y-3 text-gray-300">
-        <li><a href="#" class="hover:text-[#4ade80] transition-colors">About us</a></li>
-        <li><a href="#" class="hover:text-[#4ade80] transition-colors">FAQ</a></li>
-        <li><a href="#" class="hover:text-[#4ade80] transition-colors">Terms & Conditions</a></li>
-        <li><a href="#" class="hover:text-[#4ade80] transition-colors">Privacy Policy</a></li>
-        <li><a href="#" class="hover:text-[#4ade80] transition-colors">Cancellation & Return Policy</a></li>
+        <li><a href="#" class="hover:text-[#4ade80] transition-colors"style="color:white">About us</a></li>
+        <li><a href="#" class="hover:text-[#4ade80] transition-colors"style="color:white">FAQ</a></li>
+        <li><a href="#" class="hover:text-[#4ade80] transition-colors"style="color:white">Terms & Conditions</a></li>
+        <li><a href="#" class="hover:text-[#4ade80] transition-colors"style="color:white">Privacy Policy</a></li>
+        <li><a href="#" class="hover:text-[#4ade80] transition-colors"style="color:white">Cancellation & Return Policy</a></li>
       </ul>
     </div>
 

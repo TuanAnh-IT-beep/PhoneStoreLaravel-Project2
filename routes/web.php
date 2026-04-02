@@ -1,5 +1,5 @@
 <?php
-
+require __DIR__.'\customer.php';
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ManufacturerController;
@@ -36,9 +36,15 @@ Route::resource('users', UserController::class)->middleware(CheckUserLogin::clas
 Route::get('/', function () {
     return view('admins.index');
 })->name('home')->middleware(CheckUserLogin::class);
-Route::get('/login', [UserController::class,'login'])
+Route::get('/loginadd', [UserController::class,'login'])
 ->name('admins.users.login');
-Route::post('/login', [UserController::class,'loginProcess'])
+Route::post('/loginadd', [UserController::class,'loginProcess'])
 ->name('admins.users.login');
-Route::get('/logout',[UserController::class,'logout'])
+Route::get('/logoutadd',[UserController::class,'logout'])
+->name('logoutadd');
+Route::get('/login', [CustomerController::class,'login'])
+->name('clients.login');
+Route::post('/login', [CustomerController::class,'loginProcess'])
+->name('clients.login');
+Route::get('/logout',[CustomerController::class,'logout'])
 ->name('logout');

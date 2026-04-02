@@ -10,11 +10,9 @@
             <div class="grid grid-cols-10 gap-4">
                 <div class="col-span-4">
                     Name:<input class="mt-2 w-full" type="text" name="username" placeholder="Input username here..."><br>
-                     Password: <input type="text" name="password"><br>
                      Display Name: <input type="text" name="display_name"><br>
                       Email: <input type="text" name="email"><br>
                       Phone: <input type="text" name="phone"><br>
-                      Gender: <input type="radio" name="gender" value="M">Male <input type="radio" name="gender" value="F">Female <input type="radio" name="gender" value="O">Other<br>
                       Birthday: <input type="date" name="birthday" placeholder="can be null"><br>
                        Address: <input type="text" name="address" placeholder="can be null"><br>
                     <div class="flex gap-2 mt-4">
