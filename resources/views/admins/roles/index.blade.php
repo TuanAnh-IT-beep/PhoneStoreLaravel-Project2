@@ -1,4 +1,5 @@
 @extends("admins.layouts.master")
+@section('pageTitle', 'Roles')
 @section("main-content")
     <div class="w-full mb-4 flex items-center justify-between">
         <h1>Settings → Roles</h1>

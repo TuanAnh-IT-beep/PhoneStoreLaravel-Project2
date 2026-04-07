@@ -2,13 +2,13 @@
 <html lang="en">
 
 <head>
-    @include('admins.layouts.header')
     @include('admins.layouts.head')
     <link href="{{ asset('css/login.css') }}" rel="stylesheet">
-    <title>Login</title>
+    <title>Login - BMobileShop</title>
 </head>
 
 <body>
+    @include('admins.layouts.header')
     <div class="login_box grid grid-cols-2 mx-auto">
         <img src="/images/login/banner.png" alt="" class="image_side">
         <div class="login_side">
@@ -21,7 +21,8 @@
                 </div>
                 <div class="mt-3">
                     <label for="password">Password</label>
-                    <input type="password" placeholder="Enter password here.." name="password"class="w-full bg-white mt-1">
+                    <input type="password" placeholder="Enter password here.." name="password"
+                        class="w-full bg-white mt-1">
                 </div>
                 <button class="btn icon-only w-full mt-10 blue">Login</button>
             </form>

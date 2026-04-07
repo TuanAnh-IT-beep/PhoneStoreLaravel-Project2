@@ -1,1 +1,2 @@
-@include('admins.layouts.master')
+@extends('admins.layouts.master')
+@section('pageTitle', 'Dashboard')

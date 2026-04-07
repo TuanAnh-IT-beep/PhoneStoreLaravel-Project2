@@ -1,4 +1,5 @@
 @extends("admins.layouts.master")
+@section('pageTitle', 'Users - Edit {{ $user->username }}]')
 
 @section("main-content")
     <div class="w-full mb-4 flex items-center justify-between">

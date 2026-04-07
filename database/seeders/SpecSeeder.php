@@ -26,7 +26,6 @@ class SpecSeeder extends Seeder
             ["name" => "Material"],
             ["name" => "Color"],
             ["name" => "Size"],
-            ["name" => "Weight"],
         ];
 
         foreach ($specs as $spec) {

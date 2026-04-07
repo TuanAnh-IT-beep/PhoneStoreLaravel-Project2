@@ -1,4 +1,5 @@
 @extends("admins.layouts.master")
+@section('pageTitle', 'Customers')
 @section("main-content")
     <div class="w-full mb-4 flex items-center justify-between">
         <h1>Customers</h1>
@@ -10,6 +11,7 @@
                 <tr>
                     <th scope="col" class="px-6 py-3 font-medium">ID</th>
                     <th scope="col" class="px-6 py-3 font-medium long">Name</th>
+                    <th scope="col" class="px-6 py-3 font-medium">Gender</th>
                     <th scope="col" class="px-6 py-3 font-medium">Email</th>
                     <th scope="col" class="px-6 py-3 font-medium">Phone</th>
                     <th scope="col" class="px-6 py-3 font-medium">Actions</th>

@@ -1,4 +1,5 @@
 @extends("admins.layouts.master")
+@section('pageTitle', 'Specs - Edit {{ $spec->name }}')
 @section("main-content")
     <div class="w-full mb-4 flex items-center justify-between">
         <h1>Settings → Specs → {{ $spec->name }} → Edit</h1>
@@ -14,7 +15,7 @@
                         placeholder="Input name here..."><br>
                     <div class="flex gap-2 mt-4">
                         <button class="btn flex-1 icon-only">UPDATE</button>
-                        <a class="btn flex-1 icon-only negative" href="{{ route('specs.index') }}">CANCEL</a>
+                        <a class="btn flex-1 icon-only negative" href="{{ route('admins.settings.index') }}">CANCEL</a>
                     </div>
                 </div>
             </div>

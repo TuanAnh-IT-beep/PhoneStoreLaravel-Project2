@@ -1,4 +1,5 @@
 @extends("admins.layouts.master")
+@section('pageTitle', 'Products')
 
 @section("main-content")
     <div class="w-full flex mb-4 justify-between">

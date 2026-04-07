@@ -3,7 +3,7 @@
 
 <head>
     @include("admins.layouts.head")
-    <title>BMobileShop</title>
+    <title>@yield("pageTitle") - BMobileShop</title>
 </head>
 
 <body>
