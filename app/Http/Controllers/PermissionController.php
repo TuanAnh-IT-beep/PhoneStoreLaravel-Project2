@@ -37,9 +37,10 @@ class PermissionController
     public function store(StorePermissionRequest $request)
     {
         Permission::create([
-            'type' => $request->type
+            'name' => $request->name,
+            'description' => $request->description
         ]);
-        return Redirect::route('permissions.index');
+        return Redirect::route('admins.settings.index');
     }
 
     /**
@@ -55,12 +56,7 @@ class PermissionController
      */
     public function edit(Permission $permission)
     {
-        return view(
-            'permissions.edit',
-            [
-                'permission' => $permission
-            ]
-        );
+        return view('admins.permissions.edit', compact('permission'));
     }
 
     /**
@@ -69,9 +65,10 @@ class PermissionController
     public function update(UpdatePermissionRequest $request, Permission $permission)
     {
         $permission->update([
-            'type' => $request->type
+            'name' => $request->name,
+            'description' => $request->description
         ]);
-        return Redirect::route('permissions.index');
+        return Redirect::route('admins.settings.index');
     }
 
     /**
@@ -79,7 +76,8 @@ class PermissionController
      */
     public function destroy(Permission $permission)
     {
+        $permission->roles()->detach();
         $permission->delete();
-        return Redirect::route('permissions.index');
+        return Redirect::route('admins.settings.index');
     }
 }

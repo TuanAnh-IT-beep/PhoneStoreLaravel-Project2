@@ -2,7 +2,7 @@
 
 @section("main-content")
     <div class="w-full flex mb-4 justify-between">
-        <h1 class="">Products</h1>
+        <h1>Products</h1>
         <a class="btn" href="{{ route(name: 'products.create') }}"><i class="fa-solid fa-plus"></i>ADD NEW ITEM</a>
     </div>
     <div class="main-container">

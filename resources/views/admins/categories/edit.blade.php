@@ -2,7 +2,7 @@
 
 @section("main-content")
     <div class="w-full mb-4 flex items-center justify-between">
-        <h1>Categories → {{ $category->name }}</h1>
+        <h1>Categories → {{ $category->name }} → Edit</h1>
     </div>
     <div class="main-container">
         <form method="post" action="{{ route('categories.update', $category->id) }}">

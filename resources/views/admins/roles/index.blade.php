@@ -1,40 +1,43 @@
-<!doctype html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Document</title>
-</head>
-
-<body>
-    <h3>Role List</h3>
-    <a href="{{ route(name: 'roles.create') }}">Add a role</a>
-    <table border="1px" cellpadding="0" cellspacing="0" width="100%">
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th></th>
-        </tr>
-        @foreach ($roles as $role)
-            <tr>
-                <td>
-                    {{ $role->id }}
-                </td>
-                <td>
-                    {{ $role->name }}
-                </td>
-                <td>
-                    <a href="{{ route('roles.edit', $role->id) }}">Edit</a>
-                    <form method="post" action="{{ route('roles.delete', $role->id) }}">
-                        @csrf
-                        @method('DELETE')
-                        <button>Delete</button>
-                    </form>
-                </td>
-            </tr>
-        @endforeach
-    </table>
-</body>
-
-</html>
+@extends("admins.layouts.master")
+@section("main-content")
+    <div class="w-full mb-4 flex items-center justify-between">
+        <h1>Settings → Roles</h1>
+        <a class="btn" href="{{ route(name: 'roles.create') }}"><i class="fa-solid fa-plus"></i> ADD NEW ROLE</a>
+    </div>
+    <div class="main-container">
+        <table class="table-auto w-full text-left rtl:text-right text-body">
+            <thead>
+                <tr>
+                    <th scope="col" class="px-6 py-3 font-medium">ID</th>
+                    <th scope="col" class="px-6 py-3 font-medium long">Name</th>
+                    <th scope="col" class="px-6 py-3 font-medium">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (count(value: $roles) > 0)
+                    @foreach ($roles as $role)
+                        <tr scope="row" class="px-6 py-4 font-medium text-heading whitespace-nowrap">
+                            <th class="px-6 py-4">
+                                {{ $role->id }}
+                            </th>
+                            <td class="px-6 py-4" style="color: black"> {{ $role->name }}</td>
+                            <td class="px-6 py-4">
+                                <form method="post" action="{{ route('roles.destroy', $role->id) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <a class="btn edit icon-only" href="{{ route('roles.edit', $role->id) }}"><i
+                                            class="fa-solid fa-pencil"></i></a>
+                                    <button class="btn delete icon-only"><i class="fa-solid fa-trash"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td colspan="4" class="px-6 py-4 text-center">No role found.</td>
+                    </tr>
+                @endif
+            </tbody>
+        </table>
+    </div>
+@endsection

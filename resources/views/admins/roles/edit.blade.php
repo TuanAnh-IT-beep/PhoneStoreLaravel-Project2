@@ -1,19 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <h3>Update a role</h3>
-    <form method="post" action="{{route('roles.update', $role->id)}}">
-        @csrf
-        @method('PUT')
-        <input type="hidden" name="id" value="{{ $role->id }}" />
-        Name: <input type="text" name="name" value="{{ $role->name }}"><br>
-        <button>Update</button>
-    </form>
-</body>
-</html>
+@extends("admins.layouts.master")
+@section("main-content")
+    <div class="w-full mb-4 flex items-center justify-between">
+        <h1>Settings → Roles → {{ $role->name }} → Edit</h1>
+    </div>
+    <div class="main-container">
+        <form method="post" action="{{ route('roles.update', $role->id) }}">
+            @csrf
+            @method('PUT')
+            <div class="grid grid-cols-10 gap-4">
+                <div class="col-span-4">
+                    <label for="name">Name:</label><br>
+                    <input class="mt-2 w-full" type="text" name="name" value="{{ $role->name }}"
+                        placeholder="Input name here..."><br>
+
+                    <label class="mt-4 block" for="permissions">Permissions:</label>
+                    <div class="mt-2 grid grid-cols-2 gap-2">
+                        @foreach ($permissions as $permission)
+                            <div>
+                                <input type="checkbox" name="permissions[]" value="{{ $permission->id }}" id="perm_{{ $permission->id }}" 
+                                    {{ $role->permissions->contains($permission->id) ? 'checked' : '' }}>
+                                <label for="perm_{{ $permission->id }}">{{ $permission->name }}</label>
+                            </div>
+                        @endforeach
+                    </div>
+                    
+                    <div class="flex gap-2 mt-4">
+                        <button class="btn flex-1 icon-only">UPDATE</button>
+                        <a class="btn flex-1 icon-only negative" href="{{ route('admins.settings.index') }}">CANCEL</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+@endsection

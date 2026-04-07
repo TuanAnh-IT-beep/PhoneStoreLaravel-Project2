@@ -1,7 +1,7 @@
 @extends("admins.layouts.master")
 @section("main-content")
-<div class="w-full mb-4 flex items-center justify-between">
-        <h1>Customer List</h1>
+    <div class="w-full mb-4 flex items-center justify-between">
+        <h1>Customers</h1>
         <a class="btn" href="{{ route(name: 'customers.create') }}"><i class="fa-solid fa-plus"></i> ADD NEW CUSTOMER</a>
     </div>
     <div class="main-container">
@@ -17,13 +17,13 @@
                 </tr>
             </thead>
             <tbody>
-                @if (count($customers)>0)
+                @if (count($customers) > 0)
                     @foreach ($customers as $customer)
                         <tr scope="row" class="px-6 py-4 font-medium text-heading whitespace-nowrap">
                             <th class="px-6 py-4">
                                 {{ $customer->id }}
                             </th>
-                            <td class="px-6 py-4" style="color: black"> {{ $customer->name }}</td>
+                            <td class="px-6 py-4" style="color: black"> {{ $customer->username }}</td>
                             <td class="px-6 py-4" style="color: black"> {{ $customer->gender }}</td>
                             <td class="px-6 py-4" style="color: black"> {{ $customer->email }}</td>
                             <td class="px-6 py-4" style="color: black"> {{ $customer->phone }}</td>

@@ -11,6 +11,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductImageController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RolePermissionController;
+use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\SpecController;
 use App\Http\Controllers\SubproductController;
 use App\Http\Controllers\SubSpecController;
@@ -55,6 +56,8 @@ Route::get('/admins', function () {
 })->name('home')->middleware(CheckUserLogin::class);
 Route::get('/login', [UserController::class, 'login'])
     ->name('admins.users.login');
+Route::get('/settings', [SettingsController::class, 'index'])
+    ->name('admins.settings.index')->middleware(CheckUserLogin::class);
 Route::post('/login', [UserController::class, 'loginProcess'])
     ->name('admins.users.login');
 Route::get('/logout', [UserController::class, 'logout'])

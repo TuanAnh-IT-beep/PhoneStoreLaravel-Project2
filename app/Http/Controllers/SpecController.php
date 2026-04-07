@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Spec;
 use App\Http\Requests\StoreSpecRequest;
 use App\Http\Requests\UpdateSpecRequest;
+use App\Models\Spec;
 use Illuminate\Support\Facades\Redirect;
 
 class SpecController
@@ -15,12 +15,7 @@ class SpecController
     public function index()
     {
         $specs = Spec::all();
-        return view(
-            'specs.index',
-            [
-                'specs' => $specs
-            ]
-        );
+        return view("admins.specs.index", compact("specs"));
     }
 
     /**
@@ -28,7 +23,7 @@ class SpecController
      */
     public function create()
     {
-        return view('specs.create');
+        return view("admins.specs.create");
     }
 
     /**
@@ -37,9 +32,10 @@ class SpecController
     public function store(StoreSpecRequest $request)
     {
         Spec::create([
-            'name' => $request->name
+            'name' => $request->name,
         ]);
-        return Redirect::route('specs.index');
+
+        return Redirect::route('admins.settings.index');
     }
 
     /**
@@ -55,12 +51,7 @@ class SpecController
      */
     public function edit(Spec $spec)
     {
-        return view(
-            'specs.edit',
-            [
-                'spec' => $spec
-            ]
-        );
+        return view('admins.specs.edit', compact('spec'));
     }
 
     /**
@@ -69,9 +60,9 @@ class SpecController
     public function update(UpdateSpecRequest $request, Spec $spec)
     {
         $spec->update([
-            'name' => $request->name
+            'name' => $request->name,
         ]);
-        return Redirect::route('specs.index');
+        return Redirect::route('admins.settings.index');
     }
 
     /**
@@ -80,6 +71,6 @@ class SpecController
     public function destroy(Spec $spec)
     {
         $spec->delete();
-        return Redirect::route('specs.index');
+        return Redirect::route('admins.settings.index');
     }
 }

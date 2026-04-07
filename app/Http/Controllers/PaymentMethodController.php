@@ -15,12 +15,7 @@ class PaymentMethodController
     public function index()
     {
         $payment_methods = PaymentMethod::all();
-        return view(
-            'admins.payment_methods.index',
-            [
-                'payment_methods' => $payment_methods
-            ]
-        );
+        return view("admins.payment_methods.index", compact("payment_methods"));
     }
 
     /**
@@ -41,7 +36,7 @@ class PaymentMethodController
             'description' => $request->description,
             'icon' => $request->icon
         ]);
-        return Redirect::route('payment_methods.index');
+        return Redirect::route('admins.settings.index');
     }
 
     /**
@@ -57,12 +52,7 @@ class PaymentMethodController
      */
     public function edit(PaymentMethod $paymentMethod)
     {
-        return view(
-            'admins.payment_methods.edit',
-            [
-                'payment_method' => $paymentMethod
-            ]
-        );
+        return view('admins.payment_methods.edit', compact('paymentMethod'));
     }
 
     /**
@@ -75,7 +65,7 @@ class PaymentMethodController
             'description' => $request->description,
             'icon' => $request->icon
         ]);
-        return Redirect::route('payment_methods.index');
+        return Redirect::route('admins.settings.index');
     }
 
     /**
@@ -84,6 +74,6 @@ class PaymentMethodController
     public function destroy(PaymentMethod $paymentMethod)
     {
         $paymentMethod->delete();
-        return Redirect::route('payment_methods.index');
+        return Redirect::route('admins.settings.index');
     }
 }

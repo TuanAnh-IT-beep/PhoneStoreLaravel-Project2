@@ -1,8 +1,8 @@
-@extends("adminslayouts.master")
+@extends("admins.layouts.master")
 
 @section("main-content")
     <div class="w-full mb-4 flex items-center justify-between">
-        <h1>Users → Edit {{ $user->username }}</h1>
+        <h1>Users → {{ $user->username }} → Edit</h1>
     </div>
     <div class="main-container">
         <form method="post" action="{{ route('users.update', $user->id) }}">
@@ -10,15 +10,15 @@
             <div class="grid grid-cols-10 gap-4">
                 <div class="col-span-4">
                     <label for="name">Username:</label><br>
-                    <input class="mt-3 mb-2 w-full" type="text" name="username" placeholder="Input username here..." value="{{ $user->username }}"><br>
+                    <input class="my-3 w-full" type="text" name="username" placeholder="Input username here..." value="{{ $user->username }}"><br>
                     <label for="email">Email:</label><br>
-                    <input class="mt-3 mb-2 w-full" type="email" name="email" placeholder="Input email here..." value="{{ $user->email }}"><br>
+                    <input class="my-3 w-full" type="email" name="email" placeholder="Input email here..." value="{{ $user->email }}"><br>
                     <label for="full_name">Full name:</label><br>
-                    <input class="mt-3 mb-2 w-full" type="text" name="full_name" placeholder="Input full name here..." value="{{ $user->full_name }}"><br>
+                    <input class="my-3 w-full" type="text" name="full_name" placeholder="Input full name here..." value="{{ $user->full_name }}"><br>
                     <label for="phone">Phone:</label><br>
-                    <input class="mt-3 mb-2 w-full" type="tel" name="phone" placeholder="Input phone number here..." value="{{ $user->phone }}"><br>
+                    <input class="my-3 w-full" type="tel" name="phone" placeholder="Input phone number here..." value="{{ $user->phone }}"><br>
                     <label for="role_id">Role:</label><br>
-                    <select class="mt-3 mb-2 w-full" name="role_id">
+                    <select class="my-3 w-full" name="role_id">
                         @foreach($roles as $role)
                             <option value="{{ $role->id }}" {{ $user->role_id == $role->id ? 'selected' : '' }}>
                                 {{ $role->name }}

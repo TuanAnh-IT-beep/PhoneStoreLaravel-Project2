@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Role;
+use App\Models\Permission;
 use App\Http\Requests\StoreRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
 use Illuminate\Support\Facades\Redirect;
@@ -15,12 +16,7 @@ class RoleController
     public function index()
     {
         $roles = Role::all();
-        return view(
-            'roles.index',
-            [
-                'roles' => $roles
-            ]
-        );
+        return view("admins.roles.index", compact("roles"));
     }
 
     /**
@@ -28,7 +24,8 @@ class RoleController
      */
     public function create()
     {
-        return view('roles.create');
+        $permissions = Permission::all();
+        return view('admins.roles.create', compact('permissions'));
     }
 
     /**
@@ -36,10 +33,15 @@ class RoleController
      */
     public function store(StoreRoleRequest $request)
     {
-        Role::create([
+        $role = Role::create([
             'name' => $request->name
         ]);
-        return Redirect::route('roles.index');
+
+        if ($request->has('permissions')) {
+            $role->permissions()->sync($request->permissions);
+        }
+
+        return Redirect::route('admins.settings.index');
     }
 
     /**
@@ -55,12 +57,8 @@ class RoleController
      */
     public function edit(Role $role)
     {
-        return view(
-            'roles.edit',
-            [
-                'role' => $role
-            ]
-        );
+        $permissions = Permission::all();
+        return view('admins.roles.edit', compact('role', 'permissions'));
     }
 
     /**
@@ -71,7 +69,14 @@ class RoleController
         $role->update([
             'name' => $request->name
         ]);
-        return Redirect::route('roles.index');
+
+        if ($request->has('permissions')) {
+            $role->permissions()->sync($request->permissions);
+        } else {
+            $role->permissions()->detach();
+        }
+
+        return Redirect::route('admins.settings.index');
     }
 
     /**
@@ -79,7 +84,8 @@ class RoleController
      */
     public function destroy(Role $role)
     {
+        $role->permissions()->detach();
         $role->delete();
-        return Redirect::route('roles.index');
+        return Redirect::route('admins.settings.index');
     }
 }

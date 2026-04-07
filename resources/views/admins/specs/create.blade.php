@@ -1,16 +1,21 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Document</title>
-</head>
-<body>
-    <h3>Add a spec</h3>
-    <form method="post" action="{{ route('specs.store') }}">
-        @csrf
-        Name: <input type="text" name="name"><br>
-        <button>Add</button>
-    </form>
-</body>
-</html>
+@extends("admins.layouts.master")
+@section("main-content")
+    <div class="w-full mb-4 flex items-center justify-between">
+        <h1>Settings → Specs → New</h1>
+    </div>
+    <div class="main-container">
+        <form method="post" action="{{ route('specs.store') }}">
+            @csrf
+            <div class="grid grid-cols-10 gap-4">
+                <div class="col-span-4">
+                    <label for="name">Name:</label><br>
+                    <input class="mt-2 w-full" type="text" name="name" placeholder="Input name here..."><br>
+                    <div class="flex gap-2 mt-4">
+                        <button class="btn flex-1 icon-only">ADD</button>
+                        <a class="btn flex-1 icon-only negative" href="{{ route('specs.index') }}">CANCEL</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+@endsection

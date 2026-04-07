@@ -27,8 +27,8 @@
         <img class="icon" src="/images/main/sidebar/customer.png" />
         <p class="text">Customers</p>
     </a>
-    <a class="item {{ request()->routeIs('payment_methods.*') ? 'active' : '' }}" href="{{ route(name:'payment_methods.index') }}">
-        <img class="icon" src="/images/main/sidebar/payment.png" />
-        <p class="text">Payment<br>Methods</p>
+    <a class="item {{ (request()->routeIs('admins.settings.*') || request()->routeIs('permissions.*') || request()->routeIs('roles.*') || request()->routeIs('payment_methods.*')) ? 'active' : '' }}" href="{{ route(name:'admins.settings.index') }}">
+        <img class="icon" src="/images/main/sidebar/settings.png" />
+        <p class="text">Settings</p>
     </a>
 </div>

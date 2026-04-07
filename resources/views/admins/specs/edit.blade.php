@@ -1,22 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-
-<body>
-    <h3>Update a spec</h3>
-    <form method="post" action="{{ route('specs.update', $spec->id) }}">
-        @csrf
-        @method('PUT')
-        <input type="hidden" name="id" value="{{ $spec->id }}" />
-        Name: <input type="text" name="name" value="{{ $spec->name }}"><br>
-        <button>Update</button>
-    </form>
-</body>
-
-</html>
+@extends("admins.layouts.master")
+@section("main-content")
+    <div class="w-full mb-4 flex items-center justify-between">
+        <h1>Settings → Specs → {{ $spec->name }} → Edit</h1>
+    </div>
+    <div class="main-container">
+        <form method="post" action="{{ route('specs.update', $spec->id) }}">
+            @csrf
+            @method('PUT')
+            <div class="grid grid-cols-10 gap-4">
+                <div class="col-span-4">
+                    <label for="name">Name:</label><br>
+                    <input class="mt-2 w-full" type="text" name="name" value="{{ $spec->name }}"
+                        placeholder="Input name here..."><br>
+                    <div class="flex gap-2 mt-4">
+                        <button class="btn flex-1 icon-only">UPDATE</button>
+                        <a class="btn flex-1 icon-only negative" href="{{ route('specs.index') }}">CANCEL</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+@endsection

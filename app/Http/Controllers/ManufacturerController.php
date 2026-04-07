@@ -15,12 +15,7 @@ class ManufacturerController
     public function index()
     {
         $manufacturers = Manufacturer::all();
-        return view(
-            'admins.manufacturers.index',
-            [
-                'manufacturers' => $manufacturers
-            ]
-        );
+        return view("admins.manufacturers.index", compact("manufacturers"));
     }
 
     /**
@@ -57,12 +52,7 @@ class ManufacturerController
      */
     public function edit(Manufacturer $manufacturer)
     {
-        return view(
-            'admins.manufacturers.edit',
-            [
-                'manufacturer' => $manufacturer
-            ]
-        );
+        return view('admins.manufacturers.edit', compact('manufacturer'));
     }
 
     /**

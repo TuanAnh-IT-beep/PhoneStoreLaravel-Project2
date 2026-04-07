@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
-use App\Models\Subproduct;
-use App\Models\Spec;
-use App\Models\SubSpec;
 use App\Http\Requests\StoreSubproductRequest;
 use App\Http\Requests\UpdateSubproductRequest;
+use App\Models\Product;
+use App\Models\Spec;
+use App\Models\Subproduct;
+use App\Models\SubSpec;
 
 class SubproductController
 {
@@ -35,12 +35,11 @@ class SubproductController
     public function store(StoreSubproductRequest $request, Product $product)
     {
         $subproduct = Subproduct::create($request->all());
-
         if ($request->has('specs')) {
             $addedSpecs = [];
             foreach ($request->specs as $specData) {
-                if (!empty($specData['spec_id']) && !empty($specData['value'])) {
-                    if (!in_array($specData['spec_id'], $addedSpecs)) {
+                if (! empty($specData['spec_id']) && ! empty($specData['value'])) {
+                    if (! in_array($specData['spec_id'], $addedSpecs)) {
                         SubSpec::create([
                             'subproduct_id' => $subproduct->id,
                             'spec_id' => $specData['spec_id'],
@@ -84,18 +83,15 @@ class SubproductController
 
         if ($request->has('specs')) {
             foreach ($request->input('specs', []) as $specData) {
-                if (empty($specData['spec_id']) || !isset($specData['value']) || $specData['value'] === '') {
+                if (empty($specData['spec_id']) || ! isset($specData['value']) || $specData['value'] === '') {
                     continue;
                 }
-
                 if (in_array($specData['spec_id'], $processedSpecIds)) {
                     continue;
                 }
-
                 $exists = SubSpec::where('subproduct_id', $subproduct->id)
                     ->where('spec_id', $specData['spec_id'])
                     ->exists();
-
                 if ($exists) {
                     SubSpec::where('subproduct_id', $subproduct->id)
                         ->where('spec_id', $specData['spec_id'])
@@ -107,7 +103,6 @@ class SubproductController
                         'value' => $specData['value'],
                     ]);
                 }
-
                 $processedSpecIds[] = $specData['spec_id'];
             }
         }
@@ -124,6 +119,7 @@ class SubproductController
     public function destroy(Product $product, Subproduct $subproduct)
     {
         $subproduct->delete();
+
         return redirect()->route('subproducts.index', $subproduct->product_id);
     }
 }

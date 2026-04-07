@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 
 class CustomerController
@@ -15,12 +16,7 @@ class CustomerController
     public function index()
     {
         $customers = Customer::all();
-        return view(
-            'admins.customers.index',
-            [
-                'customers' => $customers
-            ]
-        );
+        return view("admins.customers.index", compact("customers"));
     }
 
     /**
@@ -38,7 +34,7 @@ class CustomerController
     {
         Customer::create([
             'username' => $request->username,
-            'password_hash' => $request->password_hash,
+            'password' => Hash::make($request->password),
             'icon' => $request->icon,
             'display_name' => $request->display_name,
             'email' => $request->email,
