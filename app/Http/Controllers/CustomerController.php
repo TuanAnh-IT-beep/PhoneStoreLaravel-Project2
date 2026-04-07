@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 
@@ -78,7 +80,6 @@ class CustomerController
             'display_name' => $request->display_name,
             'email' => $request->email,
             'phone' => $request->phone,
-            'gender' => $request->gender,
             'birthday' => $request->birthday,
             'address' => $request->address
         ]);
@@ -92,5 +93,25 @@ class CustomerController
     {
         $customer->delete();
         return redirect()->route('customers.index')->with('success', 'Customer deleted successfully.');
+    }
+    public function login()
+    {
+        return view('clients.login');
+    }
+
+    public function loginProcess(Request $request)
+    {
+        if (Auth::guard('client')->attempt($request->only('email', 'password'))) {
+            $request->session()->regenerate();
+            return redirect()->route('home')->with('success', 'Login successful.');
+        } else {
+            return Redirect::back();
+        }
+    }
+    public function logout(Request $request){
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/login');
     }
 }

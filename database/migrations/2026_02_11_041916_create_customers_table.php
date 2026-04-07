@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string("display_name");
             $table->string("email")->unique();
             $table->string("phone");
-            $table->set("gender", ["M", "F", "O"]);
             $table->date("birthday")->nullable();
             $table->string("address")->nullable();
             $table->timestamps();

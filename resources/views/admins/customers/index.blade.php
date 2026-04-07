@@ -10,7 +10,6 @@
                 <tr>
                     <th scope="col" class="px-6 py-3 font-medium">ID</th>
                     <th scope="col" class="px-6 py-3 font-medium long">Name</th>
-                    <th scope="col" class="px-6 py-3 font-medium">Gender</th>
                     <th scope="col" class="px-6 py-3 font-medium">Email</th>
                     <th scope="col" class="px-6 py-3 font-medium">Phone</th>
                     <th scope="col" class="px-6 py-3 font-medium">Actions</th>
@@ -23,7 +22,7 @@
                             <th class="px-6 py-4">
                                 {{ $customer->id }}
                             </th>
-                            <td class="px-6 py-4" style="color: black"> {{ $customer->username }}</td>
+                            <td class="px-6 py-4" style="color: black"> {{ $customer->display_name }}</td>
                             <td class="px-6 py-4" style="color: black"> {{ $customer->gender }}</td>
                             <td class="px-6 py-4" style="color: black"> {{ $customer->email }}</td>
                             <td class="px-6 py-4" style="color: black"> {{ $customer->phone }}</td>

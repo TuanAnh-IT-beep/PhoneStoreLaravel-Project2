@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Symfony\Component\HttpFoundation\Response;
 
-class CheckUserLogin
+class CheckClientLogin
 {
     /**
      * Handle an incoming request.
@@ -17,10 +17,9 @@ class CheckUserLogin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::guard('admin')->user()) {
+        if (Auth::guard('client')->user()) {
             return $next($request);
         }
-        return Redirect::route('admins.users.login');
-
+        return Redirect::route('clients.login');
     }
 }

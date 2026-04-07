@@ -4,13 +4,13 @@
             <a href="{{ route('home') }}">
                 <img src="{{ asset('images/main/Logo.png') }}" alt="Logo" class="logo-image">
             </a>
-            <a class="logo-text" href="{{ route('home') }}"><span style="color: #AFF5BF;">BMo</span>bileShop</a>
+            <a class="logo-text" href="{{ route('admin') }}"><span style="color: #AFF5BF;">BMo</span>bileShop</a>
         </div>
         @if (Route::has('admins.users.login') && Route::currentRouteName() !== 'admins.users.login')
             <div class="flex items-center" style="gap: 20px">
                 @auth('admin')
                     <p class="login-link">{{ Auth::guard('admin')->user()->username }}</p>
-                    <a href="{{ route('logout') }}" class="login-link">
+                    <a href="{{ route('logoutadd') }}" class="login-link">
                         <span>Logout</span>
                     </a>
                 @endauth
