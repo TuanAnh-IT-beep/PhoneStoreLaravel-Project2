@@ -105,7 +105,7 @@ class UserController
     {
         if (Auth::guard('admin')->attempt($request->only('email', 'password'))) {
             $request->session()->regenerate();
-            return redirect()->route('admin')->with('success', 'Login successful.');
+            return redirect()->route('home')->with('success', 'Login successful.');
         } else {
             return Redirect::back();
         }
@@ -114,6 +114,6 @@ class UserController
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/loginadd');
+        return redirect('/')->with('success','');
     }
 }

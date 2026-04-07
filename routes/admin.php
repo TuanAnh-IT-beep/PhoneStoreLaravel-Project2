@@ -19,50 +19,46 @@ use App\Http\Controllers\UserController;
 use App\Http\Middleware\CheckUserLogin;
 use Illuminate\Support\Facades\Route;
 
-Route::resource('permissions', PermissionController::class)->middleware(CheckUserLogin::class);
-Route::resource('roles', RoleController::class)->middleware(CheckUserLogin::class);
-Route::resource('customers', CustomerController::class)->middleware(CheckUserLogin::class);
-Route::resource('payment_methods', PaymentMethodController::class)->middleware(CheckUserLogin::class);
-Route::resource('categories', CategoryController::class)->middleware(CheckUserLogin::class);
-Route::resource('manufacturers', ManufacturerController::class)->middleware(CheckUserLogin::class);
-Route::resource('specs', SpecController::class)->middleware(CheckUserLogin::class);
-Route::resource('orders', OrderController::class)->middleware(CheckUserLogin::class);
-Route::resource('orderdetails', OrderDetailController::class)->middleware(CheckUserLogin::class);
-Route::resource('products', ProductController::class)->middleware(CheckUserLogin::class);
-Route::controller(SubproductController::class)
-    ->name('subproducts.')
-    ->prefix('/products/{product}/subproducts')
-    ->group(function () {
-        Route::get('/', 'index')
-            ->name('index');
-        Route::get('/create', 'create')
-            ->name('create');
-        Route::post('/create', 'store')
-            ->name('store');
-        Route::get('/{subproduct}/edit', 'edit')
-            ->name('edit');
-        Route::put('/{subproduct}/edit', 'update')
-            ->name('update');
-        Route::delete('/{subproduct}', 'destroy')
-            ->name('destroy');
-    });
-Route::resource('productimagies', ProductImageController::class)->middleware(CheckUserLogin::class);
-Route::resource('rolepermissions', RolePermissionController::class)->middleware(CheckUserLogin::class);
-Route::resource('products', ProductController::class)->middleware(CheckUserLogin::class);
-Route::resource('subspecs', SubSpecController::class)->middleware(CheckUserLogin::class);
-Route::resource('users', UserController::class)->middleware(CheckUserLogin::class);
-Route::get('/admins', function () {
-    return view('admins.index');
-})->name('home')->middleware(CheckUserLogin::class);
-Route::get('/login', [UserController::class, 'login'])
-    ->name('admins.users.login');
-Route::get('/settings', [SettingsController::class, 'index'])
-    ->name('admins.settings.index')->middleware(CheckUserLogin::class);
-Route::post('/login', [UserController::class, 'loginProcess'])
-    ->name('admins.users.login');
-Route::get('/logout', [UserController::class, 'logout'])
-    ->name('logout');
-
 Route::get('/', function () {
     return redirect('/admins');
+});
+
+Route::prefix('admins')->group(function () {
+    Route::get('/login', [UserController::class, 'login'])->name('admins.users.login');
+    Route::post('/login', [UserController::class, 'loginProcess'])->name('admins.users.login');
+    Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+});
+Route::middleware(CheckUserLogin::class)->prefix('admins')->group(function () {
+    Route::get('/', function () {
+        return view('admins.index');
+    })->name('home');
+
+    Route::get('/settings', [SettingsController::class, 'index'])->name('admins.settings.index');
+
+    Route::resource('categories', CategoryController::class);
+    Route::resource('customers', CustomerController::class);
+    Route::resource('manufacturers', ManufacturerController::class);
+    Route::resource('orders', OrderController::class);
+    Route::resource('orderdetails', OrderDetailController::class);
+    Route::resource('payment_methods', PaymentMethodController::class);
+    Route::resource('permissions', PermissionController::class);
+    Route::resource('products', ProductController::class);
+    Route::resource('productimagies', ProductImageController::class);
+    Route::resource('roles', RoleController::class);
+    Route::resource('rolepermissions', RolePermissionController::class);
+    Route::resource('specs', SpecController::class);
+    Route::resource('subspecs', SubSpecController::class);
+    Route::resource('users', UserController::class);
+
+    Route::controller(SubproductController::class)
+        ->name('subproducts.')
+        ->prefix('products/{product}/subproducts')
+        ->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/create', 'create')->name('create');
+            Route::post('/create', 'store')->name('store');
+            Route::get('/{subproduct}/edit', 'edit')->name('edit');
+            Route::put('/{subproduct}/edit', 'update')->name('update');
+            Route::delete('/{subproduct}', 'destroy')->name('destroy');
+        });
 });
