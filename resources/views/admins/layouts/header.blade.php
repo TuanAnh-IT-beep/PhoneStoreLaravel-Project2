@@ -10,7 +10,7 @@
             <div class="flex items-center" style="gap: 20px">
                 @auth('admin')
                     <p class="login-link">{{ Auth::guard('admin')->user()->username }}</p>
-                    <a href="{{ route('logout') }}" class="login-link">
+                    <a href="{{ route('logoutadd') }}" class="login-link">
                         <span>Logout</span>
                     </a>
                 @endauth

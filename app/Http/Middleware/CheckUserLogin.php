@@ -21,6 +21,6 @@ class CheckUserLogin
             return $next($request);
         }
         return Redirect::route('admins.users.login');
-        
+
     }
 }

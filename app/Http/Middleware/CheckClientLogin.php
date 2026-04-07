@@ -20,7 +20,6 @@ class CheckClientLogin
         if (Auth::guard('client')->user()) {
             return $next($request);
         }
-
         return Redirect::route('clients.login');
     }
 }

@@ -41,7 +41,7 @@ class CustomerController
     {
         Customer::create([
             'username' => $request->username,
-            'password' => "123456",
+            'password' => Hash::make("123456"),
             'icon' => $request->icon,
             'display_name' => $request->display_name,
             'email' => $request->email,
@@ -85,7 +85,6 @@ class CustomerController
             'display_name' => $request->display_name,
             'email' => $request->email,
             'phone' => $request->phone,
-            'gender' => $request->gender,
             'birthday' => $request->birthday,
             'address' => $request->address
         ]);
