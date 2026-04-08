@@ -20,7 +20,6 @@
                             </div>
                         @endforeach
                     </div>
-
                     <div class="flex gap-2 mt-4">
                         <button class="btn flex-1 icon-only">ADD</button>
                         <a class="btn flex-1 icon-only negative" href="{{ route('admins.settings.index') }}">CANCEL</a>
