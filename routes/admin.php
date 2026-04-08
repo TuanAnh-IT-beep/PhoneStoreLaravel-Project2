@@ -43,7 +43,7 @@ Route::middleware(CheckUserLogin::class)->prefix('admin')->group(function () {
     Route::resource('payment_methods', PaymentMethodController::class);
     Route::resource('permissions', PermissionController::class);
     Route::resource('products', ProductController::class);
-    Route::resource('productimagies', ProductImageController::class);
+    Route::resource('product_images', ProductImageController::class);
     Route::resource('roles', RoleController::class);
     Route::resource('rolepermissions', RolePermissionController::class);
     Route::resource('specs', SpecController::class);
