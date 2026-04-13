@@ -31,7 +31,7 @@ Route::prefix('admin')->group(function () {
 Route::middleware(CheckUserLogin::class)->prefix('admin')->group(function () {
     Route::get('/', function () {
         return view('admins.index');
-    })->name('home');
+    })->name('admins.home');
 
     Route::get('/settings', [SettingsController::class, 'index'])->name('admins.settings.index');
 
