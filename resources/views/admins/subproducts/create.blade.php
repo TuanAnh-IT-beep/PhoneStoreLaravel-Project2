@@ -33,8 +33,10 @@
             <div id="specs_container" class="grid grid-cols-2 gap-4">
             </div>
             <div class="flex gap-2 mt-4">
-                <button class="btn flex-1 icon-only">ADD</button>
-                <a class="btn flex-1 icon-only negative" href="{{ route('subproducts.index', $product) }}">CANCEL</a>
+                <div class="flex gap-2">
+                    <button class="btn flex-1 icon-only">ADD</button>
+                    <a class="btn flex-1 icon-only negative" href="{{ route('subproducts.index', $product) }}">CANCEL</a>
+                </div>
             </div>
         </div>
     </form>
@@ -56,20 +58,20 @@
         }
 
         document.getElementById('new_spec').addEventListener('click', function (e) {
-            e.preventDefault();
+            e.preventDefault(); // (chặn reload page sau khi ấn nứt thêm spec)
             const container = document.getElementById('specs_container');
             const html = `
-                        <div class="col-span-1 flex gap-2 mb-2 items-center">
-                            <select name="specs[${specIndex}][spec_id]" class="w-full" required>
-                                <option value="" disabled selected>Select a Spec</option>
-                                @foreach($specs as $spec)
-                                    <option value="{{ $spec->id }}">{{ $spec->name }}</option>
-                                @endforeach
-                            </select>
-                            <input type="text" name="specs[${specIndex}][value]" class="w-full" placeholder="Value" required>
-                            <button type="button" class="btn delete icon-only" onclick="this.parentElement.remove(); updateSpecOptions();"><i class="fa-solid fa-trash"></i></button>
-                        </div>
-                    `;
+                                <div class="col-span-1 flex gap-2 mb-2 items-center">
+                                    <select name="specs[${specIndex}][spec_id]" class="w-full" required>
+                                        <option value="" disabled selected>Select a Spec</option>
+                                        @foreach($specs as $spec)
+                                            <option value="{{ $spec->id }}">{{ $spec->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <input type="text" name="specs[${specIndex}][value]" class="w-full" placeholder="Value" required>
+                                    <button type="button" class="btn delete icon-only" onclick="this.parentElement.remove(); updateSpecOptions();"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                            `;
             container.insertAdjacentHTML('beforeend', html);
             specIndex++;
             updateSpecOptions();
