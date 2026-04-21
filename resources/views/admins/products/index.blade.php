@@ -11,6 +11,7 @@
             <thead class="border-default">
                 <tr>
                     <th scope="col" class="px-6 py-3 font-medium">ID</th>
+                    <th scope="col" class="px-6 py-3 font-medium">Thumbnail</th>
                     <th scope="col" class="px-6 py-3 font-medium">Name</th>
                     <th scope="col" class="px-6 py-3 font-medium">Manufacturer</th>
                     <th scope="col" class="px-6 py-3 font-medium">Category</th>
@@ -24,6 +25,13 @@
                             <th class="px-6 py-4">
                                 {{ $pro->id }}
                             </th>
+                            <td class="px-6 py-4">
+                                @if($pro->thumbnail_path)
+                                    <img src="{{ asset('storage/' . $pro->thumbnail_path) }}" alt="{{ $pro->name }}" class="w-16 h-16 object-cover border rounded">
+                                @else
+                                    <span class="text-gray-400 text-sm">No image</span>
+                                @endif
+                            </td>
                             <td class="px-6 py-4" style="color: black">
                                 {{ $pro->name }}
                             </td>
