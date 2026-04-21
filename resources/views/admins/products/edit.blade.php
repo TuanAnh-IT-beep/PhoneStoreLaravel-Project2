@@ -118,7 +118,7 @@
                                 }
                             }
                             Array.from(files).forEach((file, index) => {
-                                const radioValue = 'new_' + index;
+                                const radioValue = 'new_' + index; // sử dụng để phân biệt giữa ảnh sẽ upload và ảnh đã upload trước đó, phục vụ cho hàm xóa ảnh
                                 const isChecked = (currentSelection === radioValue);
                                 const reader = new FileReader();
                                 reader.onload = function(e) {

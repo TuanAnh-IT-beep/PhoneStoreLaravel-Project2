@@ -23,6 +23,32 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-span-6">
+                    <label>Thumbnail:</label><br>
+                    <div class="flex flex-wrap gap-4 mt-3 mb-4" id="thumbnail_selector">
+                        @foreach($product->images as $image)
+                            <div class="text-center relative inline-block">
+                                <img src="{{ asset('storage/' . $image->path) }}" class="w-24 h-24 object-cover border-2 rounded {{ $loop->first ? 'border-blue-500' : 'border-gray-300' }}">
+                                <br>
+                                <input type="radio" name="thumbnail_path" value="{{ $image->path }}" {{ $loop->first ? 'checked' : '' }} onchange="updateThumbnailSelection(this)">
+                                <label class="text-sm">Thumbnail</label>
+                            </div>
+                        @endforeach
+                    </div>
+                    <script>
+                        function updateThumbnailSelection(radio) {
+                            document.querySelectorAll('#thumbnail_selector img').forEach(img => {
+                                img.classList.remove('border-blue-500');
+                                img.classList.add('border-gray-300');
+                            });
+                            const img = radio.previousElementSibling.previousElementSibling;
+                            if (img) {
+                                img.classList.remove('border-gray-300');
+                                img.classList.add('border-blue-500');
+                            }
+                        }
+                    </script>
+                </div>
             </div>
         </div>
         <div class="main-container mt-3">
