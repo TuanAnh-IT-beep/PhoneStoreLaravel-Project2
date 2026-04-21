@@ -15,10 +15,10 @@ class Product extends Model
     public function category(){
         return $this->belongsTo(Category::class);
     }
-    public function Manufacturer(){
+    public function manufacturer(){
         return $this->belongsTo(Manufacturer::class);
     }
-    public function Imagies(){
+    public function images(){
         return $this->hasMany(ProductImage::class,'product_id','id');
     }
     public function subproducts(){

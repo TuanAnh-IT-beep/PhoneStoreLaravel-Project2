@@ -26,6 +26,7 @@ class SubproductController
     public function create(Product $product)
     {
         $specs = Spec::all();
+        $product->load('images');
         return view('admins.subproducts.create', compact('product', 'specs'));
     }
 
@@ -68,6 +69,7 @@ class SubproductController
     public function edit(Product $product, Subproduct $subproduct)
     {
         $specs = Spec::all();
+        $product->load('images');
         $subproduct->load('sub_specs');
         return view('admins.subproducts.edit', compact('product', 'subproduct', 'specs'));
     }
@@ -77,7 +79,13 @@ class SubproductController
      */
     public function update(UpdateSubproductRequest $request, Product $product, Subproduct $subproduct)
     {
-        $subproduct->update($request->validated());
+        $data = $request->validated();
+        
+        if ($request->has('thumbnail_path')) {
+            $data['thumbnail_path'] = $request->thumbnail_path;
+        }
+        
+        $subproduct->update($data);
 
         $processedSpecIds = []; // To avoid duplicate spec_id from request
 
