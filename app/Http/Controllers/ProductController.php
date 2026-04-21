@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Manufacturer;
 use App\Models\Product;
+use App\Models\ProductImage;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController
 {
@@ -34,7 +36,30 @@ class ProductController
      */
     public function store(StoreProductRequest $request)
     {
-        $product = Product::create($request->all());
+        $data = $request->all();
+        $product = Product::create($data);
+
+        $newImagePaths = [];
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('product_images', 'public');
+                ProductImage::create([
+                    'product_id' => $product->id,
+                    'path' => $path
+                ]);
+                $newImagePaths[] = $path;
+            }
+        }
+
+        if ($request->has('thumbnail_image') && str_starts_with($request->thumbnail_image, 'new_')) {
+            $index = (int) str_replace('new_', '', $request->thumbnail_image);
+            if (isset($newImagePaths[$index])) {
+                $product->update(['thumbnail_path' => $newImagePaths[$index]]);
+            }
+        } elseif (count($newImagePaths) > 0) {
+            $product->update(['thumbnail_path' => $newImagePaths[0]]);
+        }
+
         return redirect()->route("products.index")->with("success","Product created successfully.");
     }
 
@@ -53,6 +78,7 @@ class ProductController
     {
         $categories = Category::all();
         $manufacturers = Manufacturer::all();
+        $product->load('images');
         return view("admins.products.edit", compact("product", "categories", "manufacturers"));
     }
 
@@ -61,7 +87,66 @@ class ProductController
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        $product->update($request->all());
+        $data = $request->all();
+        $deletedPaths = [];
+
+        // kiểm tra có ảnh nào bị đánh dấu xóa
+        if ($request->has('deleted_images')) {
+            $imagesToDelete = ProductImage::whereIn('id', $request->deleted_images)->where('product_id', $product->id)->get();
+            foreach ($imagesToDelete as $img) {
+                $deletedPaths[] = $img->path;
+                // xóa ảnh khỏi kho lưu trữ
+                if (Storage::disk('public')->exists($img->path)) {
+                    Storage::disk('public')->delete($img->path);
+                }
+                // xóa khỏi cơ sở dữ liệu
+                $img->delete();
+            }
+        }
+
+        $newImagePaths = [];
+        // kiểm tra có upload ảnh mới hay không
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('product_images', 'public');
+                ProductImage::create([
+                    'product_id' => $product->id,
+                    'path' => $path
+                ]);
+                $newImagePaths[] = $path;
+            }
+        }
+
+        // kiểm tra có cập nhật thumbnail ảnh
+        if ($request->has('thumbnail_image')) {
+            $thumbnailVal = $request->input('thumbnail_image');
+            if (str_starts_with($thumbnailVal, 'new_')) {
+                $index = (int) str_replace('new_', '', $thumbnailVal);
+                if (isset($newImagePaths[$index])) {
+                    $data['thumbnail_path'] = $newImagePaths[$index];
+                }
+            } else {
+                if (in_array($thumbnailVal, $deletedPaths)) {
+                    $data['thumbnail_path'] = null;
+                } else {
+                    $data['thumbnail_path'] = $thumbnailVal;
+                }
+            }
+        }
+
+        // trường hợp không có ảnh được chọn làm thumbnail, chọn ảnh đầu tiên làm thumbnail hoặc để null nếu không có ảnh
+        if (!isset($data['thumbnail_path']) || $data['thumbnail_path'] === null) {
+            $firstImage = $product->images()->first();
+            if ($firstImage) {
+                $data['thumbnail_path'] = $firstImage->path;
+            } elseif (count($newImagePaths) > 0) {
+                $data['thumbnail_path'] = $newImagePaths[0];
+            } else {
+                $data['thumbnail_path'] = null;
+            }
+        }
+
+        $product->update($data);
         return redirect()->route("products.index")->with("success","Product updated successfully.");
     }
 
