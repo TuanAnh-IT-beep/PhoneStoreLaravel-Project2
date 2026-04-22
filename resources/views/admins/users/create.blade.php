@@ -6,10 +6,10 @@
         <h1>Users → New</h1>
     </div>
     <div class="main-container">
-        <form method="post" action="{{ route('users.store') }}">
+        <form method="post" action="{{ route('users.store') }}" enctype="multipart/form-data">
             @csrf
             <div class="grid grid-cols-10 gap-4">
-                <div class="col-span-4">
+                <div class="col-span-5">
                     <label for="name">Username:</label><br>
                     <input class="my-3 w-full" type="text" name="username" placeholder="Input username here..."><br>
                     <label for="email">Email:</label><br>
@@ -31,7 +31,24 @@
                         <a class="btn icon-only negative flex-1" href="{{ route('users.index') }}">CANCEL</a>
                     </div>
                 </div>
-                <div class="col-span-6">
+                <div class="col-span-5">
+                    <label for="icon">Icon:</label><br>
+                    <input class="my-3" type="file" name="icon" accept="image/*" onchange="previewIcon(event)"><br>
+                    <img id="icon_preview" class="w-32 h-32 object-cover border rounded mb-3 hidden" src="#"
+                        alt="Icon Preview"><br>
+                    <script>
+                        function previewIcon(event) {
+                            const output = document.getElementById('icon_preview');
+                            if (event.target.files && event.target.files[0]) {
+                                const reader = new FileReader();
+                                reader.onload = function (e) {
+                                    output.src = e.target.result;
+                                    output.classList.remove('hidden');
+                                };
+                                reader.readAsDataURL(event.target.files[0]);
+                            }
+                        }
+                    </script>
                 </div>
             </div>
         </form>

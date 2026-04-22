@@ -9,6 +9,10 @@
         @if (Route::has('admins.users.login') && Route::currentRouteName() !== 'admins.users.login')
             <div class="flex items-center" style="gap: 20px">
                 @auth('admin')
+                    @if(Auth::guard('admin')->user()->icon)
+                        <img src="{{ asset('storage/' . Auth::guard('admin')->user()->icon) }}"
+                            class="w-8 h-8 object-cover rounded-full">
+                    @endif  
                     <p class="login-link">{{ Auth::guard('admin')->user()->username }}</p>
                     <a href="{{ route('logout') }}" class="login-link">
                         <span>Logout</span>
