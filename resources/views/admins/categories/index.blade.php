@@ -27,7 +27,7 @@
                                 {{ $category->description }}
                             </td>
                             <td class="px-6 py-4">
-                                <form method="post" action="{{ route('categories.destroy', $category->id) }}">
+                                <form method="post" action="{{ route('categories.destroy', $category->id) }}" onsubmit="return confirm('Are you sure you want to delete this category?');">
                                     @csrf
                                     @method('DELETE')
                                     <a class="btn edit icon-only" href="{{ route('categories.edit', $category->id) }}"><i

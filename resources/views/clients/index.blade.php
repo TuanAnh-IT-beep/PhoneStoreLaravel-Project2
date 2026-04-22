@@ -3,22 +3,33 @@
 @section('main-content')
 <body class="bg-[#48a892] p-4 md:p-8 font-sans">
     <div class="max-w-6xl mx-auto space-y-10">
-        <div class="relative bg-black rounded-3xl overflow-hidden shadow-2xl">
-            <div class="flex flex-col items-center justify-center py-10 text-white text-center">
-                <p class="text-orange-400 font-bold mb-2"> iPhone 17</p>
-                <h1 class="text-7xl font-black tracking-tighter mb-4 italic">PRO</h1>
-                <div class="w-64 h-40 bg-gradient-to-t from-orange-800 to-orange-400 rounded-t-full mb-6">
-
+        <!-- Carousel Section -->
+        <div id="carouselExampleIndicators" class="carousel slide rounded-[2.5rem] overflow-hidden shadow-lg" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="https://via.placeholder.com/1200x400?text=Promotion+1" class="d-block w-full" alt="Promotion 1">
                 </div>
-                <div class="bg-zinc-900 w-full py-4 space-y-2">
-                    <p class="text-xs text-gray-400">Pre-order now with 0% installment up to 24 months.<br>Available on October 17, 2025 at 12:01 a.m.</p>
-                    <button class="mt-2 border border-white px-6 py-1 rounded-full text-sm hover:bg-white hover:text-black transition">Pre-order</button>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/1200x400?text=Promotion+2" class="d-block w-full" alt="Promotion 2">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/1200x400?text=Promotion+3" class="d-block w-full" alt="Promotion 3">
                 </div>
             </div>
-
-            <button class="absolute left-4 top-1/2 -translate-y-1/2 bg-pink-600 p-3 rounded-full text-white">❮</button>
-            <button class="absolute right-4 top-1/2 -translate-y-1/2 bg-pink-600 p-3 rounded-full text-white">❯</button>
-        </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>      
 
         <!-- 2. Top Smartphones & Tablets Section -->
         <div class="bg-[#b4f4d4] rounded-[2.5rem] p-8 shadow-lg">
