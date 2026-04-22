@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string("display_name");
             $table->string("email")->unique();
             $table->string("phone");
+            $table->string("gender")->nullable();
             $table->date("birthday")->nullable();
             $table->string("address")->nullable();
             $table->timestamps();
