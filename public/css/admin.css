@@ -21,7 +21,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: #44B097;
-    color: #FFFFFF;
+    color: #000000;
     font-family: 'Inter', sans-serif;
 }
 
@@ -121,6 +121,14 @@ h3 {
     font-size: 1.5rem;
     font-weight: 700;
     word-wrap: break-word;
+}
+
+.inter {
+    font-family: "Inter", sans-serif;
+}
+
+.rubik {
+    font-family: "Rubik", sans-serif;
 }
 
 p {

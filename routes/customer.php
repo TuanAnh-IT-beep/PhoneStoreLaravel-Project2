@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Middleware\CheckClientLogin;
 use App\Http\Controllers\CustomerController;

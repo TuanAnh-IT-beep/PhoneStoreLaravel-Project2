@@ -61,7 +61,7 @@
                     <!-- 2. Product by category -->
                     <div class="bg-[#b4f4d4] rounded-[2.5rem] p-8 shadow-lg">
                         <div class="flex justify-between items-center mb-6">
-                            <h2 class="text-2xl font-black italic uppercase tracking-tight">FEATURED</h2>
+                            <h2 class="text-2xl font-black uppercase tracking-tight">FEATURED</h2>
                             <a href="{{ route('all') }}" class="text-xs font-bold text-gray-600 underline">View All
                                 »</a>
                         </div>
@@ -109,7 +109,7 @@
                         <!-- Product Slider Container -->
                         <div class="relative bg-white rounded-3xl p-6 shadow-inner">
                             <div class="flex justify-between items-center mb-4">
-                                <h3 class="text-2xl font-black italic uppercase tracking-tight">NEWEST</h3>
+                                <h3 class="text-2xl font-black uppercase tracking-tight">NEWEST</h3>
                             </div>
                             <div class="flex overflow-x-auto gap-4 py-2">
                                 @foreach ($products->where('featured', 1) as $pro)
