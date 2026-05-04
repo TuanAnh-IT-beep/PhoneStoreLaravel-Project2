@@ -13,6 +13,8 @@
                     <label for="name">Name:</label><br>
                     <input class="mt-2 w-full" type="text" name="name" placeholder="Input name here..."
                         value="{{ $category->name }}"><br>
+                    <label for="featured">Featured:</label><br>
+                    <input class="my-3" type="checkbox" name="featured" value="1" {{ $category->featured ? 'checked' : '' }}>
                     <div class="flex gap-2 mt-4">
                         <button class="btn icon-only flex-1">UPDATE</button>
                         <a class="btn icon-only negative flex-1" href="{{ route('categories.index') }}">CANCEL</a>

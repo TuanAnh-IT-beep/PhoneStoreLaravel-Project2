@@ -11,6 +11,8 @@
                 <div class="col-span-4">
                     <label for="name">Name:</label><br>
                     <input class="mt-2 w-full" type="text" name="name" placeholder="Input name here..."><br>
+                    <label for="featured">Featured:</label><br>
+                    <input class="my-3" type="checkbox" name="featured" value="1"><br>
                     <div class="flex gap-2 mt-4">
                         <button class="btn flex-1 icon-only">ADD</button>
                         <a class="btn flex-1 icon-only negative" href="{{ route('categories.index') }}">CANCEL</a>

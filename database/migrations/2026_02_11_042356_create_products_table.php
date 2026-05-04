@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string("thumbnail_path")->nullable();
             $table->foreignId('category_id')->constrained();
             $table->foreignId('manufacturer_id')->constrained();
+            $table->integer("featured")->default(0);
             $table->date("released_date");
             $table->timestamps();
         });

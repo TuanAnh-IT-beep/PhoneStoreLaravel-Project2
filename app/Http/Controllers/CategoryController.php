@@ -34,6 +34,7 @@ class CategoryController
         Category::create([
             'name' => $request->name,
             'description' => $request->description,
+            'featured' => $request->has('featured') ? 1 : 0,
             'image' => $request->image
         ]);
         return redirect()->route('categories.index')->with('success', 'Category created successfully.');
@@ -41,7 +42,7 @@ class CategoryController
 
     /**
      * Display the specified resource.
-     */
+     */ 
     public function show(Category $category)
     {
         //
@@ -68,6 +69,7 @@ class CategoryController
         $category->update([
             'name' => $request->name,
             'description' => $request->description,
+            'featured' => $request->has('featured') ? 1 : 0,
             'image' => $request->image
         ]);
         return redirect()->route('categories.index')->with('success', 'Category updated successfully.');

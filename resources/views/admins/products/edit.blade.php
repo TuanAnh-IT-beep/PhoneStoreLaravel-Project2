@@ -12,6 +12,8 @@
                 <div class="col-span-4">
                     <label for="name">Name:</label><br>
                     <input class="my-3 w-full" type="text" name="name" placeholder="Input product name here..." value="{{ $product->name }}"><br>
+                    <label for="featured">Featured:</label><br>
+                    <input class="my-3" type="checkbox" name="featured" value="1" {{ $product->featured ? 'checked' : '' }}><br>
                     <div class="flex gap-5">
                         <div class="w-full">
                             <label for="category_id">Category:</label><br>

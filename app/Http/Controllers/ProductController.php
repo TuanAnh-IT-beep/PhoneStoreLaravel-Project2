@@ -37,6 +37,7 @@ class ProductController
     public function store(StoreProductRequest $request)
     {
         $data = $request->all();
+        $data['feature'] = $request->has('feature') ? 1 : 0;
         $product = Product::create($data);
 
         $newImagePaths = [];
@@ -88,6 +89,7 @@ class ProductController
     public function update(UpdateProductRequest $request, Product $product)
     {
         $data = $request->all();
+        $data['feature'] = $request->has('feature') ? 1 : 0;
         $deletedPaths = [];
 
         // kiểm tra có ảnh nào bị đánh dấu xóa

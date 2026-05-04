@@ -4,6 +4,7 @@
 <head>
     @include("admins.layouts.head")
     <title>BMobileShop</title>
+     @livewireStyles
 </head>
 <body>
     <div class="flex flex-col min-h-screen">
@@ -15,6 +16,7 @@
         </div>
     </div>
     @include('clients.layouts.footer')
+    @livewireScripts
 </body>
 
 </html>
