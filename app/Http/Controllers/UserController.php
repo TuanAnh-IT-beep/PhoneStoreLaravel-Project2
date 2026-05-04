@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
 
 class UserController
@@ -38,13 +39,19 @@ class UserController
      */
     public function store(StoreUserRequest $request)
     {
+        $iconPath = null;
+        if ($request->hasFile('icon')) {
+            $iconPath = $request->file('icon')->store('icons', 'public');
+        }
+
         $user = User::create([
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'full_name' => $request->full_name,
             'phone' => $request->phone,
-            'role_id' => $request->role_id
+            'role_id' => $request->role_id,
+            'icon' => $iconPath
         ]);
 
         return redirect()->route('users.index')->with('success', 'User created successfully.');
@@ -75,6 +82,13 @@ class UserController
     {
         $validated = $request->validated();
 
+        if ($request->hasFile('icon')) {
+            if ($user->icon) {
+                Storage::disk('public')->delete($user->icon);
+            }
+            $validated['icon'] = $request->file('icon')->store('icons', 'public');
+        }
+
         if (! empty($validated['password'])) {
             $validated['password'] = Hash::make($validated['password']);
         } else {
@@ -91,6 +105,10 @@ class UserController
      */
     public function destroy(User $user)
     {
+        if ($user->icon) {
+            Storage::disk('public')->delete($user->icon);
+        }
+
         $user->delete();
 
         return redirect()->route('users.index')->with('success', 'User deleted successfully.');

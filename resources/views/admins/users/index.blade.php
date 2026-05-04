@@ -10,6 +10,7 @@
             <thead class="border-default">
                 <tr>
                     <th scope="col" class="px-6 py-3 font-medium">ID</th>
+                    <th scope="col" class="px-6 py-3 font-medium">Icon</th>
                     <th scope="col" class="px-6 py-3 font-medium">Full Name</th>
                     <th scope="col" class="px-6 py-3 font-medium">Email</th>
                     <th scope="col" class="px-6 py-3 font-medium">Phone</th>
@@ -21,6 +22,13 @@
                 @foreach ($users as $user)
                     <tr class="border-default">
                         <th class="px-6 py-4">{{ $user->id }}</td>
+                        <td class="px-6 py-4">
+                            @if($user->icon)
+                                <img src="{{ asset('storage/' . $user->icon) }}" alt="{{ $user->username }}" class="w-12 h-12 object-cover border rounded-full">
+                            @else
+                                <span class="text-gray-400 text-sm">No image</span>
+                            @endif
+                        </td>
                         <td class="px-6 py-4" style="color: black">{{ $user->full_name }}</td>
                         <td class="px-6 py-4">{{ $user->email }}</td>
                         <td class="px-6 py-4">{{ $user->phone }}</td>
