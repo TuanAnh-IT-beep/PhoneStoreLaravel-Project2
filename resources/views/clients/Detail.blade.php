@@ -1,6 +1,6 @@
 @extends('clients.layouts.master')
 @section('main-content')
-    <div class="max-w-7xl mx-auto p-4 md:p-8 bg-white font-sans text-gray-900">
+    <div class="max-w-7xl mx-auto p-4 md:p-8 bg-white font-sans text-gray-900" style="border-radius:30px;" >
         <div class="grid grid-cols-12 gap-10">
             <div class="col-span-7">
                 <div class="sticky top-4">
@@ -52,7 +52,7 @@
                     <div class="border border-gray-200 rounded-2xl overflow-hidden">
                         <table class="w-full text-sm">
                             <tbody>
-                                @foreach ($specs as $spec)
+                                @foreach ($subproduct->subspecs as $spec)
                                     <tr class="border-b last:border-none">
                                         <td class="p-4 font-semibold bg-gray-50 text-gray-600 w-1/3">
                                             {{ $spec->spec?->name ?? 'N/A' }}

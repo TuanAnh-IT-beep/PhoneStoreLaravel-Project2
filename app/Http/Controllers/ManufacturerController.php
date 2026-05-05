@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Manufacturer;
 use App\Http\Requests\StoreManufacturerRequest;
 use App\Http\Requests\UpdateManufacturerRequest;
-use Illuminate\Support\Facades\Redirect;
+use App\Models\Manufacturer;
+use Illuminate\Support\Facades\Storage;
 
 class ManufacturerController
 {
@@ -15,7 +15,8 @@ class ManufacturerController
     public function index()
     {
         $manufacturers = Manufacturer::all();
-        return view("admins.manufacturers.index", compact("manufacturers"));
+
+        return view('admins.manufacturers.index', compact('manufacturers'));
     }
 
     /**
@@ -31,11 +32,16 @@ class ManufacturerController
      */
     public function store(StoreManufacturerRequest $request)
     {
+        $iconPath = null;
+        if ($request->hasFile('icon')) {
+            $iconPath = $request->file('icon')->store('manufacturers_icons', 'public');
+        }
         Manufacturer::create([
             'name' => $request->name,
             'description' => $request->description,
-            'icon' => $request->icon
+            'icon' => $iconPath,
         ]);
+
         return redirect()->route('manufacturers.index')->with('success', 'Manufacturer created successfully.');
     }
 
@@ -60,11 +66,19 @@ class ManufacturerController
      */
     public function update(UpdateManufacturerRequest $request, Manufacturer $manufacturer)
     {
+        $iconPath = $manufacturer->icon;
+        if ($request->hasFile('icon')) {
+            if ($manufacturer->icon) {
+                Storage::disk('public')->delete($manufacturer->icon);
+            }
+            $iconPath = $request->file('icon')->store('manufacturers_icons', 'public');
+        }
         $manufacturer->update([
             'name' => $request->name,
             'description' => $request->description,
-            'icon' => $request->icon
+            'icon' => $iconPath,
         ]);
+
         return redirect()->route('manufacturers.index')->with('success', 'Manufacturer updated successfully.');
     }
 
@@ -74,6 +88,7 @@ class ManufacturerController
     public function destroy(Manufacturer $manufacturer)
     {
         $manufacturer->delete();
+
         return redirect()->route('manufacturers.index')->with('success', 'Manufacturer deleted successfully.');
     }
 }

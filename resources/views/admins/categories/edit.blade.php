@@ -1,5 +1,5 @@
 @extends("admins.layouts.master")
-@section('pageTitle', 'Categories - Edit {{ $category->name }}')
+@section('pageTitle', 'Categories - Edit')
 @section("main-content")
     <div class="w-full mb-4 flex items-center justify-between">
         <h1>Categories → {{ $category->name }} → Edit</h1>
@@ -29,7 +29,7 @@
                         </div>
                         <div>
                             <label for="featured">Featured:</label>
-                            <input class="my-3 mx-3" type="checkbox" name="featured" value="1" {{ $category->featured ? 'checked' : '' }}><br>
+                            <input class="my-3 mx-3" type="checkbox" name="featured" {{ $category->featured ? 'checked' : '' }}><br>
                         </div>
                     </div>
                     <div class="flex justify-center">
