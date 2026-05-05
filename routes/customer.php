@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use \App\Http\Middleware\CheckClientLogin;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\HomeController;
+Route::get('/', function () {
+    return redirect('/home');
+});
 
 Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware(CheckClientLogin::class);
 Route::get('/login', [CustomerController::class,'login'])
