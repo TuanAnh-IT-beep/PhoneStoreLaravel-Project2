@@ -41,7 +41,7 @@ class UserController
     {
         $iconPath = null;
         if ($request->hasFile('icon')) {
-            $iconPath = $request->file('icon')->store('icons', 'public');
+            $iconPath = $request->file('icon')->store('users_avatars', 'public');
         }
 
         $user = User::create([
@@ -86,7 +86,7 @@ class UserController
             if ($user->icon) {
                 Storage::disk('public')->delete($user->icon);
             }
-            $validated['icon'] = $request->file('icon')->store('icons', 'public');
+            $validated['icon'] = $request->file('icon')->store('users_avatars', 'public');
         }
 
         if (! empty($validated['password'])) {
@@ -108,9 +108,7 @@ class UserController
         if ($user->icon) {
             Storage::disk('public')->delete($user->icon);
         }
-
         $user->delete();
-
         return redirect()->route('users.index')->with('success', 'User deleted successfully.');
     }
 
