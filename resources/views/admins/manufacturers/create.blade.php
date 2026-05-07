@@ -5,7 +5,7 @@
         <h1>Manufacturers → New</h1>
     </div>
     <div class="main-container">
-        <form method="post" action="{{ route('manufacturers.store') }}">
+        <form method="post" action="{{ route('manufacturers.store') }}" enctype="multipart/form-data">
             @csrf
             <div class="grid grid-cols-10 gap-4">
                 <div class="col-span-4">
@@ -20,6 +20,29 @@
                     <label for="description">Description:</label><br>
                     <textarea class="mt-2 w-full" name="description" placeholder="Input description here..."
                         rows="10"></textarea><br>
+                    <div class="flex items-center justify-between mt-2">
+                        <div>
+                            <label for="icon">Icon:</label>
+                            <input class="my-3 mx-3" type="file" name="icon" accept="image/*" onchange="previewIcon(event)">
+                        </div>
+                    </div>
+                    <div class="flex justify-center">
+                        <img id="icon_preview" class="w-64 h-64 object-cover border rounded mb-3 hidden" src="#"
+                            alt="Icon Preview">
+                    </div>
+                    <script>
+                        function previewIcon(event) {
+                            const output = document.getElementById('icon_preview');
+                            if (event.target.files && event.target.files[0]) {
+                                const reader = new FileReader();
+                                reader.onload = function (e) {
+                                    output.src = e.target.result;
+                                    output.classList.remove('hidden');
+                                };
+                                reader.readAsDataURL(event.target.files[0]);
+                            }
+                        }
+                    </script>
                 </div>
             </div>
         </form>

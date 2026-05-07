@@ -5,9 +5,9 @@
                 <img src="{{ asset('images/main/Logo.png') }}" alt="Logo" class="logo-image">
             </a>
             <a class="logo-text" href="{{ route('home') }}"><span style="color: #AFF5BF;">BMo</span>bileShop</a>
-            <div class="max-w-md w-full">
+            {{-- <div class="max-w-md w-full">
             @include('clients.layouts.searchbar')
-            </div>
+            </div> --}}
         </div>
         @if (Route::has('clients.login') && Route::currentRouteName() !== 'clients.login')
             <div class="flex items-center" style="gap: 20px">

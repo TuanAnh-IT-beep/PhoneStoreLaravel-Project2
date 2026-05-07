@@ -4,14 +4,14 @@
     <!-- Carousel wrapper -->
     <div class="relative h-56 overflow-hidden rounded-base md:h-96" style="border-radius:30px;">
         <!-- Item 1 -->
-        <div class=" hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="{{ asset('storage/product_images/2lMwRAhlEmnEhV376fyE26p18w3lBUJ8xGOmMKEC.jpg') }}"
-                class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+        <div class=" hidden duration-700 ease-in-out" style="border-radius:30px;" data-carousel-item>
+            <img src="https://img.freepik.com/free-psd/smartphone-camera-control-social-media-banner-design-template_47987-25416.jpg?semt=ais_hybrid&w=740&q=80"
+                class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" style="border-radius:30px;" alt="...">
         </div>
         <!-- Item 2 -->
-        <div class=" hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="{{ asset('storage/product_images/EPeBlU8QhzSJw2wVDs0jqE4J6y7jmJn9rHxD45x0.png') }}"
-                class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+        <div class=" hidden duration-700 ease-in-out" style="border-radius:30px;" data-carousel-item>
+            <img src="https://scontent.fhan18-1.fna.fbcdn.net/v/t39.30808-6/674781288_1078863334494652_81833877916710996_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=2a1932&_nc_ohc=f3V-jRNXwYMQ7kNvwFIDNgM&_nc_oc=AdpUtWgMNjXk3Q7rkS-QqPyc8THlsm5DTq9ZvlXuprx4H0rmt9pHQNQhAo9l0tmrL80&_nc_zt=23&_nc_ht=scontent.fhan18-1.fna&_nc_gid=__KbTrFmKtEo15QVqOhbHA&_nc_ss=7b289&oh=00_Af7sc1330JOQST6iqT8Ii3V796ZVC035U9cdPBmei6I39Q&oe=69FF5687"
+                class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" style="border-radius:30px;" alt="...">
         </div>
     </div>
     <!-- Slider indicators -->
@@ -61,7 +61,7 @@
                     <!-- 2. Product by category -->
                     <div class="bg-[#b4f4d4] rounded-[2.5rem] p-8 shadow-lg">
                         <div class="flex justify-between items-center mb-6">
-                            <h2 class="text-2xl font-black italic uppercase tracking-tight">FEATURED</h2>
+                            <h2 class="text-2xl font-black uppercase tracking-tight">FEATURED</h2>
                             <a href="{{ route('all') }}" class="text-xs font-bold text-gray-600 underline">View All
                                 »</a>
                         </div>
@@ -70,31 +70,33 @@
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
                             <!-- Promo Banner -->
                             @foreach ($products->where('featured', 1) as $pro)
-                            
+
                                 <div
                                     class="md:col-span-1 bg-gradient-to-r from-gray-200 to-blue-200 rounded-2xl p-6 flex relative overflow-hidden h-40 items-center">
 
                                     <div>
                                         <h3 class="text-lg font-bold leading-tight">{{ $pro->name }}</h3>
                                         <a href="/{{ $pro->id }}/viewbyid">
-                                        <button class="mt-4 bg-black text-white text-[10px] px-4 py-2 rounded-md">SHOP
-                                            NOW</button></a>
+                                            <button class="mt-4 bg-black text-white text-[10px] px-4 py-2 rounded-md">SHOP
+                                                NOW</button></a>
                                     </div>
                                     <img style="margin-left: 60px;" src="{{ asset('storage/' . $pro->thumbnail_path) }}"
                                         alt="{{ $pro->name }}"
                                         class=" relative z-10 w-30 h-30 object-cover rounded-md mt-2">
-                                    <div
-                                        class="absolute right-0 bottom-0 w-1/2 h-full bg-blue-300 opacity-50 skew-x-12">
+                                    <div class="absolute right-0 bottom-0 w-1/2 h-full bg-blue-300 opacity-50 skew-x-12">
                                     </div>
 
                                 </div>
-                                
+
                             @endforeach
                             <div class="md:col-span-2 grid grid-cols-3 gap-3">
                                 @foreach ($categories->where('featured', 1) as $cate)
                                     <a href="/{{ $cate->id }}/view">
                                         <div class="bg-white p-3 rounded-xl flex items-center gap-3 shadow-sm">
-                                            <div class="w-10 h-10 bg-gray-100 rounded"></div>
+                                            <div class="w-10 h-10 bg-gray-100 rounded">
+                                                <img src="{{ asset('storage/' . $cate->icon) }}"
+                                                    alt="{{ $cate->name }}" class="w-full h-full object-cover rounded">
+                                            </div>
                                             <div>
                                                 <p class="text-xs font-bold">{{ $cate->name }}</p>
                                                 <p class="text-[10px] text-gray-400">{{ $cate->products->count() }}
@@ -109,22 +111,21 @@
                         <!-- Product Slider Container -->
                         <div class="relative bg-white rounded-3xl p-6 shadow-inner">
                             <div class="flex justify-between items-center mb-4">
-                                <h3 class="text-2xl font-black italic uppercase tracking-tight">NEWEST</h3>
+                                <h3 class="text-2xl font-black uppercase tracking-tight">NEWEST</h3>
                             </div>
                             <div class="flex overflow-x-auto gap-4 py-2">
                                 @foreach ($products->where('featured', 1) as $pro)
                                     @if ($subproducts->where('product_id', $pro->id)->first())
-                                    <a href="/{{ $pro->id }}/viewbyid">
-                                        <div class="min-w-[150px] bg-gray-100 rounded-xl p-4 flex-shrink-0">
-                                            <img src="{{ asset('storage/' . $pro->thumbnail_path) }}"
-                                                alt="{{ $pro->name }}"
-                                                class="w-full h-24 object-cover rounded-md mb-2">
-                                            <h4 style="color:black"class="text-sm font-bold">{{ $pro->name }}</h4>
-                                            <p class="text-xs text-gray-500 mt-1">
-                                                {{ number_format($subproducts->where('product_id', $pro->id)->first()->price, 2) }}
-                                            </p>
-                                        </div>
-                                    </a>
+                                        <a href="{{ route('detail', [$pro->id, $subproducts->where('product_id', $pro->id)->first()->id])}}">
+                                            <div class="min-w-[150px] bg-gray-100 rounded-xl p-4 flex-shrink-0">
+                                                <img src="{{ asset('storage/' . $pro->thumbnail_path) }}" alt="{{ $pro->name }}"
+                                                    class="w-full h-24 object-cover rounded-md mb-2">
+                                                <h4 style="color:black" class="text-sm font-bold">{{ $pro->name }}</h4>
+                                                <p class="text-3xl font-extrabold text-red-600" mt-1">
+                                                    {{ number_format($subproducts->where('product_id', $pro->id)->first()->price, 0, ',','.') }}đ
+                                                </p>
+                                            </div>
+                                        </a>
                                     @endif
                                 @endforeach
                             </div>
@@ -132,38 +133,43 @@
 
                         <!-- 3. Recently Viewed Section -->
                         {{-- <div class="bg-[#b4f4d4] rounded-[2.5rem] p-8 shadow-lg">
-                <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-2xl font-black italic uppercase tracking-tight">Your Recently Viewed</h2>
-                    <a href="#" class="text-xs font-bold text-gray-600 underline">View All »</a>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <!-- Item -->
-                    <div class="bg-white p-4 rounded-2xl flex items-center gap-4 shadow-sm relative">
-                        <span class="absolute top-2 left-2 bg-black text-white text-[7px] px-1 rounded">NEW</span>
-                        <div class="w-16 h-16 bg-gray-200 rounded"></div>
-                        <div>
-                            <h4 class="text-[10px] font-bold">Xionia Band 9 Sport Water Resistance Watch</h4>
-                            <p class="text-sm font-bold mt-1">$579.00</p>
-                        </div>
-                    </div>
-                    <div class="bg-white p-4 rounded-2xl flex items-center gap-4 shadow-sm">
-                        <div class="w-16 h-16 bg-gray-200 rounded"></div>
-                        <div>
-                            <h4 class="text-[10px] font-bold">ePad Pro Tablet 2023 12.9 inch, 512GB</h4>
-                            <p class="text-sm font-bold mt-1">$979.00 - $1,259.00</p>
-                        </div>
-                    </div>
-                    <div class="bg-white p-4 rounded-2xl flex items-center gap-4 shadow-sm relative">
-                        <span class="absolute top-2 left-2 bg-green-500 text-white text-[7px] px-1 rounded">SAVE</span>
-                        <div class="w-16 h-16 bg-gray-200 rounded"></div>
-                        <div>
-                            <h4 class="text-[10px] font-bold">SROK Smart Phone 128GB, Oled Retina</h4>
-                            <p class="text-red-600 font-bold mt-1 text-sm">$579.00 <span
-                                    class="text-gray-400 line-through text-[8px] font-normal">$779.00</span></p>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
+                            <div class="flex justify-between items-center mb-6">
+                                <h2 class="text-2xl font-black italic uppercase tracking-tight">Your Recently Viewed
+                                </h2>
+                                <a href="#" class="text-xs font-bold text-gray-600 underline">View All »</a>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <!-- Item -->
+                                <div class="bg-white p-4 rounded-2xl flex items-center gap-4 shadow-sm relative">
+                                    <span
+                                        class="absolute top-2 left-2 bg-black text-white text-[7px] px-1 rounded">NEW</span>
+                                    <div class="w-16 h-16 bg-gray-200 rounded"></div>
+                                    <div>
+                                        <h4 class="text-[10px] font-bold">Xionia Band 9 Sport Water Resistance Watch
+                                        </h4>
+                                        <p class="text-sm font-bold mt-1">$579.00</p>
+                                    </div>
+                                </div>
+                                <div class="bg-white p-4 rounded-2xl flex items-center gap-4 shadow-sm">
+                                    <div class="w-16 h-16 bg-gray-200 rounded"></div>
+                                    <div>
+                                        <h4 class="text-[10px] font-bold">ePad Pro Tablet 2023 12.9 inch, 512GB</h4>
+                                        <p class="text-sm font-bold mt-1">$979.00 - $1,259.00</p>
+                                    </div>
+                                </div>
+                                <div class="bg-white p-4 rounded-2xl flex items-center gap-4 shadow-sm relative">
+                                    <span
+                                        class="absolute top-2 left-2 bg-green-500 text-white text-[7px] px-1 rounded">SAVE</span>
+                                    <div class="w-16 h-16 bg-gray-200 rounded"></div>
+                                    <div>
+                                        <h4 class="text-[10px] font-bold">SROK Smart Phone 128GB, Oled Retina</h4>
+                                        <p class="text-red-600 font-bold mt-1 text-sm">$579.00 <span
+                                                class="text-gray-400 line-through text-[8px] font-normal">$779.00</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> --}}
 
                     </div>
             </body>

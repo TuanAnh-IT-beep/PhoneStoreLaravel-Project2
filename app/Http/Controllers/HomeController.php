@@ -31,7 +31,7 @@ class HomeController
         $product_byID=Product::FindOrFail($id);
         return view('clients.ViewAll',compact('product_byID'));
     }
-    public function detail($subid,$proid){
+    public function detail($proid, $subid){
         $product=Product::FindOrFail($proid);
         $subproduct=Subproduct::FindOrFail($subid);
         $subproducts=$product->subproducts;

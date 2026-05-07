@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
-use Illuminate\Support\Facades\Redirect;
+use App\Models\Category;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController
 {
@@ -15,7 +15,8 @@ class CategoryController
     public function index()
     {
         $categories = Category::all();
-        return view('admins.categories.index',compact('categories'));
+
+        return view('admins.categories.index', compact('categories'));
     }
 
     /**
@@ -31,18 +32,23 @@ class CategoryController
      */
     public function store(StoreCategoryRequest $request)
     {
+        $iconPath = null;
+        if ($request->hasFile('icon')) {
+            $iconPath = $request->file('icon')->store('categories_icons', 'public');
+        }
         Category::create([
             'name' => $request->name,
             'description' => $request->description,
             'featured' => $request->has('featured') ? 1 : 0,
-            'image' => $request->image
+            'icon' => $iconPath,
         ]);
+
         return redirect()->route('categories.index')->with('success', 'Category created successfully.');
     }
 
     /**
      * Display the specified resource.
-     */ 
+     */
     public function show(Category $category)
     {
         //
@@ -53,12 +59,7 @@ class CategoryController
      */
     public function edit(Category $category)
     {
-        return view(
-            'admins.categories.edit',
-            [
-                'category' => $category
-            ]
-        );
+        return view('admins.categories.edit', compact('category'));
     }
 
     /**
@@ -66,12 +67,20 @@ class CategoryController
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
+        $iconPath = $category->icon;
+        if ($request->hasFile('icon')) {
+            if ($category->icon) {
+                Storage::disk('public')->delete($category->icon);
+            }
+            $iconPath = $request->file('icon')->store('categories_icons', 'public');
+        }
         $category->update([
             'name' => $request->name,
             'description' => $request->description,
             'featured' => $request->has('featured') ? 1 : 0,
-            'image' => $request->image
+            'icon' => $iconPath,
         ]);
+
         return redirect()->route('categories.index')->with('success', 'Category updated successfully.');
     }
 
@@ -81,6 +90,7 @@ class CategoryController
     public function destroy(Category $category)
     {
         $category->delete();
+
         return redirect()->route('categories.index')->with('success', 'Category deleted successfully.');
     }
 }
