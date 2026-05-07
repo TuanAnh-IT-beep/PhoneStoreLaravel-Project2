@@ -16,3 +16,4 @@ Route::get('/all',[HomeController::class,'showAll'])->name('all')->middleware(Ch
 Route::get('/{id}/view',[HomeController::class,'showByCategory'])->name('view')->middleware(CheckClientLogin::class);
 Route::get('/{id}/viewbyid', [HomeController::class,'showById'])->name('viewbyid')->middleware(CheckClientLogin::class);
 Route::get('/{proid}/{subid}/details', [HomeController::class, 'detail'])->name('detail')->middleware(CheckClientLogin::class);
+Route::get('/{name}/search', [HomeController::class, 'search'])->name('search')->middleware(CheckClientLogin::class);
