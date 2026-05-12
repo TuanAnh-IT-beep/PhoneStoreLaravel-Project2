@@ -33,7 +33,7 @@ class SubproductController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreSubproductRequest $request, Product $product)
+    public function store(StoreSubproductRequest $request)
     {
         $subproduct = Subproduct::create($request->all());
         if ($request->has('specs')) {
@@ -77,7 +77,7 @@ class SubproductController
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSubproductRequest $request, Product $product, Subproduct $subproduct)
+    public function update(UpdateSubproductRequest $request, Subproduct $subproduct)
     {
         $data = $request->validated();
         
