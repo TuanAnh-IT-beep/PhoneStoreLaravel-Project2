@@ -38,9 +38,5 @@ class HomeController
         $specs=Subspec::with('subproduct')->get();
         return view('clients.Detail',compact('subproduct','subproducts','specs'));
     }
-    public function search($search){
-        $search_products=Subproduct::where('name','like','%'.$search.'%')->with('product')->get();
-        return view('clients.ViewAll',compact('search_products'));
-    }
 
 }
