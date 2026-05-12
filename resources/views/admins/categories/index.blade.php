@@ -5,55 +5,5 @@
         <h1>Categories</h1>
         <a class="btn" href="{{ route(name: 'categories.create') }}"><i class="fa-solid fa-plus"></i> ADD NEW ITEM</a>
     </div>
-    <div class="main-container">
-        <table class="table-auto w-full text-left rtl:text-right text-body">
-            <thead class="border-default">
-                <tr>
-                    <th scope="col" class="px-6 py-3 font-medium">ID</th>
-                    <th scope="col" class="px-6 py-3 font-medium">Icon</th>
-                    <th scope="col" class="px-6 py-3 font-medium">Name</th>
-                    <th scope="col" class="px-6 py-3 font-medium long">Description</th>
-                    <th scope="col" class="px-6 py-3 font-medium">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (count($categories) > 0)
-                    @foreach ($categories as $category)
-                        <tr scope="row" class="px-6 py-4 font-medium text-heading whitespace-nowrap">
-                            <th class="px-6 py-4">
-                                {{ $category->id }}
-                            </th>
-                            <td class="px-6 py-4">
-                                @if($category->icon)
-                                    <img src="{{ asset('storage/' . $category->icon) }}" alt="{{ $category->name }}"
-                                        class="w-12 h-12 object-cover border rounded-full">
-                                @else
-                                    <span class="text-gray-400 text-sm">No image</span>
-                                @endif
-                            </td>
-                            <td class="px-6 py-4" style="color: black"> {{ $category->name }} </td>
-                            <td class="px-6 py-4">
-                                {{ $category->description }}
-                            </td>
-                            <td class="px-6 py-4">
-                                <form method="post" action="{{ route('categories.destroy', $category->id) }}"
-                                    onsubmit="return confirm('Are you sure you want to delete this category?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <a class="btn edit icon-only" href="{{ route('categories.edit', $category->id) }}"><i
-                                            class="fa-solid fa-pencil"></i></a>
-                                    <button class="btn delete icon-only"><i class="fa-solid fa-trash"></i></button>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
-                @else
-                    <tr>
-                        <td colspan="4" class="px-6 py-4 text-center">No category found.</td>
-                    </tr>
-                @endif
-            </tbody>
-        </table>
-    </div>
-
+    <livewire:admins.category-list />
 @endsection
