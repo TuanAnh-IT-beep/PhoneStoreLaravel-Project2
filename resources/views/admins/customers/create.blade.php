@@ -42,7 +42,25 @@
                     </div>
                 </div>
                 <div class="col-span-6">
-
+                    <div class="col-span-5">
+                    <label for="icon">Icon:</label><br>
+                    <input class="my-3" type="file" name="icon" accept="image/*" onchange="previewIcon(event)"><br>
+                    <img id="icon_preview" class="w-32 h-32 object-cover border rounded mb-3 hidden" src="#"
+                        alt="Icon Preview"><br>
+                    <script>
+                        function previewIcon(event) {
+                            const output = document.getElementById('icon_preview');
+                            if (event.target.files && event.target.files[0]) {
+                                const reader = new FileReader();
+                                reader.onload = function (e) {
+                                    output.src = e.target.result;
+                                    output.classList.remove('hidden');
+                                };
+                                reader.readAsDataURL(event.target.files[0]);
+                            }
+                        }
+                    </script>
+                </div>
                 </div>
             </div>
         </form>

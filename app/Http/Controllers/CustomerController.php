@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 
 class CustomerController
 {
@@ -34,10 +35,14 @@ class CustomerController
      */
     public function store(StoreCustomerRequest $request)
     {
+        $iconPath = null;
+        if ($request->hasFile('icon')) {
+            $iconPath = $request->file('icon')->store('customer_icons', 'public');
+        }
         Customer::create([
             'username' => $request->username,
             'password' => Hash::make($request->password),
-            'icon' => $request->icon,
+            'icon' => $iconPath,
             'display_name' => $request->display_name,
             'email' => $request->email,
             'phone' => $request->phone,
@@ -74,16 +79,24 @@ class CustomerController
      */
     public function update(UpdateCustomerRequest $request, Customer $customer)
     {
-        $customer->update([
-            'username' => $request->username,
-            'icon' => $request->icon,
-            'display_name' => $request->display_name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'birthday' => $request->birthday,
-            'address' => $request->address
-        ]);
-        return redirect()->route('customers.index')->with('success', 'Customer updated successfully.');
+        $iconPath = $customer->icon;
+   if ($request->hasFile('icon')) {
+            if ($customer->icon) {
+                Storage::disk('public')->delete($customer->icon);
+            }
+            $iconPath = $request->file('icon')->store('customer_icons', 'public');
+        }
+$customer->update([
+    'username' => $request->username,
+    'display_name' => $request->display_name,
+    'email' => $request->email,
+    'phone' => $request->phone,
+    'gender' => $request->gender,
+    'address' => $request->address,
+    'icon' => $iconPath,
+    'birthday' => $request->birthday ? date('Y-m-d', strtotime($request->birthday)) : null
+]);
+    return redirect()->route('customers.index')->with('success', 'Customer updated successfully.');
     }
 
     /**

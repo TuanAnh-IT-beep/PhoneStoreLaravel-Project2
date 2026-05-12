@@ -86,7 +86,7 @@ class UserController
             if ($user->icon) {
                 Storage::disk('public')->delete($user->icon);
             }
-            $validated['icon'] = $request->file('icon')->store('users_avatars', 'public');
+            $validated['icon'] = $request->file('icon')->store('users_icons', 'public');
         }
 
         if (! empty($validated['password'])) {

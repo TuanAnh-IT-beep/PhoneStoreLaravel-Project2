@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Models\Category;
 use App\Models\Manufacturer;
 use App\Models\Product;
 use App\Models\ProductImage;
-use App\Http\Requests\StoreProductRequest;
-use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController
@@ -18,7 +18,8 @@ class ProductController
     public function index()
     {
         $products = Product::with('category', 'manufacturer', 'subproducts')->get();
-        return view("admins.products.index", compact("products"));
+
+        return view('admins.products.index', compact('products'));
     }
 
     /**
@@ -28,9 +29,10 @@ class ProductController
     {
         $categories = Category::all();
         $manufacturers = Manufacturer::all();
-        return view("admins.products.create", compact("categories", "manufacturers"));
+
+        return view('admins.products.create', compact('categories', 'manufacturers'));
     }
-    
+
     /**
      * Store a newly created resource in storage.
      */
@@ -46,7 +48,7 @@ class ProductController
                 $path = $image->store('product_images', 'public');
                 ProductImage::create([
                     'product_id' => $product->id,
-                    'path' => $path
+                    'path' => $path,
                 ]);
                 $newImagePaths[] = $path;
             }
@@ -61,7 +63,7 @@ class ProductController
             $product->update(['thumbnail_path' => $newImagePaths[0]]);
         }
 
-        return redirect()->route("products.index")->with("success","Product created successfully.");
+        return redirect()->route('products.index')->with('success', 'Product created successfully.');
     }
 
     /**
@@ -80,7 +82,8 @@ class ProductController
         $categories = Category::all();
         $manufacturers = Manufacturer::all();
         $product->load('images');
-        return view("admins.products.edit", compact("product", "categories", "manufacturers"));
+
+        return view('admins.products.edit', compact('product', 'categories', 'manufacturers'));
     }
 
     /**
@@ -113,7 +116,7 @@ class ProductController
                 $path = $image->store('product_images', 'public');
                 ProductImage::create([
                     'product_id' => $product->id,
-                    'path' => $path
+                    'path' => $path,
                 ]);
                 $newImagePaths[] = $path;
             }
@@ -137,7 +140,7 @@ class ProductController
         }
 
         // trường hợp không có ảnh được chọn làm thumbnail, chọn ảnh đầu tiên làm thumbnail hoặc để null nếu không có ảnh
-        if (!isset($data['thumbnail_path']) || $data['thumbnail_path'] === null) {
+        if (! isset($data['thumbnail_path']) || $data['thumbnail_path'] === null) {
             $firstImage = $product->images()->first();
             if ($firstImage) {
                 $data['thumbnail_path'] = $firstImage->path;
@@ -149,7 +152,8 @@ class ProductController
         }
 
         $product->update($data);
-        return redirect()->route("products.index")->with("success","Product updated successfully.");
+
+        return redirect()->route('products.index')->with('success', 'Product updated successfully.');
     }
 
     /**
@@ -157,6 +161,9 @@ class ProductController
      */
     public function destroy(Product $product)
     {
-        //
+        $product->images()->delete();
+        $product->delete();
+
+        return redirect()->route('products.index');
     }
 }
