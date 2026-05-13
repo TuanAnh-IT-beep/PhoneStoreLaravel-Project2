@@ -19,6 +19,7 @@ new class extends Component
 };
 ?>
 
+
 <div>
     <div class="mb-4">
         <input type="text" wire:model.live="search" placeholder="Search categories..."

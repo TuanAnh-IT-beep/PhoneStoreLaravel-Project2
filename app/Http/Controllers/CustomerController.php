@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Customer;
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -19,7 +19,8 @@ class CustomerController
     public function index()
     {
         $customers = Customer::all();
-        return view("admins.customers.index", compact("customers"));
+
+        return view('admins.customers.index', compact('customers'));
     }
 
     /**
@@ -47,9 +48,10 @@ class CustomerController
             'email' => $request->email,
             'phone' => $request->phone,
             'gender' => $request->gender,
-            'birthday' => date('Y-m-d',strtotime($request->birthday)),
-            'address' => $request->address
+            'birthday' => date('Y-m-d', strtotime($request->birthday)),
+            'address' => $request->address,
         ]);
+
         return redirect()->route('customers.index')->with('success', 'Customer created successfully.');
     }
 
@@ -69,7 +71,7 @@ class CustomerController
         return view(
             'admins.customers.edit',
             [
-                'customer' => $customer
+                'customer' => $customer,
             ]
         );
     }
@@ -80,23 +82,23 @@ class CustomerController
     public function update(UpdateCustomerRequest $request, Customer $customer)
     {
         $iconPath = $customer->icon;
-   if ($request->hasFile('icon')) {
+        if ($request->hasFile('icon')) {
             if ($customer->icon) {
                 Storage::disk('public')->delete($customer->icon);
             }
             $iconPath = $request->file('icon')->store('customer_icons', 'public');
         }
-$customer->update([
-    'username' => $request->username,
-    'display_name' => $request->display_name,
-    'email' => $request->email,
-    'phone' => $request->phone,
-    'gender' => $request->gender,
-    'address' => $request->address,
-    'icon' => $iconPath,
-    'birthday' => $request->birthday ? date('Y-m-d', strtotime($request->birthday)) : null
-]);
-    return redirect()->route('customers.index')->with('success', 'Customer updated successfully.');
+        $customer->update([
+            'username' => $request->username,
+            'display_name' => $request->display_name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'gender' => $request->gender,
+            'address' => $request->address,
+            'icon' => $iconPath,
+            'birthday' => $request->birthday ? date('Y-m-d', strtotime($request->birthday)) : null,
+        ]);
+        return redirect()->route('customers.index')->with('success', 'Customer updated successfully.');
     }
 
     /**
@@ -105,8 +107,10 @@ $customer->update([
     public function destroy(Customer $customer)
     {
         $customer->delete();
+
         return redirect()->route('customers.index')->with('success', 'Customer deleted successfully.');
     }
+
     public function login()
     {
         return view('clients.login');
@@ -116,15 +120,19 @@ $customer->update([
     {
         if (Auth::guard('client')->attempt($request->only('email', 'password'))) {
             $request->session()->regenerate();
+
             return redirect()->route('home')->with('success', 'Login successful.');
         } else {
             return Redirect::back();
         }
     }
-    public function logout(Request $request){
+
+    public function logout(Request $request)
+    {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+
         return redirect('/login');
     }
 }

@@ -81,7 +81,6 @@ class UserController
     public function update(UpdateUserRequest $request, User $user)
     {
         $validated = $request->validated();
-
         if ($request->hasFile('icon')) {
             if ($user->icon) {
                 Storage::disk('public')->delete($user->icon);

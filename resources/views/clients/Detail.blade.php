@@ -45,7 +45,7 @@
                 </div>
 
                 <button class="w-full bg-red-600 text-white py-4 rounded-2xl font-bold text-lg hover:bg-red-700 transition">
-                    <a href="{{ route('add', $subproduct->id) }}" class="block text-center">
+                    <a href="{{ route('add', $subproduct->id) }}" class="block text-center" style="color: white;">
                     THÊM VÀO GIỎ HÀNG
                     </a>
                 </button>

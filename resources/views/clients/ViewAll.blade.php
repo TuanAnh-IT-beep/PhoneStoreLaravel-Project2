@@ -15,7 +15,10 @@
         <!-- Right Side: Products (Takes remaining space) -->
         <div class="flex-grow"> 
             <h1 class="text-3xl font-bold mb-6 text-gray-800">All Products</h1>
-            <livewire:client.viewall />
+            @livewire("client.viewall",[
+                'cateid'=>$cateid??null,
+                'id'=>$id??null
+            ])
         </div>
 
     </div>

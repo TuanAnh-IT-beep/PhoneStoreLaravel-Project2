@@ -18,7 +18,7 @@ Route::get('/logout',[CustomerController::class,'logout'])
 ->name('logout');
 Route::get('/settings', [SettingsController::class, 'index'])->name('admins.settings.index');
 Route::get('/all',[HomeController::class,'showAll'])->name('all');
-Route::get('/{id}/view',[HomeController::class,'showByCategory'])->name('view');
+Route::get('/{cateid}/view',[HomeController::class,'showByCategory'])->name('view');
 Route::get('/{id}/viewbyid', [HomeController::class,'showById'])->name('viewbyid');
 Route::get('/{proid}/{subid}/details', [HomeController::class, 'detail'])->name('detail');
 Route::get('/cart', [CartController::class, 'showCart'])->name('cart')->middleware(CheckClientLogin::class);
