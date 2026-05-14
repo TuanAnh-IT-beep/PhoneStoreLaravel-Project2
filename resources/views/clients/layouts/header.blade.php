@@ -17,11 +17,15 @@
                     </button>
                     <div id="dropdownDivider"
                         class="z-10 hidden bg-neutral-primary-medium border border-default-medium rounded-base divide-y divide-default-medium shadow-lg w-44" style="background-color: white">
-                        <ul class="p-2 text-sm font-medium" aria-labelledby="dropdownDividerButton">
-                                
+                        <ul class="p-2 text-sm font-medium" aria-labelledby="dropdownDividerButton"> 
                             <li>
                                 <a href="{{ route ('cart') }}" class="login-link">
                                     <span style="color: black">Cart</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route ('orders', Auth::guard('client')->user()->id) }}" class="login-link">
+                                    <span style="color: black">Orders History</span>
                                 </a>
                             </li>
                             <li>

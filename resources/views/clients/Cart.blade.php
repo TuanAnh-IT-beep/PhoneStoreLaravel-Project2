@@ -42,7 +42,7 @@
                     </div>
 
                     <!-- Bộ chọn số lượng -->
-                    <div class="flex items-center border border-gray-300 rounded-lg w-100 bg-white">
+                    <div class="flex items-center border border-gray-300 rounded-lg w-25 bg-white">
                         <button class="px-3 py-1 hover:bg-gray-100 border-r border-gray-300"><a href="{{ route('minus', $item['id']) }}">-</a></button>
                         <input type="text" value="{{ $item['stock'] }}" class="w-11 text-center text-sm font-bold focus:outline-none"
                             readonly>
@@ -68,12 +68,14 @@
             </a>
         </button>
         <button class="bg-gray-300 text-gray-700 px-4 py-2 rounded-md mr-2 hover:bg-gray-400 transition-colors">
-            <a href="{{ route('home') }}">
+            <a href="{{ route('home') }}" style="color: white;">
                 Tiếp tục mua hàng
             </a>
         </button>
         <button class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors">
+            <a href="{{ route('orderConfirm', Auth::guard('client')->user()->id) }}" class="block text-center" style="color: white;">
             Xác nhận đơn hàng
+            </a>
         </button>
     </div>
     @endif

@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Customer;
+use App\Models\PaymentMethod;
+use App\Models\OrderDetail;
+use App\Http\Requests\StoreOrderDetailRequest;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 
@@ -13,7 +17,7 @@ class OrderController
      */
     public function index()
     {
-        $orders = Order::with(['customer', 'payment'])->get();
+        $orders = Order::with(['customer', 'payment', 'orderdetails'])->get();
         return view('admins.orders.index',compact('orders'));
     }
 
@@ -30,8 +34,27 @@ class OrderController
      */
     public function store(StoreOrderRequest $request)
     {
-        Order::create($request->validated());
-        return redirect()->route('orders.index')->with('success', 'Order created successfully.');
+        $cart = session()->get('cart', []);
+       $order = Order::create([
+            'customer_id'=>$request->placer,
+            'receiver'=>$request->receiver,
+            'address'=>$request->address,
+            'phone'=>$request->phone,
+            'payment_method_id'=>$request->payment,
+            'note'=>$request->note,
+            'total_price'=>$request->total_price,
+            'status'=>$request->status
+        ]);
+        foreach ($cart as $item) {
+            OrderDetail::create([
+                'order_id' => $order->id,
+                'subproduct_id' => $item['id'],
+                'quantity' => $item['stock'],
+                'total' => $item['price'] * $item['stock'],
+            ]);
+        }
+        session()->forget('cart');
+        return redirect()->route('home')->with('success', 'Order placed successfully.');
     }
 
     /**
@@ -68,4 +91,20 @@ class OrderController
         $order->delete();
         return redirect()->route('orders.index')->with('success', 'Order deleted successfully.');
     }
+    public function showinClient($clientid){
+        $orders=Order::where('customer_id',$clientid)->with('orderdetails')->get();
+        return view('clients.Orders', compact('orders'));
+    }
+    public function orderConfirm($clientid){
+        $client = Customer::find($clientid);
+        $payment = PaymentMethod::all();
+        $cart = session()->get('cart', []);
+        $totalPrice = 0;
+        foreach ($cart as $item) {
+            $totalPrice += $item['price'] * $item['stock'];
+        }
+        $totalPrice += 40000;
+        return view('clients.orderConfirm', compact('client', 'payment', 'cart', 'totalPrice'));
+    }
 }
+ 
