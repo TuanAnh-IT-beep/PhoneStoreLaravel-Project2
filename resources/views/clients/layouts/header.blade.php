@@ -24,7 +24,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route ('orders', Auth::guard('client')->user()->id) }}" class="login-link">
+                                <a href="{{ route ('orders')}}" class="login-link">
                                     <span style="color: black">Orders History</span>
                                 </a>
                             </li>

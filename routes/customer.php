@@ -28,6 +28,6 @@ Route::get('/removeincart/{subproduct}', [CartController::class, 'removeProduct'
 Route::get('/removeallcart', [CartController::class, 'deleteCart'])->name('removeall');
 Route::get('/plus/{subproduct}', [CartController::class, 'plus'])->name('plus');
 Route::get('/minus/{subproduct}', [CartController::class, 'minus'])->name('minus');
-Route::get('/orderConfirm/{clientid}', [OrderController::class, 'orderConfirm'])->name('orderConfirm');
-Route::get('/Orders/{clientid}',[OrderController::class,'showinClient'])->name('orders');
+Route::get('/orderConfirm', [OrderController::class, 'orderConfirm'])->name('orderConfirm');
+Route::get('/Orders',[OrderController::class,'showinClient'])->name('orders');
 Route::post('/Confirm', [OrderController::class, 'store'])->name('order.confirm');

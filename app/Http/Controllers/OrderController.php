@@ -91,12 +91,12 @@ class OrderController
         $order->delete();
         return redirect()->route('orders.index')->with('success', 'Order deleted successfully.');
     }
-    public function showinClient($clientid){
-        $orders=Order::where('customer_id',$clientid)->with('orderdetails')->get();
+    public function showinClient(){
+        $orders=Order::where('customer_id',auth()->guard('client')->id())->with('orderdetails')->get();
         return view('clients.Orders', compact('orders'));
     }
-    public function orderConfirm($clientid){
-        $client = Customer::find($clientid);
+    public function orderConfirm(){
+        $client = Customer::find(auth()->guard('client')->id());
         $payment = PaymentMethod::all();
         $cart = session()->get('cart', []);
         $totalPrice = 0;
