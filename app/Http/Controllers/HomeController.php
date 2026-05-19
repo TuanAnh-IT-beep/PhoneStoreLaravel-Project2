@@ -20,7 +20,8 @@ class HomeController
         $subproducts = Subproduct::with('product')->get();
         $products = Product::all();
         $categories = Category::all();
-        return view('clients.ViewAll', compact('subproducts'));
+        $spec =SubSpec::all();
+        return view('clients.ViewAll', compact('subproducts', 'spec'));
     }
     public function showByCategory($cateid){
         return view('clients.ViewAll', compact('cateid'));
