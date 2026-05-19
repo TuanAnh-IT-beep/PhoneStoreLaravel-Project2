@@ -2,12 +2,13 @@
 @section('main-content')
     <div class="w-full">
         <div class="grid grid-cols-12 gap-10">
-            <div class="col-span-12 col-span-6">
+            <div class="col-span-12 lg:col-span-6">
                 <h1 class="text-3xl font-bold mb-6 text-gray-800">Order Confirmation</h1>
                 <div class="bg-white p-6 rounded-xl shadow-sm">
                     <form action="{{ route('order.confirm') }}" method="POST">
                         @csrf
                         @method('POST')
+                    <input type="hidden" name="customer_id" value="{{ Auth::guard('client')->user()->id }}">
                     <label for="receiver" class="block text-sm font-medium text-gray-700 mb-1">Receiver Name</label>
                     <input type="text" name="receiver" class="w-50 border border-gray-300 rounded-md p-3 mb-4">
                     <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Delivery Address</label>
@@ -33,7 +34,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-span-12 col-span-6" style="margin-top:40px">
+            <div class="col-span-12 lg:col-span-6" style="margin-top:40px">
                 <div class=" bg-white p-6 rounded-xl shadow-sm" style="margin-top:20px;">
                     <!-- Order summary details here -->
                     @foreach ($cart as $id => $item)
@@ -41,16 +42,16 @@
                         <div class="w-120 p-6 relative flex items-center gap-6"
                             style="background-color: #fafafadc; border-radius: 12px;border: 1px solid #e5e7eb;margin-left:100px">
                             <!-- 2. Hình ảnh sản phẩm (Ví dụ) -->
-                            <div class="w-12 h-12 flex-shrink-0">
+                            <div class="w-12 h-12 shrink-0">
                                 <img src="{{ asset('storage/' . $item['thumbnail_path']) }}" alt="Product"
                                     class="w-full h-full object-cover rounded-lg">
                             </div>
 
                             <!-- 3. Nội dung: Tên, Giá, Số lượng -->
-                            <div class="flex-grow flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div class="grow flex flex-col md:flex-row md:items-center justify-between gap-4">
 
                                 <!-- Tên sản phẩm -->
-                                <div class="flex-grow">
+                                <div class="grow">
                                     <h3 style="font-size:15px" class="font-bold text-gray-800 leading-tight">
                                         {{ $item['name'] }}</h3>
                                 </div>

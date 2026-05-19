@@ -58,7 +58,7 @@ new class extends Component {
                                 {{ $subproduct->name }}
                             </td>
                             <td class="px-6 py-4" style="color: black">
-                                {{ $subproduct->price }}
+                                {{ number_format($subproduct->price, 0, ',', '.') }}đ
                             </td>
                             <td class="px-6 py-4" style="color: black">
                                 {{ $subproduct->stock }}

@@ -10,7 +10,7 @@
             <div class="flex items-center" style="gap: 20px">
                 @auth('client')
                     <button id="dropdownDividerButton" data-dropdown-toggle="dropdownDivider"
-                        class="inline-flex items-center justify-center text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+                        class="inline-flex items-center justify-center text-white bg-brand box-border border border-transparent hover:bg-brand-strong shadow-xs font-medium leading-5 rounded-base text-sm focus:outline-none"
                         type="button">
                         <img src="{{ asset('storage/' . Auth::guard('client')->user()->icon) }}" alt="User Icon"
                             class="w-10 h-10 rounded-full object-cover border-2 border-[#AFF5BF]">

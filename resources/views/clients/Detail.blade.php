@@ -30,7 +30,7 @@
                         @foreach ($subproducts as $subs)
                             <a href="/{{ $subs->product->id }}/{{ $subs->id }}/details"
                                 class="flex items-center gap-4 p-3 border rounded-xl hover:border-red-500 transition-all {{ $subs->id == $subproduct->id ? 'border-red-500 bg-red-50' : 'bg-white' }}">
-                                <div class="w-16 h-16 flex-shrink-0">
+                                <div class="w-16 h-16 shrink-0">
                                     <img src="{{ asset('storage/' . $subs->thumbnail_path) }}"
                                         class="w-full h-full object-cover rounded-lg border">
                                 </div>

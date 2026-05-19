@@ -1,27 +1,22 @@
 @include('admins.layouts.head')
 @include('clients.layouts.header')
 <div id="default-carousel" class="relative w-250" style="margin-left: 22%;margin-bottom: 25px;" data-carousel="slide">
-    <!-- Carousel wrapper -->
     <div class="relative h-56 overflow-hidden rounded-base md:h-96" style="border-radius:30px;">
-        <!-- Item 1 -->
         <div class=" hidden duration-700 ease-in-out" style="border-radius:30px;" data-carousel-item>
             <img src="https://img.freepik.com/free-psd/smartphone-camera-control-social-media-banner-design-template_47987-25416.jpg?semt=ais_hybrid&w=740&q=80"
                 class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" style="border-radius:30px;" alt="...">
         </div>
-        <!-- Item 2 -->
         <div class=" hidden duration-700 ease-in-out" style="border-radius:30px;" data-carousel-item>
             <img src="https://scontent.fhan18-1.fna.fbcdn.net/v/t39.30808-6/674781288_1078863334494652_81833877916710996_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=2a1932&_nc_ohc=f3V-jRNXwYMQ7kNvwFIDNgM&_nc_oc=AdpUtWgMNjXk3Q7rkS-QqPyc8THlsm5DTq9ZvlXuprx4H0rmt9pHQNQhAo9l0tmrL80&_nc_zt=23&_nc_ht=scontent.fhan18-1.fna&_nc_gid=__KbTrFmKtEo15QVqOhbHA&_nc_ss=7b289&oh=00_Af7sc1330JOQST6iqT8Ii3V796ZVC035U9cdPBmei6I39Q&oe=69FF5687"
                 class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" style="border-radius:30px;" alt="...">
         </div>
     </div>
-    <!-- Slider indicators -->
     <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
         <button type="button" class="w-3 h-3 rounded-base" aria-current="true" aria-label="Slide 1"
             data-carousel-slide-to="0"></button>
         <button type="button" class="w-3 h-3 rounded-base" aria-current="false" aria-label="Slide 2"
             data-carousel-slide-to="1"></button>
     </div>
-    <!-- Slider controls -->
     <button type="button"
         class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none "
         data-carousel-prev>
@@ -54,7 +49,6 @@
 <div class="flex flex-col min-h-screen">
     <div class="container mx-auto flex flex-1" style="gap: 20px">
         <div class="main-content flex-1 p-6">
-
             <body class="bg-[#48a892] p-4 md:p-8 font-sans">
                 <div class="max-w-6xl mx-auto space-y-10">
                     <!-- Carousel Section -->

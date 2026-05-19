@@ -45,7 +45,13 @@ Route::middleware(CheckUserLogin::class)->prefix('admin')->group(function () {
     Route::resource('specs', SpecController::class);
     Route::resource('subspecs', SubSpecController::class);
     Route::resource('users', UserController::class);
-
+    // Route::controller(OrderController::class)
+    //     ->name('orders.')
+    //     ->prefix('orders')
+    //     ->group(function () {
+    //         Route::get('/', 'index')->name('index');
+    //         Route::get('/{order}/details', 'show')->name('show');
+    //     });
     Route::controller(SubproductController::class)
         ->name('subproducts.')
         ->prefix('products/{product}/subproducts')

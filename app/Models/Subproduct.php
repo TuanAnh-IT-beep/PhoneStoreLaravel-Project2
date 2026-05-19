@@ -15,7 +15,7 @@ class Subproduct extends Model
     public function product(){
         return $this->belongsTo(Product::class);
     }
-    public function subspecs(){
+    public function sub_specs(){
         return $this->hasMany(SubSpec::class,'subproduct_id','id');
     }
     public function orderdetails(){

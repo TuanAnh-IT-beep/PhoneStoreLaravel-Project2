@@ -263,3 +263,31 @@ table tr {
 hr {
     color: #9A9A9A;
 }
+
+.order-details {
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    border-radius: 16px;
+    outline: 1px #E7E7E3 solid;
+    outline-offset: -1px;
+    gap: 16px;
+    display: flex;
+    align-items: flex-start;
+    flex: 1;
+}
+
+.order-details .icon {
+    padding: 16px;
+    background: #232321;
+    border-radius: 8px;
+    gap: 10px;
+}
+
+.order-details .info {
+    color: #70706E;
+    font-size: 16px;
+    font-weight: 600;
+    word-wrap: break-word
+}
