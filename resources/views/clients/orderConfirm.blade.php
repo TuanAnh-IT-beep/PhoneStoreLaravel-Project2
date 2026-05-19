@@ -8,6 +8,7 @@
                     <form action="{{ route('order.confirm') }}" method="POST">
                         @csrf
                         @method('POST')
+                        <input type="hidden" name="placer" value="{{ auth()->guard('client')->id() }}">
                     <label for="receiver" class="block text-sm font-medium text-gray-700 mb-1">Receiver Name</label>
                     <input type="text" name="receiver" class="w-50 border border-gray-300 rounded-md p-3 mb-4">
                     <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Delivery Address</label>
