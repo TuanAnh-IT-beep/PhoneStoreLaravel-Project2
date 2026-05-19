@@ -22,14 +22,11 @@ class HomeController
         $categories = Category::all();
         return view('clients.ViewAll', compact('subproducts'));
     }
-    public function showByCategory($id){
-        $category=Category::FindOrFail($id);
-        $products= $category->products;
-        return view('clients.ViewAll',compact('category','products'));
+    public function showByCategory($cateid){
+        return view('clients.ViewAll', compact('cateid'));
     }
     public function showById($id){
-        $product_byID=Product::FindOrFail($id);
-        return view('clients.ViewAll',compact('product_byID'));
+        return view('clients.ViewAll',compact('id'));
     }
     public function detail($proid, $subid){
         $product=Product::FindOrFail($proid);
@@ -37,10 +34,6 @@ class HomeController
         $subproducts=$product->subproducts;
         $specs=Subspec::with('subproduct')->get();
         return view('clients.Detail',compact('subproduct','subproducts','specs'));
-    }
-    public function search($search){
-        $search_products=Subproduct::where('name','like','%'.$search.'%')->with('product')->get();
-        return view('clients.ViewAll',compact('search_products'));
     }
 
 }

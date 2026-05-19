@@ -5,7 +5,7 @@
         <h1>Customers → {{$customer->username}} → Edit</h1>
     </div>
     <div class="main-container">
-        <form method="post" action="{{ route('customers.update', $customer->id) }}">
+        <form method="post" action="{{ route('customers.update', $customer->id) }}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="grid grid-cols-10 gap-4">
@@ -39,6 +39,27 @@
                         <button class="btn flex-1 icon-only">ADD</button>
                         <a class="btn flex-1 icon-only negative" href="{{ route('customers.index') }}">CANCEL</a>
                     </div>
+                </div>
+                <div class="col-span-5">
+                    <label for="icon">Icon:</label><br>
+                    <input class="my-3" type="file" name="icon" accept="image/*" onchange="previewIcon(event)"><br>
+                    <img id="icon_preview" src="{{ $customer->icon ? asset('storage/' . $customer->icon) : '#' }}"
+                        alt="Icon Preview"
+                        class="w-64 h-64 object-cover border rounded mb-3 {{ $customer->icon ? '' : 'hidden' }}"><br>
+
+                    <script>
+                        function previewIcon(event) {
+                            const output = document.getElementById('icon_preview');
+                            if (event.target.files && event.target.files[0]) {
+                                const reader = new FileReader();
+                                reader.onload = function (e) {
+                                    output.src = e.target.result;
+                                    output.classList.remove('hidden');
+                                };
+                                reader.readAsDataURL(event.target.files[0]);
+                            }
+                        }
+                    </script>
                 </div>
             </div>
         </form>
