@@ -37,33 +37,40 @@ new class extends Component {
                 </tr>
             </thead>
             <tbody>
-                @foreach ($users as $user)
-                    <tr class="border-default">
-                        <th class="px-6 py-4">{{ $user->id }}</td>
-                        <td class="px-6 py-4">
-                            @if($user->icon)
-                                <img src="{{ asset('storage/' . $user->icon) }}" alt="{{ $user->username }}"
-                                    class="w-12 h-12 object-cover border rounded-full">
-                            @else
-                                <span class="text-gray-400 text-sm">No image</span>
-                            @endif
-                        </td>
-                        <td class="px-6 py-4" style="color: black">{{ $user->full_name }}</td>
-                        <td class="px-6 py-4">{{ $user->email }}</td>
-                        <td class="px-6 py-4">{{ $user->phone }}</td>
-                        <td class="px-6 py-4">{{ $user->role->name }}</td>
-                        <td class="px-6 py-4">
-                            <a href="{{ route(name: 'users.edit', parameters: $user->id) }}" class="btn icon-only edit"><i
-                                    class="fa-solid fa-pen-to-square"></i></a>
-                            <form method="post" action="{{ route(name: 'users.destroy', parameters: $user->id) }}"
-                                style="display: inline-block">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn icon-only delete"><i class="fa-solid fa-trash"></i></button>
-                            </form>
-                        </td>
+                @if (count($users) > 0)
+
+                    @foreach ($users as $user)
+                        <tr class="border-default">
+                            <th class="px-6 py-4">{{ $user->id }}</td>
+                            <td class="px-6 py-4">
+                                @if($user->icon)
+                                    <img src="{{ asset('storage/' . $user->icon) }}" alt="{{ $user->username }}"
+                                        class="w-12 h-12 object-cover border rounded-full">
+                                @else
+                                    <span class="text-gray-400 text-sm">No image</span>
+                                @endif
+                            </td>
+                            <td class="px-6 py-4" style="color: black">{{ $user->full_name }}</td>
+                            <td class="px-6 py-4">{{ $user->email }}</td>
+                            <td class="px-6 py-4">{{ $user->phone }}</td>
+                            <td class="px-6 py-4">{{ $user->role->name }}</td>
+                            <td class="px-6 py-4">
+                                <a href="{{ route(name: 'users.edit', parameters: $user->id) }}" class="btn icon-only edit"><i
+                                        class="fa-solid fa-pen-to-square"></i></a>
+                                <form method="post" action="{{ route(name: 'users.destroy', parameters: $user->id) }}"
+                                    style="display: inline-block">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn icon-only delete"><i class="fa-solid fa-trash"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td colspan="6" class="px-6 py-4 text-center">No user found.</td>
                     </tr>
-                @endforeach
+                @endif
             </tbody>
 
         </table>
