@@ -1,17 +1,17 @@
 <?php
 $statuses = [
-    -1 => "Cancelled",
-    0 => "Pending",
-    1 => "Confirmed",
-    2 => "Shipping",
-    3 => "Delivered",
-    4 => "Completed",
+    -1 => ['text' => 'Cancelled', 'color' => 'text-red-500'],
+    0 => ['text' => 'Pending', 'color' => 'text-yellow-500'],
+    1 => ['text' => 'Confirmed', 'color' => 'text-green-500'],
+    2 => ['text' => 'Shipping', 'color' => 'text-blue-500'],
+    3 => ['text' => 'Delivered', 'color' => 'text-green-500'],
+    4 => ['text' => 'Completed', 'color' => 'text-green-500'],
 ];
 ?>
-@extends("admins.layouts.master")
+@extends('admins.layouts.master')
 @section('pageTitle', 'Orders')
 
-@section("main-content")
+@section('main-content')
     <div class="w-full flex mb-4 justify-between">
         <h1>Order Details: #{{ $order->id }}</h1>
     </div>
@@ -26,7 +26,9 @@ $statuses = [
                     <div>
                         <h3>Receiver</h3>
                         <p class="info mt-1">Full Name: {{ $order->receiver }}</p>
-                        <p class="info mt-1">Ordered By: {{ $order->customer->display_name }}</p>
+                        @if ($order->customer)
+                            <p class="info mt-1">Ordered By: {{ $order->customer->display_name }}</p>
+                        @endif
                         <p class="info mt-1">Phone: {{ $order->phone }}</p>
                     </div>
                 </div>
@@ -40,8 +42,11 @@ $statuses = [
                         <h3>Order Info</h3>
                         <div class="flex justify-between">
                             <div>
-                                <p class="info mt-1">Status: {{ $statuses[$order->status] }}</p>
+                                <p class="info mt-1">Status: <span
+                                        class="{{ $statuses[$order->status]['color'] }}">{{ $statuses[$order->status]['text'] }}</span>
+                                </p>
                                 <p class="info mt-1">Payment Method: {{ $order->payment->name }}</p>
+                                <p class="info mt-1">Ordered at: {{ $order->created_at }}</p>
                             </div>
                         </div>
                     </div>
@@ -62,7 +67,7 @@ $statuses = [
         </div>
         <label>Note</label>
         <textarea class="my-3 w-full" placeholder="No note." rows="6" readonly>{{ $order->note }}</textarea>
-        @if ($order->status > 0 && $order->status < 3)
+        @if ($order->status >= 0 && $order->status < 3)
             <div class="w-full flex justify-end">
                 <form method="post" action="{{ route('orders.update', $order->id) }}">
                     @csrf
@@ -87,18 +92,18 @@ $statuses = [
             </thead>
             <tbody>
                 <?php
-    $total = 0;
-    foreach ($order->orderdetails as $detail) {
-        $total += $detail->subproduct->price * $detail->quantity;
-    }
-                    ?>
+                $total = 0;
+                foreach ($order->orderdetails as $detail) {
+                    $total += $detail->subproduct->price * $detail->quantity;
+                }
+                ?>
                 @foreach ($order->orderdetails as $detail)
                     <tr scope="row" class="px-6 py-4 font-medium text-heading whitespace-nowrap">
                         <th class="px-6 py-4">
                             {{ $loop->index + 1 }}
                         </th>
                         <td class="px-6 py-4">
-                            @if($detail->subproduct->thumbnail_path)
+                            @if ($detail->subproduct->thumbnail_path)
                                 <img src="{{ asset('storage/' . $detail->subproduct->thumbnail_path) }}"
                                     alt="{{ $detail->subproduct->name }}" class="w-16 h-16 object-cover border rounded">
                             @else
@@ -123,10 +128,26 @@ $statuses = [
                 @endforeach
                 <tr>
                     <td colspan="5" class="px-6 py-4">
-                        <p><b>Total:</b></p>
+                        <p>Subtotal:</p>
                     </td>
                     <td class="px-6 py-4" style="color: black">
                         <p><b>{{ number_format($total, 0, ',', '.') }}đ</b></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="px-6 py-4">
+                        <p>Fee:</p>
+                    </td>
+                    <td class="px-6 py-4" style="color: black">
+                        <p><b>{{ number_format($order->ship_fee, 0, ',', '.') }}đ</b></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="px-6 py-4">
+                        <p><b>Total:</b></p>
+                    </td>
+                    <td class="px-6 py-4" style="color: black">
+                        <p><b>{{ number_format($order->total_price, 0, ',', '.') }}đ</b></p>
                     </td>
                 </tr>
             </tbody>

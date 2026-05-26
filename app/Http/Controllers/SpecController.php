@@ -35,7 +35,7 @@ class SpecController
             'name' => $request->name,
         ]);
 
-        return Redirect::route('admins.settings.index');
+        return Redirect::route('admins.settings.index')->with('success', 'Spec created successfully.');
     }
 
     /**
@@ -62,7 +62,7 @@ class SpecController
         $spec->update([
             'name' => $request->name,
         ]);
-        return Redirect::route('admins.settings.index');
+        return Redirect::route('admins.settings.index')->with('success', 'Spec updated successfully.');
     }
 
     /**
@@ -71,6 +71,6 @@ class SpecController
     public function destroy(Spec $spec)
     {
         $spec->delete();
-        return Redirect::route('admins.settings.index');
+        return Redirect::route('admins.settings.index')->with('success', 'Spec deleted successfully.');
     }
 }

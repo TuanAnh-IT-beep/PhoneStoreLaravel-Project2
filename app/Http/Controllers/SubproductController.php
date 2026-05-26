@@ -17,6 +17,7 @@ class SubproductController
     public function index(Product $product)
     {
         $subproducts = $product->subproducts;
+
         return view('admins.subproducts.index', compact('subproducts', 'product'));
     }
 
@@ -27,6 +28,7 @@ class SubproductController
     {
         $specs = Spec::all();
         $product->load('images');
+
         return view('admins.subproducts.create', compact('product', 'specs'));
     }
 
@@ -52,7 +54,7 @@ class SubproductController
             }
         }
 
-        return redirect()->route('subproducts.index', $subproduct->product_id);
+        return redirect()->route('subproducts.index', $subproduct->product_id)->with('success', 'Subproduct created successfully.');
     }
 
     /**
@@ -77,15 +79,19 @@ class SubproductController
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSubproductRequest $request, Subproduct $subproduct)
+    public function update(UpdateSubproductRequest $request, Product $product, Subproduct $subproduct)
     {
-        $data = $request->validated();
-        
+        $thumbnail_path = $subproduct->thumbnail_path;
         if ($request->has('thumbnail_path')) {
-            $data['thumbnail_path'] = $request->thumbnail_path;
+            $thumbnail_path = $request->thumbnail_path;
         }
-        
-        $subproduct->update($data);
+
+        $subproduct->update([
+            'name' => $request->name,
+            'price' => $request->price,
+            'stock' => $request->stock,
+            'thumbnail_path' => $thumbnail_path
+        ]);
 
         $processedSpecIds = []; // To avoid duplicate spec_id from request
 
@@ -118,7 +124,7 @@ class SubproductController
         // Delete all sub_specs that were not processed
         $subproduct->sub_specs()->whereNotIn('spec_id', $processedSpecIds)->delete();
 
-        return redirect()->route('subproducts.index', $subproduct->product_id);
+        return redirect()->route('subproducts.index', $subproduct->product_id)->with('success', 'Subproduct updated successfully.');
     }
 
     /**
@@ -128,6 +134,6 @@ class SubproductController
     {
         $subproduct->delete();
 
-        return redirect()->route('subproducts.index', $subproduct->product_id);
+        return redirect()->route('subproducts.index', $subproduct->product_id)->with('success', 'Subproduct deleted successfully.');
     }
 }

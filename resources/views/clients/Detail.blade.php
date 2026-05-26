@@ -1,8 +1,8 @@
 @extends('clients.layouts.master')
 @section('main-content')
-    <div class="max-w-7xl mx-auto p-4 md:p-8 bg-white font-sans text-gray-900" style="border-radius:30px;" >
-        <div class="grid grid-cols-12 gap-10">
-            <div class="col-span-7">
+    <div class="mx-auto p-4 md:p-8 bg-white font-sans text-gray-900" style="border-radius:30px;">
+        <div class="grid grid-cols-12 gap-12">
+            <div class="col-span-6">
                 <div class="sticky top-4">
                     <div
                         class="relative rounded-3xl overflow-hidden bg-gray-100 aspect-square flex items-center justify-center border">
@@ -12,9 +12,9 @@
                 </div>
             </div>
 
-            <div class="col-span-5 space-y-6">
+            <div class="col-span-6 space-y-6">
                 <div>
-                    <h1 class="text-3xl font-bold">{{ $subproduct->product->name }}</h1>
+                    <h1 class="text-3xl font-bold">{{ $subproduct->name }}</h1>
                     <div class="text-sm text-gray-500 mt-2">Mã SP: #{{ $subproduct->id }}</div>
                 </div>
 
@@ -46,7 +46,7 @@
 
                 <button class="w-full bg-red-600 text-white py-4 rounded-2xl font-bold text-lg hover:bg-red-700 transition">
                     <a href="{{ route('add', $subproduct->id) }}" class="block text-center" style="color: white;">
-                    THÊM VÀO GIỎ HÀNG
+                        THÊM VÀO GIỎ HÀNG
                     </a>
                 </button>
                 <div>
@@ -54,7 +54,7 @@
                     <div class="border border-gray-200 rounded-2xl overflow-hidden">
                         <table class="w-full text-sm">
                             <tbody>
-                                @foreach ($subproduct->subspecs as $spec)
+                                @foreach ($subproduct->sub_specs as $spec)
                                     <tr class="border-b last:border-none">
                                         <td class="p-4 font-semibold bg-gray-50 text-gray-600 w-1/3">
                                             {{ $spec->spec?->name ?? 'N/A' }}
@@ -73,10 +73,10 @@
         <div class="my-3 border-t border-gray-100"></div>
         <div>
             <h1 class="text-2xl font-bold mb-6 inter">Mô tả sản phẩm</h3>
-            <div class="prose max-w-none text-gray-700">
-                <!-- Nội dung mô tả từ database -->
-                {!! $subproduct->product->description ?? 'Đang cập nhật nội dung mô tả...' !!}
-            </div>
+                <div class="prose max-w-none text-gray-700">
+                    <!-- Nội dung mô tả từ database -->
+                    {!! $subproduct->product->description ?? 'Đang cập nhật nội dung mô tả...' !!}
+                </div>
         </div>
     </div>
 @endsection

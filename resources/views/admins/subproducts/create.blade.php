@@ -4,7 +4,7 @@
     <div class="w-full mb-4 flex items-center justify-between">
         <h1>Products → {{ $product->name }} → Subproducts → New</h1>
     </div>
-    <form method="post" action="{{ route('subproducts.store', $product) }}">
+    <form method="post" action="{{ route('subproducts.store') }}">
         @csrf
         <div class="main-container">
             <input type="hidden" name="product_id" value="{{ $product->id }}">

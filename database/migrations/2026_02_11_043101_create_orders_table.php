@@ -13,13 +13,12 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('customer_id')->constrained();
+            $table->foreignId('customer_id')->nullable()->constrained()->onDelete(('set null'));
             $table->foreignId('payment_method_id')->constrained();
             $table->string("receiver");
             $table->string("address");
             $table->string("phone");
             $table->string("note")->nullable();
-            $table->string("ship_track_id")->nullable();
             $table->float("ship_fee")->default(0);
             $table->float("total_price");
             $table->dateTime("ship_expect_date")->nullable();

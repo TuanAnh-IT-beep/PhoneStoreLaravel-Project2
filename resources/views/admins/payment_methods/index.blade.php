@@ -1,6 +1,6 @@
-@extends("admins.layouts.master")
+@extends('admins.layouts.master')
 @section('pageTitle', 'Payment Methods')
-@section("main-content")
+@section('main-content')
     <div class="w-full mb-4 flex items-center justify-between">
         <h1>Settings → Payment Methods</h1>
         <a class="btn" href="{{ route(name: 'payment_methods.create') }}"><i class="fa-solid fa-plus"></i> ADD NEW

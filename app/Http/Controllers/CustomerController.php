@@ -118,21 +118,20 @@ class CustomerController
 
     public function loginProcess(Request $request)
     {
-        if (Auth::guard('client')->attempt($request->only('email', 'password'))) {
+        if (Auth::guard('client')->attempt(['email' => $request->login, 'password' => $request->password]) || Auth::guard('client')->attempt(['username' => $request->login, 'password' => $request->password])) {
             $request->session()->regenerate();
 
-            return redirect()->route('home')->with('success', 'Login successful.');
+            return redirect()->route('home');
         } else {
-            return Redirect::back();
+            return Redirect::back()->with('error', 'Invalid email or password.');
         }
     }
 
     public function logout(Request $request)
     {
-        Auth::logout();
+        Auth::guard("client")->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-
-        return redirect('/login');
+        return redirect()->route('home');
     }
 }

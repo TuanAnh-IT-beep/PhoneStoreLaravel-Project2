@@ -7,7 +7,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\Subproduct;
 use App\Models\SubSpec;
-class HomeController 
+class HomeController
 {
     public function index()
     {
@@ -21,20 +21,20 @@ class HomeController
         $products = Product::all();
         $categories = Category::all();
         $spec =SubSpec::all();
-        return view('clients.ViewAll', compact('subproducts', 'spec'));
+        return view('clients.view', compact('subproducts', 'spec'));
     }
     public function showByCategory($cateid){
-        return view('clients.ViewAll', compact('cateid'));
+        return view('clients.view', compact('cateid'));
     }
     public function showById($id){
-        return view('clients.ViewAll',compact('id'));
+        return view('clients.view',compact('id'));
     }
     public function detail($proid, $subid){
         $product=Product::FindOrFail($proid);
         $subproduct=Subproduct::FindOrFail($subid);
         $subproducts=$product->subproducts;
         $specs=Subspec::with('subproduct')->get();
-        return view('clients.Detail',compact('subproduct','subproducts','specs'));
+        return view('clients.detail',compact('subproduct','subproducts','specs'));
     }
 
 }

@@ -43,8 +43,7 @@ new class extends Component {
                             </th>
                             <td class="px-6 py-4">
                                 @if($manufacturer->icon)
-                                    <img src="{{ asset('storage/' . $manufacturer->icon) }}" alt="{{ $manufacturer->name }}"
-                                        class="w-12 h-12 object-cover border rounded-full">
+                                    <img src="{{ asset('storage/' . $manufacturer->icon) }}" alt="{{ $manufacturer->name }}">
                                 @else
                                     <span class="text-gray-400 text-sm">No image</span>
                                 @endif

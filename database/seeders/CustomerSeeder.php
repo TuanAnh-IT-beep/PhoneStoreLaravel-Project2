@@ -14,11 +14,11 @@ class CustomerSeeder extends Seeder
     {
         $customers = [
             [
-                'username' => 'tuananh',
+                'username' => 'guest',
                 'password' => bcrypt('12345678'),
-                'icon' => null,
-                'display_name' => 'tuananh',
-                'email' => 'cactustg252006@gmail.com'
+                'display_name' => 'Guest',
+                'email' => 'guest@example.com',
+                'phone' => '0123456789',
             ]
         ];
         \App\Models\Customer::insert($customers);

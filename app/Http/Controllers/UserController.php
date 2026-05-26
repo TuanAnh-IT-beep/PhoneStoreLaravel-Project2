@@ -20,7 +20,6 @@ class UserController
     public function index()
     {
         $users = User::with('role')->get();
-
         return view('admins.users.index', compact('users'));
     }
 
@@ -30,7 +29,6 @@ class UserController
     public function create()
     {
         $roles = Role::all();
-
         return view('admins.users.create', compact('roles'));
     }
 
@@ -43,7 +41,6 @@ class UserController
         if ($request->hasFile('icon')) {
             $iconPath = $request->file('icon')->store('users_avatars', 'public');
         }
-
         $user = User::create([
             'username' => $request->username,
             'email' => $request->email,
@@ -53,7 +50,6 @@ class UserController
             'role_id' => $request->role_id,
             'icon' => $iconPath
         ]);
-
         return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
 
@@ -115,18 +111,18 @@ class UserController
     {
         return view('admins.users.login');
     }
-
+    // Kiểm tra đăng nhập
     public function loginProcess(Request $request)
     {
         if (Auth::guard('admin')->attempt($request->only('email', 'password'))) {
             $request->session()->regenerate();
             return redirect()->route('admins.home')->with('success', 'Login successful.');
         } else {
-            return Redirect::back();
+            return Redirect::back()->with('error', 'Invalid email or password.');
         }
     }
     public function logout(Request $request){
-        Auth::logout();
+        Auth::guard('admin')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect()->route('admins.users.login')->with('success','');

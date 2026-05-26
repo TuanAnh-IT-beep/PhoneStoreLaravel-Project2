@@ -36,7 +36,7 @@ class PaymentMethodController
             'description' => $request->description,
             'icon' => $request->icon
         ]);
-        return Redirect::route('admins.settings.index');
+        return Redirect::route('admins.settings.index')->with('success', 'Payment method created successfully.');
     }
 
     /**
@@ -65,7 +65,7 @@ class PaymentMethodController
             'description' => $request->description,
             'icon' => $request->icon
         ]);
-        return Redirect::route('admins.settings.index');
+        return Redirect::route('admins.settings.index')->with('success', 'Payment method updated successfully.');
     }
 
     /**
@@ -74,6 +74,6 @@ class PaymentMethodController
     public function destroy(PaymentMethod $paymentMethod)
     {
         $paymentMethod->delete();
-        return Redirect::route('admins.settings.index');
+        return Redirect::route('admins.settings.index')->with('success', 'Payment method deleted successfully.');
     }
 }

@@ -16,8 +16,4 @@ class Customer extends Model implements Authenticatable
     public function orders(){
         return $this->hasMany(Order::class,'customer_id','id');
     }
-    public function getAuthPassword()
-    {
-        return $this->password;
-    }
 }

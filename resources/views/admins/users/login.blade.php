@@ -13,9 +13,15 @@
         <img src="/images/login/banner.png" alt="" class="image_side">
         <div class="login_side">
             <h1>Login as Administrator</h1>
+            @if (session('error'))
+                <div class="p-4 text-sm text-red-500 rounded-xl bg-red-50 border border-red-400 font-normal mt-3"
+                    role="alert">
+                    <span class="font-semibold mr-2">Error</span> {{ session('error') }}
+                </div>
+            @endif
             <form action="" method="post">
                 @csrf
-                <div class="mt-10">
+                <div class="mt-5">
                     <label for="username">E-mail</label>
                     <input type="text" name="email" placeholder="Enter your email" class="w-full bg-white mt-1">
                 </div>

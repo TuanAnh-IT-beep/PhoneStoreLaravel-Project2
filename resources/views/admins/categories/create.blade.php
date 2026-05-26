@@ -27,7 +27,7 @@
                         </div>
                         <div>
                             <label for="featured">Featured:</label>
-                            <input class="my-3 mx-3" type="checkbox" name="featured" value="1"><br>
+                            <input class="my-3 mx-3 truncate" type="checkbox" name="featured" value="1"><br>
                         </div>
                     </div>
                     <div class="flex justify-center">
