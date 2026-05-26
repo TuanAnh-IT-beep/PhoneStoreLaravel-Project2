@@ -37,6 +37,15 @@ class UserController
      */
     public function store(StoreUserRequest $request)
     {
+        if (User::where('username', $request->username)->exists()) {
+            return back()->with('error', 'Username already exists.');
+        }
+        if (User::where('email', $request->email)->exists()) {
+            return back()->with('error', 'Email already exists.');
+        }
+        if (str($request->password)->length < 8) {
+            return back()->with('error', 'Password must be at least 8 characters.');
+        }
         $iconPath = null;
         if ($request->hasFile('icon')) {
             $iconPath = $request->file('icon')->store('users_avatars', 'public');
@@ -76,6 +85,12 @@ class UserController
      */
     public function update(UpdateUserRequest $request, User $user)
     {
+        if (User::where('username', $request->username)->exists()) {
+            return back()->with('error', 'Username already exists.');
+        }
+        if (User::where('email', $request->email)->exists()) {
+            return back()->with('error', 'Email already exists.');
+        }
         $validated = $request->validated();
         if ($request->hasFile('icon')) {
             if ($user->icon) {

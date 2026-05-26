@@ -1,16 +1,21 @@
-@extends("admins.layouts.master")
+@extends('admins.layouts.master')
 @section('pageTitle', 'Categories - New')
-@section("main-content")
+@section('main-content')
     <div class="w-full mb-4 flex items-center justify-between">
         <h1>Categories → New</h1>
     </div>
+    @if (session('error'))
+        <div class="p-4 text-sm text-red-500 rounded-xl bg-red-50 border border-red-400 font-normal mb-4" role="alert">
+            <span class="font-semibold mr-2">Error</span>{{ session('error') }}
+        </div>
+    @endif
     <div class="main-container">
         <form method="post" action="{{ route('categories.store') }}" enctype="multipart/form-data">
             @csrf
             <div class="grid grid-cols-10 gap-4">
                 <div class="col-span-4">
                     <label for="name">Name:</label><br>
-                    <input class="mt-2 w-full" type="text" name="name" placeholder="Input name here..."><br>
+                    <input required class="mt-2 w-full" type="text" name="name" placeholder="Input name here..."><br>
                     <div class="flex gap-2 mt-4">
                         <button class="btn flex-1 icon-only">ADD</button>
                         <a class="btn flex-1 icon-only negative" href="{{ route('categories.index') }}">CANCEL</a>
@@ -18,12 +23,12 @@
                 </div>
                 <div class="col-span-6">
                     <label for="description">Description:</label><br>
-                    <textarea class="mt-2 w-full" name="description" placeholder="Input description here..."
-                        rows="10"></textarea><br>
+                    <textarea class="mt-2 w-full" name="description" placeholder="Input description here..." rows="10"></textarea><br>
                     <div class="flex items-center justify-between mt-2">
                         <div>
                             <label for="icon">Icon:</label>
-                            <input class="my-3 mx-3" type="file" name="icon" accept="image/*" onchange="previewIcon(event)">
+                            <input class="my-3 mx-3" type="file" name="icon" accept="image/*"
+                                onchange="previewIcon(event)">
                         </div>
                         <div>
                             <label for="featured">Featured:</label>
@@ -39,7 +44,7 @@
                             const output = document.getElementById('icon_preview');
                             if (event.target.files && event.target.files[0]) {
                                 const reader = new FileReader();
-                                reader.onload = function (e) {
+                                reader.onload = function(e) {
                                     output.src = e.target.result;
                                     output.classList.remove('hidden');
                                 };
