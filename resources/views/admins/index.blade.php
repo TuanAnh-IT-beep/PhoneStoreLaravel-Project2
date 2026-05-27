@@ -10,6 +10,15 @@
         use Carbon\Carbon;
         use Illuminate\Support\Facades\DB;
 
+        $statuses = [
+            -1 => ['text' => 'Cancelled', 'color' => 'text-red-500'],
+            0 => ['text' => 'Pending', 'color' => 'text-yellow-500'],
+            1 => ['text' => 'Confirmed', 'color' => 'text-green-500'],
+            2 => ['text' => 'Shipping', 'color' => 'text-blue-500'],
+            3 => ['text' => 'Delivered', 'color' => 'text-green-500'],
+            4 => ['text' => 'Completed', 'color' => 'text-green-500'],
+        ];
+
         $currentYear = Carbon::now()->year;
         $currentMonth = Carbon::now()->month;
         $currentDay = Carbon::now()->day;
@@ -55,6 +64,8 @@
         $totalUnconfirmedOrders = Order::where('status', 0)->count();
         $totalSubproducts = Subproduct::where('stock', '>', 0)->count();
         $totalLowQuantity = Subproduct::where('stock', '<', 10)->count();
+
+        $recentOrders = Order::orderBy('created_at', 'desc')->limit(10)->get();
     @endphp
 
     <div class="dashboard grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
@@ -170,11 +181,62 @@
             <div id="monthlyChart"></div>
         </div>
     </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-
-
+    <div class="main-container my-3">
+        <h3 class="text-lg font-bold mb-4 text-heading">Recent orders</h3>
+        <table class="table-auto w-full text-left rtl:text-right text-body">
+            <thead class="border-default">
+                <tr>
+                    <th scope="col" class="px-6 py-3 font-medium">ID</th>
+                    <th scope="col" class="px-6 py-3 font-medium">Receiver</th>
+                    <th scope="col" class="px-6 py-3 font-medium">Phone</th>
+                    <th scope="col" class="px-6 py-3 font-medium">Items</th>
+                    <th scope="col" class="px-6 py-3 font-medium">Total</th>
+                    <th scope="col" class="px-6 py-3 font-medium">Status</th>
+                    <th scope="col" class="px-6 py-3 font-medium">Created at</th>
+                    <th scope="col" class="px-6 py-3 font-medium">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (count($recentOrders) > 0)
+                    @foreach ($recentOrders as $order)
+                        <tr scope="row" class="px-6 py-4 font-medium text-heading whitespace-nowrap">
+                            <th class="px-6 py-4">
+                                {{ $loop->index + 1 }}
+                            </th>
+                            <td class="px-6 py-4 long" style="color: black">
+                                {{ $order->receiver }}
+                            </td>
+                            <td class="px-6 py-4" style="color: black">
+                                {{ $order->phone }}
+                            </td>
+                            <td class="px-6 py-4" style="color: black">
+                                {{ count($order->orderdetails) }}
+                            </td>
+                            <td class="px-6 py-4" style="color: black">
+                                {{ number_format($order->total_price, 0, ',', '.') }}đ
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="{{ $statuses[$order->status]['color'] }}">
+                                    {{ $statuses[$order->status]['text'] }}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4" style="color: black">
+                                {{ $order->created_at }}
+                            </td>
+                            <td class="px-6 py-4" style="color: black">
+                                <a class="btn edit icon-only" href="{{ route('orders.show', $order->id) }}">
+                                    <i class="fa-solid fa-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td colspan="6" class="px-6 py-4 text-center">No order found.</td>
+                    </tr>
+                @endif
+            </tbody>
+        </table>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
