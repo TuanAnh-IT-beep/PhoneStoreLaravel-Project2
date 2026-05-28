@@ -51,7 +51,7 @@ class OrderController
             ]);
         }
         session()->forget('cart');
-        return redirect()->route('home')->with('success', 'Order placed successfully.');
+        return redirect()->route('orders')->with('success', 'Order placed successfully.');
     }
 
     /**
@@ -112,5 +112,16 @@ class OrderController
         $totalPrice += 40000;
 
         return view('clients.orderConfirm', compact('client', 'payment', 'cart', 'totalPrice'));
+    }
+    public function OrderCancel(UpdateOrderRequest $request, Order $order)
+    {
+
+        $status = $order->status;
+        if ($status == 0 ) {
+            $order->update([
+                'status' => -1,
+            ]);
+        }
+        return redirect()->route('orders', $order->id)->with('success', 'Order updated successfully.');
     }
 }

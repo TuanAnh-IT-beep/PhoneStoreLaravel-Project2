@@ -54,7 +54,7 @@
                     <div class="border border-gray-200 rounded-2xl overflow-hidden">
                         <table class="w-full text-sm">
                             <tbody>
-                                @foreach ($subproduct->subspecs as $spec)
+                                @foreach ($subproduct->sub_specs as $spec)
                                     <tr class="border-b last:border-none">
                                         <td class="p-4 font-semibold bg-gray-50 text-gray-600 w-1/3">
                                             {{ $spec->spec?->name ?? 'N/A' }}

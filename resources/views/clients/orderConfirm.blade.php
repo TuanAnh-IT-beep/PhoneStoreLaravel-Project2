@@ -2,19 +2,19 @@
 @section('main-content')
     <div class="w-full">
         <div class="grid grid-cols-12 gap-10">
-            <div class="col-span-12 lg:col-span-6">
+            <div class="col-span-12 col-span-6">
                 <h1 class="text-3xl font-bold mb-6 text-gray-800">Order Confirmation</h1>
                 <div class="bg-white p-6 rounded-xl shadow-sm">
                     <form action="{{ route('order.confirm') }}" method="POST">
                         @csrf
                         @method('POST')
                     <input type="hidden" name="customer_id" value="{{ Auth::guard('client')->user()->id }}">
-                    <label for="receiver" class="block text-sm font-medium text-gray-700 mb-1">Receiver Name</label>
-                    <input type="text" name="receiver" class="w-50 border border-gray-300 rounded-md p-3 mb-4">
+                    <label for="receiver" class="block text-sm font-medium text-gray-700 mb-1" >Receiver Name</label>
+                    <input type="text" name="receiver" class="w-50 border border-gray-300 rounded-md p-3 mb-4" value="{{ Auth::guard('client')->user()->display_name }}">
                     <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Delivery Address</label>
-                    <input type="text" name="address" class="w-50 border border-gray-300 rounded-md p-3 mb-4">
+                    <input type="text" name="address" class="w-50 border border-gray-300 rounded-md p-3 mb-4" value="{{ Auth::guard('client')->user()->address }}">
                     <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                    <input type="text" name="phone" class="w-50 border border-gray-300 rounded-md p-3 mb-4">
+                    <input type="text" name="phone" class="w-50 border border-gray-300 rounded-md p-3 mb-4" value="{{ Auth::guard('client')->user()->phone }}">
                     <input type="hidden" name="total_price" value="{{ $totalPrice }}">
                     <input type="hidden" name="status" value="0">
                     <label for="payment" class="block text-sm font-medium text-gray-700 mb-1">Payment Method</label>
@@ -34,7 +34,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-span-12 lg:col-span-6" style="margin-top:40px">
+            <div class="col-span-12 col-span-6" style="margin-top:40px">
                 <div class=" bg-white p-6 rounded-xl shadow-sm" style="margin-top:20px;">
                     <!-- Order summary details here -->
                     @foreach ($cart as $id => $item)
@@ -84,4 +84,5 @@
             </div>
         </div>
     </div>
+    
 @endsection

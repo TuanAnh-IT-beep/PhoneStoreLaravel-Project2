@@ -62,12 +62,12 @@ $statuses = [
         </div>
         <label>Note</label>
         <textarea class="my-3 w-full" placeholder="No note." rows="6" readonly>{{ $order->note }}</textarea>
-        @if ($order->status > 0 && $order->status < 3)
+        @if ($order->status >= 0 && $order->status < 3)
             <div class="w-full flex justify-end">
                 <form method="post" action="{{ route('orders.update', $order->id) }}">
                     @csrf
                     @method('put')
-                    <button class="btn icon-only">ADVANCE STATUS</button>
+                    <button class="btn icon-only">CONFIRM </button>
                 </form>
             </div>
         @endif

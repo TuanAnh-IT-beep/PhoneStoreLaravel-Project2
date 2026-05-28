@@ -53,7 +53,7 @@ new class extends Component {
 
                 <div class="pt-4 flex-grow">
                     <h2 style="color:black" class="text-lg font-semibold leading-tight">
-                        {{ $subproduct->product->name }} {{ $subproduct->subspecs->where('spec_id',1)->first()?->value }} {{ $subproduct->subspecs->where('spec_id',12)->first()?->value }}
+                        {{ $subproduct->product->name }} {{ $subproduct->sub_specs->where('spec_id',1)->first()?->value }} {{ $subproduct->sub_specs->where('spec_id',12)->first()?->value }}
                     </h2>
                     <p style="color:gray;font-size:0.900rem">{{ $subproduct->product->category->name }}</p>
                     <p class="text-3xl font-extrabold text-red-600 mt-2">
