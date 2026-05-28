@@ -1,5 +1,4 @@
 @extends('clients.layouts.master')
-
 @section('main-content')
     <div class="w-full px-4 py-8"> <!-- Removed max-w-6xl to allow more room -->
         <div class="flex flex-col md:flex-row gap-6">
@@ -12,7 +11,6 @@
                 </div>
             </div>
 
-            <!-- Right Side: Products (Takes remaining space) -->
             <div class="grow">
                 <h1 class="text-3xl font-bold mb-6 text-gray-800">All Products</h1>
                 @livewire("client.viewall", [

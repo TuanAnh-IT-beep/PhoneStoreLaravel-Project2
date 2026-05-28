@@ -36,6 +36,15 @@ class CustomerController
      */
     public function store(StoreCustomerRequest $request)
     {
+        if (Customer::where('username', $request->username)->exists()) {
+            return back()->with('error', 'Username already exists.');
+        }
+        if (Customer::where('email', $request->email)->exists()) {
+            return back()->with('error', 'Email already exists.');
+        }
+        if (str($request->password)->length < 8) {
+            return back()->with('error', 'Password must be at least 8 characters.');
+        }
         $iconPath = null;
         if ($request->hasFile('icon')) {
             $iconPath = $request->file('icon')->store('customer_icons', 'public');
@@ -81,6 +90,12 @@ class CustomerController
      */
     public function update(UpdateCustomerRequest $request, Customer $customer)
     {
+        if (Customer::where('username', $request->username)->exists()) {
+            return back()->with('error', 'Username already exists.');
+        }
+        if (Customer::where('email', $request->email)->exists()) {
+            return back()->with('error', 'Email already exists.');
+        }
         $iconPath = $customer->icon;
         if ($request->hasFile('icon')) {
             if ($customer->icon) {
@@ -98,6 +113,7 @@ class CustomerController
             'icon' => $iconPath,
             'birthday' => $request->birthday ? date('Y-m-d', strtotime($request->birthday)) : null,
         ]);
+
         return redirect()->route('customers.index')->with('success', 'Customer updated successfully.');
     }
 
@@ -118,21 +134,21 @@ class CustomerController
 
     public function loginProcess(Request $request)
     {
-        if (Auth::guard('client')->attempt($request->only('email', 'password'))) {
+        if (Auth::guard('client')->attempt(['email' => $request->login, 'password' => $request->password]) || Auth::guard('client')->attempt(['username' => $request->login, 'password' => $request->password])) {
             $request->session()->regenerate();
 
-            return redirect()->route('home')->with('success', 'Login successful.');
+            return redirect()->route('home');
         } else {
-            return Redirect::back();
+            return Redirect::back()->with('error', 'Invalid email or password.');
         }
     }
 
     public function logout(Request $request)
     {
-        Auth::logout();
+        Auth::guard('client')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/login');
+        return redirect()->route('home');
     }
 }

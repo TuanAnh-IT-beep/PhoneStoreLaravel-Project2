@@ -20,7 +20,6 @@ class UserController
     public function index()
     {
         $users = User::with('role')->get();
-
         return view('admins.users.index', compact('users'));
     }
 
@@ -30,7 +29,6 @@ class UserController
     public function create()
     {
         $roles = Role::all();
-
         return view('admins.users.create', compact('roles'));
     }
 
@@ -39,11 +37,19 @@ class UserController
      */
     public function store(StoreUserRequest $request)
     {
+        if (User::where('username', $request->username)->exists()) {
+            return back()->with('error', 'Username already exists.');
+        }
+        if (User::where('email', $request->email)->exists()) {
+            return back()->with('error', 'Email already exists.');
+        }
+        if (str($request->password)->length < 8) {
+            return back()->with('error', 'Password must be at least 8 characters.');
+        }
         $iconPath = null;
         if ($request->hasFile('icon')) {
             $iconPath = $request->file('icon')->store('users_avatars', 'public');
         }
-
         $user = User::create([
             'username' => $request->username,
             'email' => $request->email,
@@ -53,7 +59,6 @@ class UserController
             'role_id' => $request->role_id,
             'icon' => $iconPath
         ]);
-
         return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
 
@@ -80,6 +85,12 @@ class UserController
      */
     public function update(UpdateUserRequest $request, User $user)
     {
+        if (User::where('username', $request->username)->exists()) {
+            return back()->with('error', 'Username already exists.');
+        }
+        if (User::where('email', $request->email)->exists()) {
+            return back()->with('error', 'Email already exists.');
+        }
         $validated = $request->validated();
         if ($request->hasFile('icon')) {
             if ($user->icon) {
@@ -115,18 +126,18 @@ class UserController
     {
         return view('admins.users.login');
     }
-
+    // Kiểm tra đăng nhập
     public function loginProcess(Request $request)
     {
         if (Auth::guard('admin')->attempt($request->only('email', 'password'))) {
             $request->session()->regenerate();
             return redirect()->route('admins.home')->with('success', 'Login successful.');
         } else {
-            return Redirect::back();
+            return Redirect::back()->with('error', 'Invalid email or password.');
         }
     }
     public function logout(Request $request){
-        Auth::logout();
+        Auth::guard('admin')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect()->route('admins.users.login')->with('success','');

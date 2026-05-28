@@ -1,9 +1,14 @@
-@extends("admins.layouts.master")
+@extends('admins.layouts.master')
 @section('pageTitle', 'Products - Edit')
-@section("main-content")
+@section('main-content')
     <div class="w-full mb-4 flex items-center justify-between">
         <h1>Products → {{ $product->name }} → Edit</h1>
     </div>
+    @if (session('error'))
+        <div class="p-4 text-sm text-red-500 rounded-xl bg-red-50 border border-red-400 font-normal mb-4" role="alert">
+            <span class="font-semibold mr-2">Error</span>{{ session('error') }}
+        </div>
+    @endif
     <div class="main-container">
         <form method="post" action="{{ route('products.update', $product->id) }}" enctype="multipart/form-data">
             @csrf
@@ -11,15 +16,18 @@
             <div class="grid grid-cols-10 gap-4">
                 <div class="col-span-4">
                     <label for="name">Name:</label><br>
-                    <input class="my-3 w-full" type="text" name="name" placeholder="Input product name here..." value="{{ $product->name }}"><br>
+                    <input required class="my-3 w-full" type="text" name="name"
+                        placeholder="Input product name here..." value="{{ $product->name }}"><br>
                     <label for="featured">Featured:</label><br>
-                    <input class="my-3" type="checkbox" name="featured" value="1" {{ $product->featured ? 'checked' : '' }}><br>
+                    <input class="my-3" type="checkbox" name="featured" value="1"
+                        {{ $product->featured ? 'checked' : '' }}><br>
                     <div class="flex gap-5">
                         <div class="w-full">
                             <label for="category_id">Category:</label><br>
-                            <select class="w-full my-3" name="category_id">
-                                @foreach($categories as $category)
-                                    <option value="{{ $category->id }}" {{ $product->category_id == $category->id ? 'selected' : '' }}>
+                            <select required class="w-full my-3" name="category_id">
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}"
+                                        {{ $product->category_id == $category->id ? 'selected' : '' }}>
                                         {{ $category->name }}
                                     </option>
                                 @endforeach
@@ -27,9 +35,10 @@
                         </div>
                         <div class="w-full">
                             <label for="manufacturer_id">Manufacturer:</label><br>
-                            <select class="w-full my-3" name="manufacturer_id">
-                                @foreach($manufacturers as $manufacturer)
-                                    <option value="{{ $manufacturer->id }}" {{ $product->manufacturer_id == $manufacturer->id ? 'selected' : '' }}>
+                            <select required class="w-full my-3" name="manufacturer_id">
+                                @foreach ($manufacturers as $manufacturer)
+                                    <option value="{{ $manufacturer->id }}"
+                                        {{ $product->manufacturer_id == $manufacturer->id ? 'selected' : '' }}>
                                         {{ $manufacturer->name }}
                                     </option>
                                 @endforeach
@@ -37,7 +46,8 @@
                         </div>
                     </div>
                     <label for="released_date">Release date:</label><br>
-                    <input class="my-3 w-full" type="date" name="released_date" value="{{ $product->released_date }}"><br>
+                    <input required class="my-3 w-full" type="date" name="released_date"
+                        value="{{ $product->released_date }}"><br>
                     <div class="flex gap-2 mt-4">
                         <button class="btn flex-1 icon-only">UPDATE</button>
                         <a class="btn flex-1 icon-only negative" href="{{ route('products.index') }}">CANCEL</a>
@@ -46,8 +56,7 @@
                 <div class="col-span-6">
                     <label for="description">Description:</label><br>
                     <div class="my-3 w-full">
-                        <textarea name="description" id="description" placeholder="Input description here..."
-                            rows="10">{{ $product->description }}</textarea><br>
+                        <textarea name="description" id="description" placeholder="Input description here..." rows="10">{{ $product->description }}</textarea><br>
                         <script>
                             tinymce.init({
                                 selector: '#description',
@@ -57,7 +66,8 @@
                     </div>
                     <div class="mt-4">
                         <label>Product Images:</label><br>
-                        <input type="file" id="image_selector" class="my-3 w-full" multiple accept="image/*" onchange="addImages(this)">
+                        <input type="file" id="image_selector" class="my-3 w-full" multiple accept="image/*"
+                            onchange="addImages(this)">
                         <input type="file" name="images[]" id="images_upload" class="hidden" multiple>
                         {{--
                         input đầu tiên sẽ được hiện để cho phép người dùng upload ảnh, sau khi upload sẽ chạy hàm addImages
@@ -65,12 +75,17 @@
                         làm kiểu này để hỗ trợ upload từng cái một
                         --}}
                         <div class="flex flex-wrap gap-4 mt-2 mb-4" id="image_previews">
-                            @foreach($product->images as $image)
-                                <div class="text-center relative inline-block" id="existing_image_container_{{ $image->id }}">
-                                    <img src="{{ asset('storage/' . $image->path) }}" class="w-24 h-24 object-cover border-2 rounded {{ $product->thumbnail_path == $image->path ? 'border-blue-500' : 'border-gray-300' }}">
-                                    <button type="button" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs shadow hover:bg-red-600" onclick="removeExistingImage({{ $image->id }})">X</button>
+                            @foreach ($product->images as $image)
+                                <div class="text-center relative inline-block"
+                                    id="existing_image_container_{{ $image->id }}">
+                                    <img src="{{ asset('storage/' . $image->path) }}"
+                                        class="w-24 h-24 object-cover border-2 rounded {{ $product->thumbnail_path == $image->path ? 'border-blue-500' : 'border-gray-300' }}">
+                                    <button type="button"
+                                        class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs shadow hover:bg-red-600"
+                                        onclick="removeExistingImage({{ $image->id }})">X</button>
                                     <br>
-                                    <input type="radio" name="thumbnail_image" value="{{ $image->path }}" {{ $product->thumbnail_path == $image->path ? 'checked' : '' }}>
+                                    <input type="radio" name="thumbnail_image" value="{{ $image->path }}"
+                                        {{ $product->thumbnail_path == $image->path ? 'checked' : '' }}>
                                     <label class="text-sm">Thumbnail</label>
                                 </div>
                             @endforeach
@@ -109,7 +124,7 @@
                             const previewContainer = document.getElementById('image_previews');
                             const files = document.getElementById('images_upload').files;
                             document.querySelectorAll('.new-image-preview').forEach(el => el.remove());
-                            
+
                             const checkedRadio = document.querySelector('input[name="thumbnail_image"]:checked');
                             let currentSelection = checkedRadio ? checkedRadio.value : '';
 
@@ -120,7 +135,8 @@
                                 }
                             }
                             Array.from(files).forEach((file, index) => {
-                                const radioValue = 'new_' + index; // sử dụng để phân biệt giữa ảnh sẽ upload và ảnh đã upload trước đó, phục vụ cho hàm xóa ảnh
+                                const radioValue = 'new_' +
+                                index; // sử dụng để phân biệt giữa ảnh sẽ upload và ảnh đã upload trước đó, phục vụ cho hàm xóa ảnh
                                 const isChecked = (currentSelection === radioValue);
                                 const reader = new FileReader();
                                 reader.onload = function(e) {
@@ -138,17 +154,19 @@
                                 reader.readAsDataURL(file);
                             });
                         }
+
                         function removeImage(index) {
                             const newDt = new DataTransfer();
                             Array.from(dataTransfer.files).forEach((file, i) => {
                                 if (i !== index) newDt.items.add(file);
                             });
-                            
+
                             dataTransfer.items.clear();
                             Array.from(newDt.files).forEach(file => dataTransfer.items.add(file));
                             document.getElementById('images_upload').files = dataTransfer.files;
                             renderPreviews();
                         }
+
                         function removeExistingImage(id) {
                             document.getElementById('existing_image_container_' + id).style.display = 'none';
                             const input = document.createElement('input');

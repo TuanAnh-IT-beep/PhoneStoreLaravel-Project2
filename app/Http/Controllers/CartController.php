@@ -12,7 +12,6 @@ class CartController
     public function showCart()
     {
         $cart = Session::get('cart', []);
-
         return view('clients.Cart', compact('cart'));
     }
 

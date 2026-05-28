@@ -40,7 +40,7 @@ class PermissionController
             'name' => $request->name,
             'description' => $request->description
         ]);
-        return Redirect::route('admins.settings.index');
+        return Redirect::route('admins.settings.index')->with('success', 'Permission created successfully.');
     }
 
     /**
@@ -68,7 +68,7 @@ class PermissionController
             'name' => $request->name,
             'description' => $request->description
         ]);
-        return Redirect::route('admins.settings.index');
+        return Redirect::route('admins.settings.index')->with('success', 'Permission updated successfully.');
     }
 
     /**
@@ -78,6 +78,6 @@ class PermissionController
     {
         $permission->roles()->detach();
         $permission->delete();
-        return Redirect::route('admins.settings.index');
+        return Redirect::route('admins.settings.index')->with('success', 'Permission deleted successfully.');
     }
 }

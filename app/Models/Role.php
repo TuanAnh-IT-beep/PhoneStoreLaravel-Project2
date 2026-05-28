@@ -13,10 +13,14 @@ class Role extends Model
     protected $primaryKey = 'id';
     protected $fillable = ['name'];
     public $timestamps = false;
-    public function Users(){
+    public function users(){
         return $this->hasMany(User::class,'role_id','id');
     }
     public function permissions(){
         return $this->belongsToMany(Permission::class, 'role_permissions', 'role_id', 'permission_id');
     }
+    public function hasPermission($permission) {
+        return $this->permissions()->where('name', $permission)->exists();
+    }
+
 }

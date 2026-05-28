@@ -16,8 +16,8 @@
             <form action="" method="post">
                 @csrf
                 <div class="mt-10">
-                    <label for="username">E-mail</label>
-                    <input type="text" name="email" placeholder="Enter your email" class="w-full bg-white mt-1">
+                    <label for="login">Username or E-mail</label>
+                    <input type="text" name="login" placeholder="Enter your username or e-mail here..." class="w-full bg-white mt-1">
                 </div>
                 <div class="mt-3">
                     <label for="password">Password</label>

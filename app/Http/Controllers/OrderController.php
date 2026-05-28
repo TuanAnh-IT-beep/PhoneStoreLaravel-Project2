@@ -8,6 +8,7 @@ use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\PaymentMethod;
+use App\Models\Subproduct;
 
 class OrderController
 {
@@ -24,14 +25,66 @@ class OrderController
     /**
      * Show the form for creating a new resource.
      */
-    public function create() {}
+    public function create()
+    {
+        $payment_methods = PaymentMethod::all();
+
+        return view('admins.orders.create', compact('payment_methods'));
+    }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(StoreOrderRequest $request)
     {
+        $total_price = 0;
+        foreach ($request->order_details as $item) {
+            $subproduct = Subproduct::find($item['subproduct_id']);
+            if ($subproduct->stock < $item['quantity']) {
+                return back()->with('error', 'One of the subproducts has insufficient stock.');
+            }
+            if ($subproduct) {
+                $total_price += $subproduct->price * $item['quantity'];
+            }
+        }
+        $total_price += 40000;
+        $order = Order::create([
+            'customer_id' => $request->customer_id,
+            'receiver' => $request->receiver,
+            'address' => $request->address,
+            'phone' => $request->phone,
+            'payment_method_id' => $request->payment_method_id,
+            'note' => $request->note,
+            'status' => $request->status,
+            'ship_fee' => 40000,
+            'total_price' => $total_price,
+        ]);
+        if ($request->has('order_details')) {
+            foreach ($request->order_details as $item) {
+                $subproduct = Subproduct::find($item['subproduct_id']);
+                if ($subproduct) {
+                    OrderDetail::create([
+                        'order_id' => $order->id,
+                        'subproduct_id' => $subproduct->id,
+                        'quantity' => $item['quantity'],
+                        'total' => $subproduct->price * $item['quantity'],
+                    ]);
+                    $subproduct->update(['stock' => $subproduct->stock - $item['quantity']]);
+                }
+            }
+        }
+        return redirect()->route('orders.index')->with('success', 'Order created successfully.');
+    }
+
+    public function placeOrder(StoreOrderRequest $request)
+    {
         $cart = session()->get('cart', []);
+        foreach ($cart as $item) {
+            $subproduct = Subproduct::find($item['id']);
+            if ($subproduct->stock < $item['stock']) {
+                return back()->with('error', 'One of the item in carts has insufficient stock.');
+            }
+        }
         $order = Order::create([
             'customer_id' => $request->customer_id,
             'receiver' => $request->receiver,
@@ -39,6 +92,7 @@ class OrderController
             'phone' => $request->phone,
             'payment_method_id' => $request->payment,
             'note' => $request->note,
+            'ship_fee' => 40000,
             'total_price' => $request->total_price,
             'status' => $request->status,
         ]);
@@ -49,6 +103,7 @@ class OrderController
                 'quantity' => $item['stock'],
                 'total' => $item['price'] * $item['stock'],
             ]);
+            Subproduct::find($item['id'])->update(['stock' => Subproduct::find($item['id'])->stock - $item['stock']]);
         }
         session()->forget('cart');
         return redirect()->route('orders')->with('success', 'Order placed successfully.');
@@ -60,6 +115,7 @@ class OrderController
     public function show(Order $order)
     {
         $order->load(['customer', 'payment', 'orderdetails']);
+
         return view('admins.orders.show', compact('order'));
     }
 
@@ -77,9 +133,10 @@ class OrderController
         $status = $order->status;
         if ($status >= 0 && $status < 3) {
             $order->update([
-                'status' => $status+1,
+                'status' => $status + 1,
             ]);
         }
+
         return redirect()->route('orders.show', $order->id)->with('success', 'Order updated successfully.');
     }
 
@@ -97,7 +154,7 @@ class OrderController
     {
         $orders = Order::where('customer_id', auth()->guard('client')->id())->with('orderdetails')->get();
 
-        return view('clients.Orders', compact('orders'));
+        return view('clients.orders', compact('orders'));
     }
 
     public function orderConfirm()

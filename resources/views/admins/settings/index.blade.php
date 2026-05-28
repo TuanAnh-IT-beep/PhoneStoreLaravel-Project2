@@ -1,10 +1,15 @@
-@extends("admins.layouts.master")
+@extends('admins.layouts.master')
 @section('pageTitle', 'Settings')
 
-@section("main-content")
+@section('main-content')
     <div class="w-full mb-4 flex items-center justify-between">
         <h1>Settings</h1>
     </div>
+    @if (session('success'))
+        <div class="p-4 text-sm text-emerald-500 rounded-xl bg-emerald-50 border border-emerald-400 font-normal mb-4"
+            role="alert"> <span class="font-semibold mr-2">Success</span> {{ session('success') }}
+        </div>
+    @endif
     <div class="w-full my-4 flex items-center justify-between">
         <h3>Permissions</h3>
         <a class="btn" href="{{ route(name: 'permissions.create') }}"><i class="fa-solid fa-plus"></i> ADD NEW
@@ -112,7 +117,8 @@
                                 <form method="post" action="{{ route('payment_methods.destroy', $method->id) }}">
                                     @csrf
                                     @method('DELETE')
-                                    <a class="btn edit icon-only" href="{{ route('payment_methods.edit', $method->id) }}"><i
+                                    <a class="btn edit icon-only"
+                                        href="{{ route('payment_methods.edit', $method->id) }}"><i
                                             class="fa-solid fa-pencil"></i></a>
                                     <button class="btn delete icon-only"><i class="fa-solid fa-trash"></i></button>
                                 </form>

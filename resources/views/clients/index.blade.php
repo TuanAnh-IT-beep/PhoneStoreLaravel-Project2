@@ -1,3 +1,4 @@
+
 @include('admins.layouts.head')
 @include('clients.layouts.header')
 <div id="default-carousel" class="relative w-250" style="margin-left: 22%;margin-bottom: 25px;" data-carousel="slide">
@@ -85,7 +86,7 @@
                             @endforeach
                             <div class="md:col-span-2 grid grid-cols-3 gap-3">
                                 @foreach ($categories->where('featured', 1) as $cate)
-                                    <a href="/{{ $cate->id }}/view">
+                                    <a href="{{ route('viewbycategory',$cate->id) }}">
                                         <div class="bg-white p-3 rounded-xl flex items-center gap-3 shadow-sm">
                                             <div class="w-10 h-10 bg-gray-100 rounded">
                                                 <img src="{{ asset('storage/' . $cate->icon) }}"

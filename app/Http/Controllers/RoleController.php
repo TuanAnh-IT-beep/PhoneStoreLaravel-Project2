@@ -41,7 +41,7 @@ class RoleController
             $role->permissions()->sync($request->permissions);
         }
 
-        return Redirect::route('admins.settings.index');
+        return Redirect::route('admins.settings.index')->with('success', 'Role created successfully.');
     }
 
     /**
@@ -76,7 +76,7 @@ class RoleController
             $role->permissions()->detach();
         }
 
-        return Redirect::route('admins.settings.index');
+        return Redirect::route('admins.settings.index')->with('success', 'Role updated successfully.');
     }
 
     /**
@@ -86,6 +86,6 @@ class RoleController
     {
         $role->permissions()->detach();
         $role->delete();
-        return Redirect::route('admins.settings.index');
+        return Redirect::route('admins.settings.index')->with('success', 'Role deleted successfully.');
     }
 }

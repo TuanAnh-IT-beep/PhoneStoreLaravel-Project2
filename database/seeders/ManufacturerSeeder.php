@@ -12,6 +12,5 @@ class ManufacturerSeeder extends Seeder
      */
     public function run(): void
     {
-        //
     }
 }

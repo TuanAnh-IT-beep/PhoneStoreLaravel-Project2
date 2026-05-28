@@ -23,12 +23,10 @@ class User extends Model implements Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
-
-    /**
-     * Override the default auth password field.
-     */
-    public function getAuthPassword()
-    {
-        return $this->password;
+    public function orders(){
+        return $this->hasMany(Order::class,'customer_id','id');
+    }
+    public function hasPermission($permission) {
+        return $this->role()->hasPermission($permission);
     }
 }

@@ -5,12 +5,12 @@ use App\Models\Order;
 new class extends Component {
     public string $search = '';
     public $statuses = [
-        -1 => "Cancelled",
-        0 => "Pending",
-        1 => "Confirmed",
-        2 => "Shipping",
-        3 => "Delivered",
-        4 => "Completed",
+        -1 => ['text' => 'Cancelled', 'color' => 'text-red-500'],
+        0 => ['text' => 'Pending', 'color' => 'text-yellow-500'],
+        1 => ['text' => 'Confirmed', 'color' => 'text-green-500'],
+        2 => ['text' => 'Shipping', 'color' => 'text-blue-500'],
+        3 => ['text' => 'Delivered', 'color' => 'text-green-500'],
+        4 => ['text' => 'Completed', 'color' => 'text-green-500'],
     ];
     public function with(): array
     {
@@ -23,7 +23,6 @@ new class extends Component {
                 ->get(),
         ];
     }
-
 };
 ?>
 
@@ -65,8 +64,10 @@ new class extends Component {
                             <td class="px-6 py-4" style="color: black">
                                 {{ number_format($order->total_price, 0, ',', '.') }}đ
                             </td>
-                            <td class="px-6 py-4" style="color: black">
-                                {{ $statuses[$order->status] }}
+                            <td class="px-6 py-4">
+                                <span class="{{ $statuses[$order->status]['color'] }}">
+                                    {{ $statuses[$order->status]['text'] }}
+                                </span>
                             </td>
                             <td class="px-6 py-4" style="color: black">
                                 <a class="btn edit icon-only" href="{{ route('orders.show', $order->id) }}">
