@@ -7,6 +7,19 @@ new class extends Component {
     use WithPagination;
 
     public string $search = '';
+    public string $sortBy = 'id';
+    public string $sortDir = 'asc';
+
+    public function setSortBy($sortByField)
+    {
+        if ($this->sortBy === $sortByField) {
+            $this->sortDir = ($this->sortDir === 'asc') ? 'desc' : 'asc';
+        } else {
+            $this->sortBy = $sortByField;
+            $this->sortDir = 'asc';
+        }
+        $this->resetPage();
+    }
 
     public function updatedSearch()
     {
@@ -18,7 +31,7 @@ new class extends Component {
         return [
             'products' => Product::with('category', 'manufacturer', 'subproducts')
                 ->where('name', 'like', '%' . $this->search . '%')
-                ->orderBy('id', 'asc')
+                ->orderBy($this->sortBy, $this->sortDir)
                 ->paginate(10),
         ];
     }
@@ -34,11 +47,11 @@ new class extends Component {
         <table class="table-auto w-full text-left rtl:text-right text-body">
             <thead class="border-default">
                 <tr>
-                    <th scope="col" class="px-6 py-3 font-medium">ID</th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('id')">ID @if($sortBy === 'id')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
                     <th scope="col" class="px-6 py-3 font-medium">Thumbnail</th>
-                    <th scope="col" class="px-6 py-3 font-medium">Name</th>
-                    <th scope="col" class="px-6 py-3 font-medium">Manufacturer</th>
-                    <th scope="col" class="px-6 py-3 font-medium">Category</th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('name')">Name @if($sortBy === 'name')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('manufacturer_id')">Manufacturer @if($sortBy === 'manufacturer_id')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('category_id')">Category @if($sortBy === 'category_id')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
                     <th scope="col" class="px-6 py-3 font-medium">Actions</th>
                 </tr>
             </thead>

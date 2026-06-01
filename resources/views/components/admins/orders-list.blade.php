@@ -7,6 +7,19 @@ new class extends Component {
     use WithPagination;
 
     public string $search = '';
+    public string $sortBy = 'id';
+    public string $sortDir = 'asc';
+
+    public function setSortBy($sortByField)
+    {
+        if ($this->sortBy === $sortByField) {
+            $this->sortDir = ($this->sortDir === 'asc') ? 'desc' : 'asc';
+        } else {
+            $this->sortBy = $sortByField;
+            $this->sortDir = 'asc';
+        }
+        $this->resetPage();
+    }
 
     public $statuses = [
         -1 => ['text' => 'Cancelled', 'color' => 'text-red-500'],
@@ -29,7 +42,7 @@ new class extends Component {
                 ->where('receiver', 'like', '%' . $this->search . '%')
                 ->orWhere('phone', 'like', '%' . $this->search . '%')
                 ->orWhere('address', 'like', '%' . $this->search . '%')
-                ->orderBy('id', 'asc')
+                ->orderBy($this->sortBy, $this->sortDir)
                 ->paginate(10),
         ];
     }
@@ -46,12 +59,12 @@ new class extends Component {
         <table class="table-auto w-full text-left rtl:text-right text-body">
             <thead class="border-default">
                 <tr>
-                    <th scope="col" class="px-6 py-3 font-medium">ID</th>
-                    <th scope="col" class="px-6 py-3 font-medium">Receiver</th>
-                    <th scope="col" class="px-6 py-3 font-medium">Phone</th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('id')">ID @if($sortBy === 'id')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('receiver')">Receiver @if($sortBy === 'receiver')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('phone')">Phone @if($sortBy === 'phone')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
                     <th scope="col" class="px-6 py-3 font-medium">Items</th>
-                    <th scope="col" class="px-6 py-3 font-medium">Total</th>
-                    <th scope="col" class="px-6 py-3 font-medium">Status</th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('total_price')">Total @if($sortBy === 'total_price')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('status')">Status @if($sortBy === 'status')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
                     <th scope="col" class="px-6 py-3 font-medium">Actions</th>
                 </tr>
             </thead>
