@@ -33,7 +33,7 @@ new class extends Component {
             'manufacturers' => Manufacturer::where('name', 'like', '%' . $this->search . '%')
                 ->orWhere('description', 'like', '%' . $this->search . '%')
                 ->orderBy($this->sortBy, $this->sortDir)
-                ->paginate(1),
+                ->paginate(10),
         ];
     }
 };
