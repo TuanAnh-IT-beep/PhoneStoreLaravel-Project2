@@ -1,8 +1,10 @@
 <?php
 
 use Livewire\Component;
+use Livewire\WithPagination;
 use App\Models\Subproduct;
 new class extends Component {
+    use WithPagination;
 
     public $product;
     public function mount($product)
@@ -10,13 +12,19 @@ new class extends Component {
         $this->product = $product;
     }
     public string $search = '';
+
+    public function updatedSearch()
+    {
+        $this->resetPage();
+    }
+
     public function with(): array
     {
         return [
             'subproducts' => Subproduct::where('name', 'like', '%' . $this->search . '%')
                 ->where('product_id', $this->product->id)
                 ->orderBy('id', 'asc')
-                ->get(),
+                ->paginate(10),
         ];
     }
 };
@@ -47,9 +55,9 @@ new class extends Component {
                                 {{ $subproduct->id }}
                             </th>
                             <td class="px-6 py-4">
-                                @if($subproduct->thumbnail_path)
-                                    <img src="{{ asset('storage/' . $subproduct->thumbnail_path) }}" alt="{{ $subproduct->name }}"
-                                        class="w-16 h-16 object-cover border rounded">
+                                @if ($subproduct->thumbnail_path)
+                                    <img src="{{ asset('storage/' . $subproduct->thumbnail_path) }}"
+                                        alt="{{ $subproduct->name }}" class="w-16 h-16 object-cover border rounded">
                                 @else
                                     <span class="text-gray-400 text-sm">No image</span>
                                 @endif
@@ -82,6 +90,11 @@ new class extends Component {
                     </tr>
                 @endif
             </tbody>
+            <tfoot>
+                <tr style="border: 0;">
+                    <td colspan="5" class="pt-4"> {{ $subproducts->links() }}</td>
+                </tr>
+            </tfoot>
         </table>
     </div>
 </div>

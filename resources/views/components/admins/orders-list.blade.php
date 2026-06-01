@@ -1,9 +1,13 @@
 <?php
 
 use Livewire\Component;
+use Livewire\WithPagination;
 use App\Models\Order;
 new class extends Component {
+    use WithPagination;
+
     public string $search = '';
+
     public $statuses = [
         -1 => ['text' => 'Cancelled', 'color' => 'text-red-500'],
         0 => ['text' => 'Pending', 'color' => 'text-yellow-500'],
@@ -12,6 +16,12 @@ new class extends Component {
         3 => ['text' => 'Delivered', 'color' => 'text-green-500'],
         4 => ['text' => 'Completed', 'color' => 'text-green-500'],
     ];
+
+    public function updatedSearch()
+    {
+        $this->resetPage();
+    }
+
     public function with(): array
     {
         return [
@@ -20,7 +30,7 @@ new class extends Component {
                 ->orWhere('phone', 'like', '%' . $this->search . '%')
                 ->orWhere('address', 'like', '%' . $this->search . '%')
                 ->orderBy('id', 'asc')
-                ->get(),
+                ->paginate(10),
         ];
     }
 };
@@ -78,10 +88,16 @@ new class extends Component {
                     @endforeach
                 @else
                     <tr>
-                        <td colspan="6" class="px-6 py-4 text-center">No order found.</td>
+                        <td colspan="7" class="px-6 py-4 text-center">No order found.</td>
                     </tr>
                 @endif
             </tbody>
+            <tfoot>
+                <tr style="border: 0;">
+                    <td colspan="7" class="pt-4"> {{ $orders->links() }}</td>
+                </tr>
+            </tfoot>
         </table>
     </div>
+
 </div>

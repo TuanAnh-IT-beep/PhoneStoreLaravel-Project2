@@ -1,11 +1,18 @@
 <?php
 
 use Livewire\Component;
+use Livewire\WithPagination;
 use App\Models\Category;
 
-new class extends Component
-{
+new class extends Component {
+    use WithPagination;
+
     public string $search = '';
+
+    public function updatedSearch()
+    {
+        $this->resetPage();
+    }
 
     public function with(): array
     {
@@ -13,7 +20,7 @@ new class extends Component
             'categories' => Category::where('name', 'like', '%' . $this->search . '%')
                 ->orWhere('description', 'like', '%' . $this->search . '%')
                 ->orderBy('id', 'asc')
-                ->get(),
+                ->paginate(10),
         ];
     }
 };
@@ -44,7 +51,7 @@ new class extends Component
                             class="px-6 py-4 font-medium text-heading whitespace-nowrap">
                             <th class="px-6 py-4">{{ $category->id }}</th>
                             <td class="px-6 py-4">
-                                @if($category->icon)
+                                @if ($category->icon)
                                     <img src="{{ asset('storage/' . $category->icon) }}" alt="{{ $category->name }}">
                                 @else
                                     <span class="text-gray-400 text-sm">No image</span>
@@ -57,7 +64,9 @@ new class extends Component
                                     onsubmit="return confirm('Are you sure you want to delete this category?');">
                                     @csrf
                                     @method('DELETE')
-                                    <a class="btn edit icon-only" href="{{ route('categories.edit', $category->id) }}"><i class="fa-solid fa-pencil"></i></a>
+                                    <a class="btn edit icon-only"
+                                        href="{{ route('categories.edit', $category->id) }}"><i
+                                            class="fa-solid fa-pencil"></i></a>
                                     <button class="btn delete icon-only"><i class="fa-solid fa-trash"></i></button>
                                 </form>
                             </td>
@@ -69,6 +78,11 @@ new class extends Component
                     </tr>
                 @endif
             </tbody>
+            <tfoot>
+                <tr style="border: 0;">
+                    <td colspan="5" class="pt-4"> {{ $categories->links() }}</td>
+                </tr>
+            </tfoot>
         </table>
     </div>
 </div>

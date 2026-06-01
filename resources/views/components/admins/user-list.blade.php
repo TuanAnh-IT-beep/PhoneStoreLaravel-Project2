@@ -1,9 +1,17 @@
 <?php
 
 use Livewire\Component;
+use Livewire\WithPagination;
 use App\Models\User;
 new class extends Component {
+    use WithPagination;
+
     public string $search = '';
+
+    public function updatedSearch()
+    {
+        $this->resetPage();
+    }
 
     public function with(): array
     {
@@ -12,7 +20,7 @@ new class extends Component {
                 ->orWhere('email', 'like', '%' . $this->search . '%')
                 ->orWhere('phone', 'like', '%' . $this->search . '%')
                 ->orderBy('id', 'asc')
-                ->get(),
+                ->paginate(10),
         ];
     }
 };
@@ -72,7 +80,11 @@ new class extends Component {
                     </tr>
                 @endif
             </tbody>
-
+            <tfoot>
+                <tr style="border: 0;">
+                    <td colspan="5" class="pt-4"> {{ $users->links() }}</td>
+                </tr>
+            </tfoot>
         </table>
     </div>
 </div>

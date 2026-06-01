@@ -1,16 +1,25 @@
 <?php
 
 use Livewire\Component;
+use Livewire\WithPagination;
 use App\Models\Product;
 new class extends Component {
+    use WithPagination;
+
     public string $search = '';
+
+    public function updatedSearch()
+    {
+        $this->resetPage();
+    }
 
     public function with(): array
     {
         return [
-            'products' => Product::with('category', 'manufacturer', 'subproducts')->where('name', 'like', '%' . $this->search . '%')
+            'products' => Product::with('category', 'manufacturer', 'subproducts')
+                ->where('name', 'like', '%' . $this->search . '%')
                 ->orderBy('id', 'asc')
-                ->get(),
+                ->paginate(10),
         ];
     }
 };
@@ -41,7 +50,7 @@ new class extends Component {
                                 {{ $pro->id }}
                             </th>
                             <td class="px-6 py-4">
-                                @if($pro->thumbnail_path)
+                                @if ($pro->thumbnail_path)
                                     <img src="{{ asset('storage/' . $pro->thumbnail_path) }}" alt="{{ $pro->name }}"
                                         class="w-16 h-16 object-cover border rounded">
                                 @else
@@ -76,6 +85,14 @@ new class extends Component {
                     </tr>
                 @endif
             </tbody>
+            <tfoot>
+                <tr style="border: 0;">
+                    <td colspan="6" class="pt-4"> {{ $products->links() }}</td>
+                </tr>
+            </tfoot>
         </table>
+    </div>
+    <div class="mt-4">
+        {{ $products->links() }}
     </div>
 </div>

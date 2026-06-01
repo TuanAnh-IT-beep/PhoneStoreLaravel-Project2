@@ -1,16 +1,24 @@
 <?php
 
 use Livewire\Component;
+use Livewire\WithPagination;
 use App\Models\Customer;
 new class extends Component {
+    use WithPagination;
+
     public string $search = '';
+
+    public function updatedSearch()
+    {
+        $this->resetPage();
+    }
 
     public function with(): array
     {
         return [
             'customers' => Customer::where('display_name', 'like', '%' . $this->search . '%')
                 ->orderBy('id', 'asc')
-                ->get(),
+                ->paginate(10),
         ];
     }
 };
@@ -57,10 +65,15 @@ new class extends Component {
                     @endforeach
                 @else
                     <tr>
-                        <td colspan="4" class="px-6 py-4 text-center">No customer found.</td>
+                        <td colspan="6" class="px-6 py-4 text-center">No customer found.</td>
                     </tr>
                 @endif
             </tbody>
+            <tfoot>
+                <tr style="border: 0;">
+                    <td colspan="6" class="pt-4"> {{ $customers->links() }}</td>
+                </tr>
+            </tfoot>
         </table>
     </div>
 </div>
