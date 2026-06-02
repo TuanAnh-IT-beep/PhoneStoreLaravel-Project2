@@ -55,7 +55,7 @@
                                     <h3 style="font-size:15px" class="font-bold text-gray-800 leading-tight">
                                         {{ $item['name'] }}</h3>
                                 </div>
-                                <div class="text-left md:text-right min-w-[120px]">
+                                <div class="text-left md:text-right min-w-[120px]">-
                                     <p name="stock" style="font-size:15px" class="text-gray-400">Quantity:
                                         {{ $item['stock'] }}</p>
                                 </div>
