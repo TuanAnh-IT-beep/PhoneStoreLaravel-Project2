@@ -49,15 +49,6 @@ new class extends Component {
     <div class="flex flex-col md:flex-row gap-6">
 
         <!-- Left Side: Filter (Fixed Width) -->
-        <div class="w-full md:w-64 shrink-0">
-            <div class="bg-white p-6 rounded-xl shadow-sm min-h-[100px]">
-                <h1 class="text-2xl font-bold mb-4">Filter</h1>
-                <select>
-                    @foreach ( $products as $pro)
-                    <option value="{{ $pro->id }}">{{$pro->name}}</option>
-                     @endforeach
-                </select>
-            </div>
         </div>
         <div class="grow">
             <h1 class="text-3xl font-bold mb-6 text-gray-800">All Products</h1>

@@ -172,11 +172,12 @@ class OrderController
             $totalPrice += $item['price'] * $item['stock'];
         }
         $totalPrice += 40000;
-        return view('clients.orderConfirm', compact('client', 'payment', 'cart', 'totalPrice'));
-    }
-    public function OrderCancel(UpdateOrderRequest $request, Order $order)
-    {
 
+        return view('clients.order_confirms', compact('client', 'payment', 'cart', 'totalPrice'));
+    }
+    public function OrderCancel(UpdateOrderRequest $request, $id)
+    {
+        $order = Order::findOrFail($id);
         $status = $order->status;
         if ($status == 0 ) {
             $order->update([

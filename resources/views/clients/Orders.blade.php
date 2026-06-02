@@ -41,7 +41,7 @@ $statuses = [
                             </div>
                             @if ($order->status == 0)
                                 <div class="w-full flex justify-end mt-4">
-                                    <button type="submit" class="btn icon-only" onclick="toggleModal('{{ route('order.cancel', $order->id) }}')">CANCEL
+                                    <button type="button" class="btn icon-only" onclick="toggleModal('{{ route('order.cancel', $order->id) }}')">CANCEL
                                         ORDER</button>
                                 </div>
                             @endif
@@ -74,16 +74,16 @@ $statuses = [
             <div class="flex flex-row justify-between gap-4 w-full">
                 <button type="button" onclick="toggleModal()"
                     class="py-4 bg-[#c4c4c4] text-gray-800 font-bold text-lg rounded-full hover:bg-gray-400 transition-colors border-0"
-                    style="width:100px">
+                    style="width:100px">    
                     Close
                 </button>
-                <form action="" method="GET" id="cancelForm">
+                <form action="" method="POST" id="cancelForm">
                     @csrf
-                    @method('GET')
+                    @method('PUT')
                     <button type="submit"
                         class=" py-4 bg-[#ff2d20] font-bold text-lg rounded-full hover:bg-red-700 shadow-md transition-all border-0"
                         style="width:100px">
-                        Cancel
+                        Yes
                     </button>
                 </form>
             </div>

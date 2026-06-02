@@ -39,3 +39,4 @@ Route::get('/minus/{subproduct}', [CartController::class, 'minus'])->name('minus
 Route::get('/order_confirm', [OrderController::class, 'orderConfirm'])->name('orderConfirm');
 Route::get('/orders', [OrderController::class, 'showinClient'])->name('orders');
 Route::post('/confirm', [OrderController::class, 'placeOrder'])->name('order.confirm');
+Route::put('/cancel/{id}',[OrderController::class,'OrderCancel'])->name('order.cancel');
