@@ -1,8 +1,8 @@
 @extends('admins.layouts.master')
-@section('pageTitle', 'Subproducts - Edit {{ $subproduct->name }}')
+@section('pageTitle', 'Subproducts - Edit')
 @section('main-content')
     <div class="w-full mb-4 flex items-center justify-between">
-        <h1>Products → {{ $product->name }} → Subproducts → Edit {{ $subproduct->name }}</h1>
+        <h1>Products → {{ $product->name }} → Subproducts → Edit</h1>
     </div>
     @if (session('error'))
         <div class="p-4 text-sm text-red-500 rounded-xl bg-red-50 border border-red-400 font-normal mb-4" role="alert">
@@ -16,9 +16,6 @@
             <input type="hidden" name="product_id" value="{{ $product->id }}">
             <div class="grid grid-cols-10 gap-4">
                 <div class="col-span-4">
-                    <label for="name">Name:</label><br>
-                    <input required class="my-3 w-full" type="text" name="name"
-                        placeholder="Input subproduct name here..." value="{{ old('name', $subproduct->name) }}"><br>
                     <div class="flex gap-5">
                         <div class="w-full">
                             <label for="price">Price:</label><br>

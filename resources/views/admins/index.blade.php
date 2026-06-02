@@ -130,7 +130,7 @@
                                     <img src="{{ asset('storage/' . $product->thumbnail_path) }}"
                                         class="w-10 h-10 object-cover border border-default">
                                 @endif
-                                <span class="font-medium text-black">{{ $product->name }}</span>
+                                <span class="font-medium text-black">{{ $product->name() }}</span>
                             </td>
                             <td class="px-4 py-2 text-black">{{ number_format($product->price, 0, ',', '.') }}đ</td>
                             <td class="px-4 py-2 font-bold text-green-600">
@@ -162,7 +162,7 @@
                                     <img src="{{ asset('storage/' . $product->thumbnail_path) }}"
                                         class="w-10 h-10 object-cover border border-default">
                                 @endif
-                                <span class="font-medium text-black">{{ $product->name }}</span>
+                                <span class="font-medium text-black">{{ $product->name() }}</span>
                             </td>
                             <td class="px-4 py-2 text-black">{{ number_format($product->price, 0, ',', '.') }}đ
                             </td>

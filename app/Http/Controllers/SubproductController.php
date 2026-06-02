@@ -85,9 +85,7 @@ class SubproductController
         if ($request->has('thumbnail_path')) {
             $thumbnail_path = $request->thumbnail_path;
         }
-
         $subproduct->update([
-            'name' => $request->name,
             'price' => $request->price,
             'stock' => $request->stock,
             'thumbnail_path' => $thumbnail_path

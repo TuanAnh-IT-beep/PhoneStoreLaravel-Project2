@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('sub_specs', function (Blueprint $table) {
             $table->foreignId('spec_id')->constrained();
-            $table->foreignId('subproduct_id')->constrained();
+            $table->foreignId('subproduct_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->string("value");
         });
     }
