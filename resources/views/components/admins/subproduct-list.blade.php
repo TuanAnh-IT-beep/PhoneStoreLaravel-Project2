@@ -18,7 +18,7 @@ new class extends Component {
     public function setSortBy($sortByField)
     {
         if ($this->sortBy === $sortByField) {
-            $this->sortDir = $this->sortDir === 'asc' ? 'desc' : 'asc';
+            $this->sortDir = ($this->sortDir === 'asc') ? 'desc' : 'asc';
         } else {
             $this->sortBy = $sortByField;
             $this->sortDir = 'asc';
@@ -33,32 +33,11 @@ new class extends Component {
 
     public function with(): array
     {
-        $query = Subproduct::query();
-
-        if (isset($this->id)) {
-            $query->whereHas('product', function ($q) {
-                $q->where('id', $this->id);
-            });
-        } elseif (isset($this->cateid)) {
-            $query->whereHas('product', function ($q) {
-                $q->where('category_id', $this->cateid);
-            });
-        }
-        if (!empty($this->search)) {
-            $query->where(function ($mainQuery) {
-                $mainQuery
-                    ->whereHas('product', function ($q) {
-                        $q->where('name', 'like', '%' . $this->search . '%');
-                    })
-                    ->orWhereHas('sub_specs', function ($q) {
-                        $q->where('value', 'like', '%' . $this->search . '%');
-                    })
-                    ->orWhere('price', 'like', '%' . $this->search . '%');
-            });
-        }
-
         return [
-            'subproducts' => $query->paginate(10),
+            'subproducts' => Subproduct::where('name', 'like', '%' . $this->search . '%')
+                ->where('product_id', $this->product->id)
+                ->orderBy($this->sortBy, $this->sortDir)
+                ->paginate(10),
         ];
     }
 };
@@ -73,23 +52,11 @@ new class extends Component {
         <table class="table-auto w-full text-left rtl:text-right text-body">
             <thead class="border-default">
                 <tr>
-                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer"
-                        wire:click="setSortBy('id')">ID @if ($sortBy === 'id')
-                            <i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>
-                        @endif
-                    </th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('id')">ID @if($sortBy === 'id')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
                     <th scope="col" class="px-6 py-3 font-medium">Thumbnail</th>
-                    <th scope="col" class="px-6 py-3 font-medium">Name</th>
-                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer"
-                        wire:click="setSortBy('price')">Price @if ($sortBy === 'price')
-                            <i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>
-                        @endif
-                    </th>
-                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer"
-                        wire:click="setSortBy('stock')">Stock @if ($sortBy === 'stock')
-                            <i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>
-                        @endif
-                    </th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('name')">Name @if($sortBy === 'name')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('price')">Price @if($sortBy === 'price')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('stock')">Stock @if($sortBy === 'stock')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
                     <th scope="col" class="px-6 py-3 font-medium">Actions</th>
                 </tr>
             </thead>
@@ -103,13 +70,13 @@ new class extends Component {
                             <td class="px-6 py-4">
                                 @if ($subproduct->thumbnail_path)
                                     <img src="{{ asset('storage/' . $subproduct->thumbnail_path) }}"
-                                        alt="{{ $subproduct->name() }}" class="w-16 h-16 object-cover border rounded">
+                                        alt="{{ $subproduct->name }}" class="w-16 h-16 object-cover border rounded">
                                 @else
                                     <span class="text-gray-400 text-sm">No image</span>
                                 @endif
                             </td>
                             <td class="px-6 py-4" style="color: black">
-                                {{ $subproduct->name() }}
+                                {{ $subproduct->name }}
                             </td>
                             <td class="px-6 py-4" style="color: black">
                                 {{ number_format($subproduct->price, 0, ',', '.') }}đ
