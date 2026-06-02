@@ -28,14 +28,17 @@
                     <label for="phone">Phone:</label><br>
                     <input required class="my-3 w-full" type="tel" name="phone"
                         placeholder="Input phone number here..." value="{{ $user->phone }}"><br>
-                    <label for="role_id">Role:</label><br>
-                    <select required class="my-3 w-full" name="role_id">
-                        @foreach ($roles as $role)
-                            <option value="{{ $role->id }}" {{ $user->role_id == $role->id ? 'selected' : '' }}>
-                                {{ $role->name }}
-                            </option>
-                        @endforeach
-                    </select>
+                    @if (auth('admin')->user()->roles->first()->level > $user->roles->first()->level)
+                        <label for="role_id">Role:</label><br>
+                        <select required class="my-3 w-full" name="role_id">
+                            @foreach ($roles as $role)
+                                <option value="{{ $role->id }}" {{ auth('admin')->user()->roles->first()->level>$role->level?'':'disabled' }}
+                                    {{ $user->roles->contains('id', $role->id) ? 'selected' : '' }}>
+                                    {{ $role->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    @endif
                     <div class="flex gap-2 mt-4">
                         <button class="btn icon-only flex-1">UPDATE</button>
                         <a class="btn icon-only negative flex-1" href="{{ route('users.index') }}">CANCEL</a>

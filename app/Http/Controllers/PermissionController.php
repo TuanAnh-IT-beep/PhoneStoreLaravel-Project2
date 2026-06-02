@@ -38,7 +38,8 @@ class PermissionController
     {
         Permission::create([
             'name' => $request->name,
-            'description' => $request->description
+            'description' => $request->description,
+            'guard_name' => 'admin'
         ]);
         return Redirect::route('admins.settings.index')->with('success', 'Permission created successfully.');
     }
@@ -76,7 +77,6 @@ class PermissionController
      */
     public function destroy(Permission $permission)
     {
-        $permission->roles()->detach();
         $permission->delete();
         return Redirect::route('admins.settings.index')->with('success', 'Permission deleted successfully.');
     }

@@ -10,7 +10,6 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductImageController;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\SpecController;
 use App\Http\Controllers\SubproductController;
@@ -29,38 +28,45 @@ Route::middleware(CheckUserLogin::class)->prefix('admin')->group(function () {
         return view('admins.index');
     })->name('admins.home');
 
-    Route::get('/settings', [SettingsController::class, 'index'])->name('admins.settings.index');
+    Route::group(['middleware' => ['permission:manage_settings,admin']], function () {
+        Route::get('/settings', [SettingsController::class, 'index'])->name('admins.settings.index');
+        Route::resource('permissions', PermissionController::class);
+        Route::resource('roles', RoleController::class);
+    });
 
-    Route::resource('categories', CategoryController::class);
-    Route::resource('customers', CustomerController::class);
-    Route::resource('manufacturers', ManufacturerController::class);
-    Route::resource('orders', OrderController::class);
-    Route::resource('orderdetails', OrderDetailController::class);
-    Route::resource('payment_methods', PaymentMethodController::class);
-    Route::resource('permissions', PermissionController::class);
-    Route::resource('products', ProductController::class);
-    Route::resource('product_images', ProductImageController::class);
-    Route::resource('roles', RoleController::class);
-    Route::resource('rolepermissions', RolePermissionController::class);
-    Route::resource('specs', SpecController::class);
-    Route::resource('subspecs', SubSpecController::class);
-    Route::resource('users', UserController::class);
-    // Route::controller(OrderController::class)
-    //     ->name('orders.')
-    //     ->prefix('orders')
-    //     ->group(function () {
-    //         Route::get('/', 'index')->name('index');
-    //         Route::get('/{order}/details', 'show')->name('show');
-    //     });
-    Route::controller(SubproductController::class)
-        ->name('subproducts.')
-        ->prefix('products/{product}/subproducts')
-        ->group(function () {
-            Route::get('/', 'index')->name('index');
-            Route::get('/create', 'create')->name('create');
-            Route::post('/create', 'store')->name('store');
-            Route::get('/{subproduct}/edit', 'edit')->name('edit');
-            Route::put('/{subproduct}/edit', 'update')->name('update');
-            Route::delete('/{subproduct}', 'destroy')->name('destroy');
-        });
+    Route::group(['middleware' => ['permission:manage_products,admin']], function () {
+        Route::resource('categories', CategoryController::class);
+        Route::resource('manufacturers', ManufacturerController::class);
+        Route::post('products/upload-image', [ProductController::class, 'uploadImage'])->name('products.upload_image');
+        Route::resource('products', ProductController::class);
+        Route::resource('product_images', ProductImageController::class);
+        Route::resource('specs', SpecController::class);
+        Route::resource('subspecs', SubSpecController::class);
+
+        Route::controller(SubproductController::class)
+            ->name('subproducts.')
+            ->prefix('products/{product}/subproducts')
+            ->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('/create', 'create')->name('create');
+                Route::post('/create', 'store')->name('store');
+                Route::get('/{subproduct}/edit', 'edit')->name('edit');
+                Route::put('/{subproduct}/edit', 'update')->name('update');
+                Route::delete('/{subproduct}', 'destroy')->name('destroy');
+            });
+    });
+
+    Route::group(['middleware' => ['permission:manage_customers,admin']], function () {
+        Route::resource('customers', CustomerController::class);
+    });
+
+    Route::group(['middleware' => ['permission:manage_orders,admin']], function () {
+        Route::resource('orders', OrderController::class);
+        Route::resource('orderdetails', OrderDetailController::class);
+        Route::resource('payment_methods', PaymentMethodController::class);
+    });
+
+    Route::group(['middleware' => ['permission:manage_users,admin']], function () {
+        Route::resource('users', UserController::class);
+    });
 });

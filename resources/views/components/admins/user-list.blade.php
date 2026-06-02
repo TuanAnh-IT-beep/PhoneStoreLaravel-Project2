@@ -49,25 +49,31 @@ new class extends Component {
             <thead class="border-default">
                 <tr>
                     <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer"
-                        wire:click="setSortBy('id')">ID @if ($sortBy === 'id')<i
-                                class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif
+                        wire:click="setSortBy('id')">ID @if ($sortBy === 'id')
+                            <i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>
+                        @endif
                     </th>
                     <th scope="col" class="px-6 py-3 font-medium">Icon</th>
                     <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer"
-                        wire:click="setSortBy('full_name')">Full Name @if ($sortBy === 'full_name')<i
-                                class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif
+                        wire:click="setSortBy('full_name')">Full Name @if ($sortBy === 'full_name')
+                            <i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>
+                        @endif
                     </th>
                     <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer"
-                        wire:click="setSortBy('email')">Email @if ($sortBy === 'email')<i
-                                class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif
+                        wire:click="setSortBy('email')">Email @if ($sortBy === 'email')
+                            <i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>
+                        @endif
                     </th>
                     <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer"
-                        wire:click="setSortBy('phone')">Phone @if ($sortBy === 'phone')<i
-                                class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif
+                        wire:click="setSortBy('phone')">Phone @if ($sortBy === 'phone')
+                            <i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>
+                        @endif
                     </th>
                     <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer"
-                        wire:click="setSortBy('role_id')">Role @if ($sortBy === 'role_id')<i
-                                class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
+                        wire:click="setSortBy('role_id')">Role @if ($sortBy === 'role_id')
+                            <i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>
+                        @endif
+                    </th>
                     <th scope="col" class="px-6 py-3 font-medium">Actions</th>
                 </tr>
             </thead>
@@ -87,7 +93,7 @@ new class extends Component {
                             <td class="px-6 py-4" style="color: black">{{ $user->full_name }}</td>
                             <td class="px-6 py-4">{{ $user->email }}</td>
                             <td class="px-6 py-4">{{ $user->phone }}</td>
-                            <td class="px-6 py-4">{{ $user->role->name }}</td>
+                            <td class="px-6 py-4">{{ $user->roles->first()->name }}</td>
                             <td class="px-6 py-4">
                                 <a href="{{ route(name: 'users.edit', parameters: $user->id) }}"
                                     class="btn icon-only edit"><i class="fa-solid fa-pen-to-square"></i></a>

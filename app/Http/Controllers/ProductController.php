@@ -166,4 +166,17 @@ class ProductController
 
         return redirect()->route('products.index')->with('success', 'Product deleted successfully.');
     }
+
+    /**
+     * Upload image from TinyMCE.
+     */
+    public function uploadImage(\Illuminate\Http\Request $request)
+    {
+        if ($request->hasFile('file')) {
+            $path = $request->file('file')->store('product_descriptions', 'public');
+            return response()->json(['location' => asset('storage/' . $path)]);
+        }
+
+        return response()->json(['error' => 'No file uploaded.'], 400);
+    }
 }

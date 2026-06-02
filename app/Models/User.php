@@ -2,31 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Traits\HasRoles;
 
-class User extends Model implements Authenticatable
+class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
-
-    use \Illuminate\Auth\Authenticatable;
-
+    use HasRoles;
     protected $table = 'users';
-
+    protected $guard_name = 'admin';
     protected $primaryKey = 'id';
-
-    protected $fillable = ['username', 'password', 'icon', 'full_name', 'email', 'phone', 'role_id'];
-
-    public function role()
-    {
-        return $this->belongsTo(Role::class);
-    }
+    protected $fillable = ['username', 'password', 'icon', 'full_name', 'email', 'phone'];
     public function orders(){
         return $this->hasMany(Order::class,'customer_id','id');
-    }
-    public function hasPermission($permission) {
-        return $this->role()->hasPermission($permission);
     }
 }
