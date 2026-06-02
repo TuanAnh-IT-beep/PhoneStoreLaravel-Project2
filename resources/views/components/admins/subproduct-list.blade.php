@@ -34,16 +34,9 @@ new class extends Component {
     public function with(): array
     {
         $query = Subproduct::query();
-
-        if (isset($this->id)) {
-            $query->whereHas('product', function ($q) {
-                $q->where('id', $this->id);
-            });
-        } elseif (isset($this->cateid)) {
-            $query->whereHas('product', function ($q) {
-                $q->where('category_id', $this->cateid);
-            });
-        }
+        $query->whereHas('product', function ($q) {
+            $q->where('id', $this->product->id);
+        });
         if (!empty($this->search)) {
             $query->where(function ($mainQuery) {
                 $mainQuery

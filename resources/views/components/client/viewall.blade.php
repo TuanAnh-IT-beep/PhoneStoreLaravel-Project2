@@ -1,16 +1,33 @@
 <?php
 
 use Livewire\Component;
+use Livewire\Attributes\Url;
 use App\Models\Subproduct;
+use App\Models\Product;
+use App\Models\Category;
+use App\Models\Manufacturer;
+use App\Models\Spec;
 
 new class extends Component {
+    #[Url]
     public string $search = '';
     public $id = null;
     public $cateid = null;
+
+    #[Url]
+    public array $selectedCategories = [];
+    #[Url]
+    public array $selectedManufacturers = [];
+    #[Url]
+    public array $selectedSpecs = [];
+
     public function mount($id, $cateid)
     {
         $this->id = $id;
         $this->cateid = $cateid;
+        if ($cateid && !in_array($cateid, $this->selectedCategories)) {
+            $this->selectedCategories[] = $cateid;
+        }
     }
     public function with(): array
     {
@@ -19,10 +36,6 @@ new class extends Component {
         if (isset($this->id)) {
             $query->whereHas('product', function ($q) {
                 $q->where('id', $this->id);
-            });
-        } elseif (isset($this->cateid)) {
-            $query->whereHas('product', function ($q) {
-                $q->where('category_id', $this->cateid);
             });
         }
         if (!empty($this->search)) {
@@ -38,42 +51,112 @@ new class extends Component {
             });
         }
 
+        if (!empty($this->selectedCategories)) {
+            $query->whereHas('product', function ($q) {
+                $q->whereIn('category_id', $this->selectedCategories);
+            });
+        }
+
+        if (!empty($this->selectedManufacturers)) {
+            $query->whereHas('product', function ($q) {
+                $q->whereIn('manufacturer_id', $this->selectedManufacturers);
+            });
+        }
+
+        if (!empty($this->selectedSpecs)) {
+            foreach ($this->selectedSpecs as $specId => $values) {
+                if (is_array($values)) {
+                    $values = array_filter($values);
+                    if (!empty($values)) {
+                        $query->whereHas('sub_specs', function ($q) use ($specId, $values) {
+                            $q->where('spec_id', $specId)->whereIn('value', $values);
+                        });
+                    }
+                }
+            }
+        }
+
+        $specs = Spec::with('sub_specs')->get()->map(function($spec) {
+            $spec->unique_values = $spec->sub_specs->pluck('value')->unique()->filter()->sort();
+            return $spec;
+        });
+
         return [
             'subproducts' => $query->get(),
-            'products'=> \App\Models\Product::all(),
+            'products' => Product::all(),
+            'categories' => Category::withCount('products')->get(),
+            'manufacturers' => Manufacturer::withCount('products')->get(),
+            'specs' => $specs,
         ];
     }
 };
 ?>
 <div class="w-full px-4 py-8"> <!-- Removed max-w-6xl to allow more room -->
-    <div class="flex flex-col md:flex-row gap-6">
-
-        <!-- Left Side: Filter (Fixed Width) -->
+    <div class="main-content flex flex-col md:flex-row gap-6">
+        <div class="w-full md:w-64 shrink-0 bg-white p-6 rounded-2xl shadow-sm h-fit sticky top-4 self-start">
+            <div class="flex justify-between items-center mb-4 pb-2 border-b">
+                <h2 class="text-xl font-bold text-gray-800">Filters</h2>
+                <button wire:click="$set('selectedCategories', []); $set('selectedManufacturers', []); $set('selectedSpecs', []);" class="text-xs btn red">Clear All</button>
+            </div>
+            <div>
+                <h5 class="font-bold mb-3 text-black">Category</h3>
+                <div class="space-y-2">
+                    @foreach($categories as $category)
+                    <label class="flex items-center gap-3 cursor-pointer group">
+                        <input type="checkbox" wire:model.live="selectedCategories" value="{{ $category->id }}" class="w-4 h-4 rounded border-gray-300 text-black focus:ring-black transition-colors">
+                        <span class="text-sm text-gray-600 group-hover:text-black">{{ $category->name }} <span class="text-gray-400 text-xs">({{ $category->products_count }})</span></span>
+                    </label>
+                    @endforeach
+                </div>
+            </div>
+            <div class="mt-6">
+                <h5 class="font-bold mb-3 text-black">Manufacturer</h3>
+                <div class="space-y-2">
+                    @foreach($manufacturers as $manufacturer)
+                    <label class="flex items-center gap-3 cursor-pointer group">
+                        <input type="checkbox" wire:model.live="selectedManufacturers" value="{{ $manufacturer->id }}" class="w-4 h-4 rounded border-gray-300 text-black focus:ring-black transition-colors">
+                        <span class="text-sm text-gray-600 group-hover:text-black">{{ $manufacturer->name }} <span class="text-gray-400 text-xs">({{ $manufacturer->products_count }})</span></span>
+                    </label>
+                    @endforeach
+                </div>
+            </div>
+            @foreach($specs as $spec)
+                @if($spec->unique_values->count() > 0)
+                <div class="mt-6">
+                    <h5 class="font-bold mb-3 text-black">{{ $spec->name }}</h3>
+                    <div class="space-y-2 max-h-48 overflow-y-auto pr-2">
+                        @foreach($spec->unique_values as $val)
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="checkbox" wire:model.live="selectedSpecs.{{ $spec->id }}" value="{{ $val }}" class="w-4 h-4 rounded border-gray-300 text-black focus:ring-black transition-colors">
+                            <span class="text-sm text-gray-600 group-hover:text-black">{{ $val }} {{ $spec->suffix }}</span>
+                        </label>
+                        @endforeach
+                    </div>
+                </div>
+                @endif
+            @endforeach
         </div>
         <div class="grow">
-            <h1 class="text-3xl font-bold mb-6 text-gray-800">All Products</h1>
+            <h1 class="text-3xl font-bold mb-3 text-gray-800">Products</h1>
             <div>
                 <div class="mb-4">
                     <input type="text" wire:model.live="search" placeholder="Search products..."
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
-                <a href="{{ route('all') }}" class="text-xs font-bold text-gray-600 underline">View All
-                    »</a>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 items-stretch">
+                <div class="grid grid-cols-4 gap-6 items-stretch">
                     @isset($subproducts)
                         @foreach ($subproducts as $subproduct)
-                            <div class="w-full min-h-[350px] rounded-xl p-4 flex flex-col shadow-sm"
+                            <a href="{{ route('detail', [$subproduct->product->id, $subproduct->id]) }}"
+                                class="w-full min-h-[350px] rounded-xl p-4 flex flex-col shadow-sm"
                                 style="background-color: #fafafadc">
 
-                                <img class="rounded-xl w-full h-64 object-cover shrink-0"
+                                <img class="rounded-xl w-full h-64 object-contain shrink-0"
                                     src="{{ asset('storage/' . $subproduct->thumbnail_path) }}"
                                     alt="{{ $subproduct->product->name }}">
 
-                                <div class="pt-4 flex-grow">
+                                <div class="pt-4 grow">
                                     <h2 style="color:black" class="text-lg font-semibold leading-tight">
-                                        {{ $subproduct->product->name }}
-                                        {{ $subproduct->sub_specs->where('spec_id', 1)->first()?->value }}
-                                        {{ $subproduct->sub_specs->where('spec_id', 12)->first()?->value }}
+                                        {{ $subproduct->name() }}
                                     </h2>
                                     <p style="color:gray;font-size:0.900rem">{{ $subproduct->product->category->name }}</p>
                                     <p class="text-3xl font-extrabold text-red-600 mt-2">
@@ -82,14 +165,12 @@ new class extends Component {
                                 </div>
 
                                 <div class="mt-auto pt-4">
-                                    <a href="{{ route('detail', [$subproduct->product->id, $subproduct->id]) }}">
-                                        <button
-                                            class="w-full bg-black text-white text-[10px] font-bold px-4 py-2 rounded-md uppercase tracking-wider hover:bg-gray-800 transition-colors">
-                                            SHOP NOW
-                                        </button>
-                                    </a>
+                                    <button
+                                        class="w-full bg-black text-white text-[10px] font-bold px-4 py-2 rounded-md uppercase tracking-wider hover:bg-gray-800 transition-colors">
+                                        SHOP NOW
+                                    </button>
                                 </div>
-                            </div>
+                            </a>
                         @endforeach
                     @endisset
                 </div>

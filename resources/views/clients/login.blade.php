@@ -3,17 +3,17 @@
 
 <head>
 
-    @include('admins.layouts.head')
+    @include('clients.layouts.head')
     <link href="{{ asset('css/login.css') }}" rel="stylesheet">
-    <title>Login</title>
+    <title>Login - BMobileShop</title>
 </head>
 
 <body>
     @include('clients.layouts.header')
-    <div class="login_box grid grid-cols-2 mx-auto">
+    <div class="container login_box grid grid-cols-2 mx-auto">
         <img src="/images/login/banner.png" alt="" class="image_side">
         <div class="login_side">
-            <h1>Login as new customer</h1>
+            <h1>Login</h1>
             <form action="" method="post">
                 @csrf
                 <div class="mt-10">

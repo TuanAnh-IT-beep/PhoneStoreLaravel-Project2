@@ -7,7 +7,7 @@
             <a class="logo-text" href="{{ route('admins.home') }}"><span style="color: #AFF5BF;">BMo</span>bileShop</a>
         </div>
         @if (Route::has('admins.users.login') && Route::currentRouteName() !== 'admins.users.login')
-            <div class="flex items-center">
+            <div>
                 @auth('admin')
                     <button type="button" class="flex items-center gap-3" id="dropdownDefaultButton"
                         data-dropdown-toggle="dropdown" data-dropdown-placement="bottom-end">
@@ -17,8 +17,9 @@
                                 class="w-10 h-10 object-cover rounded-full">
                         @endif
                     </button>
-                    <div id="dropdown"
-                        class="z-10 hidden bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44">
+                    <div id="dropdownDivider"
+                        class="z-10 hidden bg-neutral-primary-medium border border-default-medium rounded-base divide-y divide-default-medium shadow-lg w-44"
+                        style="background-color: white">
                         <ul class="p-2 text-sm text-body font-medium" aria-labelledby="dropdownDefaultButton">
                             <li>
                                 <a href="{{ route('home') }}"

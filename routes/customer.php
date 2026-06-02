@@ -23,7 +23,6 @@ Route::get('/logout', [CustomerController::class, 'logout'])
     ->name('register');
 Route::post('/register', [CustomerController::class,'registerProcess'])
 ->name('register');
-Route::get('/profile',[CustomerController::class,'viewProfile'])->name('profile');
 Route::get('/update',[CustomerController::class,'getProfile'])->name('getProfile');
 Route::put('/update',[CustomerController::class, 'updateProfile'])->name('updateProfile');
 Route::get('/view', [HomeController::class, 'showAll'])->name('all');

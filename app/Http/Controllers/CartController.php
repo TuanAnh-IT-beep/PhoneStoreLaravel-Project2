@@ -26,7 +26,7 @@ class CartController
                 $cart[$subproduct->id] = [
                     'id' => $subproduct->id,
                     'stock' => 1,
-                    'name' => $subproduct->name,
+                    'name' => $subproduct->name(),
                     'price' => $subproduct->price,
                     'thumbnail_path' => $subproduct->thumbnail_path
                 ];
@@ -36,10 +36,10 @@ class CartController
             $cart[$subproduct->id] = [
                 'id' => $subproduct->id,
                 'stock' => 1,
-                'name' => $subproduct->name,
+                'name' => $subproduct->name(),
                 'price' => $subproduct->price,
                 'thumbnail_path' => $subproduct->thumbnail_path
-                
+
             ];
 
         }

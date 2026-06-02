@@ -3,14 +3,14 @@
 
 <head>
     @include('clients.layouts.head')
-    <title>BMobileShop</title>
+    <title>@yield('title') - BMobileShop</title>
 </head>
 
 <body>
     <div class="flex flex-col min-h-screen">
         @include('clients.layouts.header')
         <div class="container mx-auto flex flex-1" style="gap: 20px">
-            <div class="main-content flex-1 p-6">
+            <div class="flex-1 p-6">
                 @yield('main-content')
             </div>
         </div>

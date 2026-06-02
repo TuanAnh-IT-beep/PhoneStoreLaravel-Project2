@@ -14,6 +14,6 @@ class Manufacturer extends Model
     protected $fillable = ['name', 'description', 'icon'];
     public $timestamps = false;
     public function products(){
-        return $this->hasMany(Manufacturer::class,'manufacturer_id','id');
+        return $this->hasMany(Product::class,'manufacturer_id','id');
     }
 }

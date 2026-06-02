@@ -1,88 +1,96 @@
 @extends('clients.layouts.master')
+@section('title', 'Order Confirmation')
 @section('main-content')
-    <div class="w-full">
-        <div class="grid grid-cols-12 gap-10">
-            <div class="col-span-12 col-span-6">
-                <h1 class="text-3xl font-bold mb-6 text-gray-800">Order Confirmation</h1>
-                <div class="bg-white p-6 rounded-xl shadow-sm">
-                    <form action="{{ route('order.confirm') }}" method="POST">
-                        @csrf
-                        @method('POST')
-                    <input type="hidden" name="customer_id" value="{{ Auth::guard('client')->user()->id }}">
-                    <label for="receiver" class="block text-sm font-medium text-gray-700 mb-1" >Receiver Name</label>
-                    <input type="text" name="receiver" class="w-50 border border-gray-300 rounded-md p-3 mb-4" value="{{ Auth::guard('client')->user()->display_name }}">
-                    <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Delivery Address</label>
-                    <input type="text" name="address" class="w-50 border border-gray-300 rounded-md p-3 mb-4" value="{{ Auth::guard('client')->user()->address }}">
-                    <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                    <input type="text" name="phone" class="w-50 border border-gray-300 rounded-md p-3 mb-4" value="{{ Auth::guard('client')->user()->phone }}">
-                    <input type="hidden" name="total_price" value="{{ $totalPrice }}">
-                    <input type="hidden" name="status" value="0">
-                    <label for="payment" class="block text-sm font-medium text-gray-700 mb-1">Payment Method</label>
-                    <select name="payment" id="payment" class="w-30 border border-gray-300 rounded-md p-3 mb-4">
-                        @foreach ($payment as $pay)
-                            <option value="{{ $pay->id }}" selected >{{ $pay->name }}</option>
-                        @endforeach
-                    </select>
-                    <label for="Note" class="block text-sm font-medium text-gray-700 mb-1">Additional Notes</label>
-                    <input type="text" name="Note" class="w-50 border border-gray-300 rounded-md p-3 mb-4" style="height: 150px;width: 400px;   ">
-                    <div>
-                        <button type="submit"
-                            class="bg-red-300 text-gray-700 px-4 py-2 rounded-md mr-2 hover:bg-gray-400 transition-colors" style="width: 250px;">
-                                Place Order
-                        </button>
-                    </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col-span-12 col-span-6" style="margin-top:40px">
-                <div class=" bg-white p-6 rounded-xl shadow-sm" style="margin-top:20px;">
-                    <!-- Order summary details here -->
-                    @foreach ($cart as $id => $item)
-                        <!-- Card Container: relative để làm gốc cho icon X tuyệt đối -->
-                        <div class="w-120 p-6 relative flex items-center gap-6"
-                            style="background-color: #fafafadc; border-radius: 12px;border: 1px solid #e5e7eb;margin-left:100px">
-                            <!-- 2. Hình ảnh sản phẩm (Ví dụ) -->
-                            <div class="w-12 h-12 shrink-0">
-                                <img src="{{ asset('storage/' . $item['thumbnail_path']) }}" alt="Product"
-                                    class="w-full h-full object-cover rounded-lg">
+    <div class="main-content">
+        <h1 class="text-3xl font-bold mb-6 text-gray-800">Order Confirmation</h1>
+        <form action="{{ route('order.confirm') }}" method="POST">
+            @csrf
+            <input type="hidden" name="customer_id" value="{{ Auth::guard('client')->user()->id }}">
+            <input type="hidden" name="total_price" value="{{ $totalPrice }}">
+            <input type="hidden" name="status" value="0">
+
+            <div class="grid grid-cols-12 gap-8 mt-4">
+                <div class="col-span-8">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                        <h2 class="text-xl font-bold text-gray-800 mb-6 border-b pb-4">Shipping information</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label for="receiver" class="block text-sm font-semibold text-gray-700 mb-2">Receiver Name</label>
+                                <input type="text" name="receiver" id="receiver" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow" value="{{ Auth::guard('client')->user()->display_name }}" required>
                             </div>
-
-                            <!-- 3. Nội dung: Tên, Giá, Số lượng -->
-                            <div class="grow flex flex-col md:flex-row md:items-center justify-between gap-4">
-
-                                <!-- Tên sản phẩm -->
-                                <div class="grow">
-                                    <h3 style="font-size:15px" class="font-bold text-gray-800 leading-tight">
-                                        {{ $item['name'] }}</h3>
-                                </div>
-                                <div class="text-left md:text-right min-w-[120px]">-
-                                    <p name="stock" style="font-size:15px" class="text-gray-400">Quantity:
-                                        {{ $item['stock'] }}</p>
-                                </div>
-                                <!-- Giá tiền -->
-                                <div class="text-left md:text-right min-w-[120px]">
-                                    <p style="font-size:15px" class="text-gray-400">
-                                        {{ number_format($item['price'] * $item['stock'], 0, ',', '.') }}đ</p>
-                                </div>
+                            <div>
+                                <label for="phone" class="block text-sm font-semibold text-gray-700 mb-2">Phone Number</label>
+                                <input type="text" name="phone" id="phone" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow" value="{{ Auth::guard('client')->user()->phone }}" required>
                             </div>
                         </div>
-                    @endforeach
-                    <div>
-                        <button class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors"
-                            style="margin-top: 10px;margin-left:100px"><a href="{{ route('cart') }}">Edit Order</a></button>
+
+                        <div class="mb-6">
+                            <label for="address" class="block text-sm font-semibold text-gray-700 mb-2">Delivery Address</label>
+                            <input type="text" name="address" id="address" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow" value="{{ Auth::guard('client')->user()->address }}" required>
+                        </div>
+
+                        <div class="mb-6">
+                            <label for="payment" class="block text-sm font-semibold text-gray-700 mb-2">Payment Method</label>
+                            <select name="payment" id="payment" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow" required>
+                                @foreach ($payment as $pay)
+                                    <option value="{{ $pay->id }}">{{ $pay->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="mb-6">
+                            <label for="note" class="block text-sm font-semibold text-gray-700 mb-2">Additional Notes</label>
+                            <textarea name="note" id="note" rows="4" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow" placeholder="Any special requests or instructions for delivery..."></textarea>
+                        </div>
                     </div>
-                    <div style="margin-top: 10px;margin-left:100px">
-                        <p class=" font-bold text-gray-500" style="font-size:15px">Shipping Fee: 40.000đ</p>
-                        <p class=" font-bold text-gray-800" style="font-size:15px">Products Price :
-                            {{ number_format($item['price'] * $item['stock'], 0, ',', '.') }}đ
-                        </p>
-                        <p class=" font-bold text-gray-800" style="font-size:15px">Total:
-                            {{ number_format($totalPrice, 0, ',', '.') }}đ
-                        </p>
+                </div>
+                <div class="col-span-4">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 sticky top-6">
+                        <h2 class="text-xl font-bold text-gray-800 mb-6 border-b pb-4">Order summary</h2>
+                        <div class="max-h-80 overflow-y-auto mb-6 pr-2 custom-scrollbar">
+                            @foreach ($cart as $id => $item)
+                                <div class="flex items-center gap-4 mb-4 pb-4 border-b border-gray-100 last:border-0 last:mb-0 last:pb-0">
+                                    <div class="w-16 h-16 shrink-0 bg-gray-50 rounded-md border border-gray-200 p-1">
+                                        <img src="{{ asset('storage/' . $item['thumbnail_path']) }}" alt="Product" class="w-full h-full object-cover rounded">
+                                    </div>
+                                    <div class="grow">
+                                        <h3 class="text-sm font-bold text-gray-800 leading-tight mb-1">{{ $item['name'] }}</h3>
+                                        <div class="flex justify-between items-center text-sm">
+                                            <span class="text-gray-500">Qty: {{ $item['stock'] }}</span>
+                                            <span class="font-semibold text-gray-700">{{ number_format($item['price'] * $item['stock'], 0, ',', '.') }}đ</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+
+                        <div class="space-y-3 text-sm text-gray-600 mb-6 border-t pt-4">
+                            <div class="flex justify-between">
+                                <span class="font-semibold">Subtotal</span>
+                                <span class="font-medium text-gray-800">{{ number_format($totalPrice - 40000, 0, ',', '.') }}đ</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Shipping Fee</span>
+                                <span class="font-medium text-gray-800">40.000đ</span>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between items-center mb-6 pt-4 border-t border-gray-200">
+                            <span class="text-lg font-bold text-gray-800">Total</span>
+                            <span class="text-xl font-bold text-red-500">{{ number_format($totalPrice, 0, ',', '.') }}đ</span>
+                        </div>
+
+                        <div class="flex flex-col gap-3">
+                            <button type="submit" class="w-full btn icon-only create">
+                                PLACE
+                            </button>
+                            <a href="{{ route('cart') }}" class="w-full btn icon-only">
+                                BACK
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
-    
 @endsection

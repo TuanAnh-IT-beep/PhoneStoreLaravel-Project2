@@ -193,13 +193,6 @@ class CustomerController
         return redirect()->route('clients.login')->with('success', 'Customer created successfully.');
     }
 
-    public function viewProfile()
-    {
-        $cus = auth()->guard('client')->user();
-
-        return view('clients.Profile', compact('cus'));
-    }
-
     public function getProfile()
     {
         $cus = auth()->guard('client')->user();
@@ -210,9 +203,6 @@ class CustomerController
     public function updateProfile(UpdateCustomerRequest $request, Customer $customer)
     {
         $customer = auth()->guard('client')->user();
-        if (Customer::where('username', $request->username)->where('id', '!=', $customer->id)->exists()) {
-            return back()->with('error', 'Username already exists.');
-        }
         if (Customer::where('email', $request->email)->where('id', '!=', $customer->id)->exists()) {
             return back()->with('error', 'Email already exists.');
         }
@@ -224,7 +214,6 @@ class CustomerController
             $iconPath = $request->file('icon')->store('customer_icons', 'public');
         }
         $customer->update([
-            'username' => $request->username,
             'display_name' => $request->display_name,
             'email' => $request->email,
             'phone' => $request->phone,
@@ -233,7 +222,6 @@ class CustomerController
             'icon' => $iconPath,
             'birthday' => $request->birthday ? date('Y-m-d', strtotime($request->birthday)) : null,
         ]);
-
-        return redirect()->route('profile')->with('success', 'Customer updated successfully.');
+        return redirect()->route('getProfile')->with('success', 'Customer updated successfully.');
     }
 }

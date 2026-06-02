@@ -1,4 +1,5 @@
 @extends('clients.layouts.master')
+@section('title', 'Detail')
 @section('main-content')
     <div class="mx-auto p-4 md:p-8 bg-white font-sans text-gray-900" style="border-radius:30px;">
         <div class="grid grid-cols-12 gap-12">
@@ -14,18 +15,19 @@
 
             <div class="col-span-6 space-y-6">
                 <div>
-                    <h1 class="text-3xl font-bold">{{ $subproduct->product->name }}
-                        {{ $subproduct->sub_specs->where('spec_id', 1)->first()?->value }}
-                        {{ $subproduct->sub_specs->where('spec_id', 12)->first()?->value }}</h1>
-                    <div class="text-sm text-gray-500 mt-2">product code: #{{ $subproduct->id }}</div>
+                    <h1 class="text-3xl font-bold">{{ $subproduct->name() }}</h1>
+                    <div class="text-sm text-gray-500 mt-2">Code: #{{ $subproduct->id }}</div>
                 </div>
-
-                <div class="bg-red-50 rounded-2xl p-6 border border-red-100">
-                    <span class="text-3xl font-extrabold text-red-600">
-                        {{ number_format($subproduct->price, 0, ',', '.') }}đ
-                    </span>
+                <div>
+                    <div class="bg-red-50 rounded-2xl p-6 border border-red-100 mb-2">
+                        <span class="text-3xl font-extrabold text-red-600">
+                            {{ number_format($subproduct->price, 0, ',', '.') }}đ
+                        </span>
+                    </div>
+                    <div class="w-full text-right">
+                        Remaining: {{ $subproduct->stock }}
+                    </div>
                 </div>
-
                 <div>
                     <label class="font-bold text-lg block mb-3 inter">Models</label>
                     <div class="grid grid-cols-2 gap-3">
@@ -37,9 +39,8 @@
                                         class="w-full h-full object-cover rounded-lg border">
                                 </div>
                                 <div class="flex-1">
-                                    <div class="font-bold text-gray-800"> {{ $subs->product->name }}
-                                        {{ $subs->sub_specs->where('spec_id', 1)->first()?->value }}
-                                        {{ $subs->sub_specs->where('spec_id', 12)->first()?->value }}</div>
+                                    <div class="font-bold text-gray-800"> {{ $subs->name() }}</div>
+                                    <div class="text-sm">Remaining: {{ $subs->stock }}</div>
                                     <div class="text-red-600 font-semibold">{{ number_format($subs->price, 0, ',', '.') }}đ
                                     </div>
                                 </div>
@@ -49,14 +50,14 @@
                 </div>
 
                 <button class="w-full bg-red-600 text-white py-4 rounded-2xl font-bold text-lg hover:bg-red-700 transition">
-                    @if($subproduct->stock ==0)
-                    <a href="#" class="block text-center" style="color: white;">
-                        Out of stock
-                    </a>
+                    @if ($subproduct->stock <= 0)
+                        <a href="#" class="block text-center" style="color: white;">
+                            OUT OF STOCK
+                        </a>
                     @else
-                    <a href="{{ route('add', $subproduct->id) }}" class="block text-center" style="color: white;">
-                        Add to cart
-                    </a>
+                        <a href="{{ route('add', $subproduct->id) }}" class="block text-center" style="color: white;">
+                            ADD TO CART
+                        </a>
                     @endif
                 </button>
                 <div>
@@ -70,7 +71,7 @@
                                             {{ $spec->spec?->name ?? 'N/A' }}
                                         </td>
                                         <td class="p-4 text-gray-900">
-                                            {{ $spec->value }}
+                                            {{ $spec->value }} {{ $spec->spec->suffix }}
                                         </td>
                                     </tr>
                                 @endforeach
@@ -84,8 +85,7 @@
         <div>
             <h1 class="text-2xl font-bold mb-6 inter">Descriptions</h3>
                 <div class="prose max-w-none text-gray-700">
-                    <!-- Nội dung mô tả từ database -->
-                    {!! $subproduct->product->description ?? 'Being update....' !!}
+                    {!! $subproduct->product->description ?? 'Updating soon....' !!}
                 </div>
         </div>
     </div>

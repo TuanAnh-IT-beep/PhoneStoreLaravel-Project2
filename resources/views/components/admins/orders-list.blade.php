@@ -89,7 +89,7 @@ new class extends Component {
                         wire:click="setSortBy('created_at')">Created at @if ($sortBy === 'created_at')
                             <i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>
                         @endif
-                    <th>
+                    </th>
                     <th scope="col" class="px-6 py-3 font-medium">Actions</th>
                 </tr>
             </thead>
@@ -116,6 +116,9 @@ new class extends Component {
                                 <span class="{{ $statuses[$order->status]['color'] }}">
                                     {{ $statuses[$order->status]['text'] }}
                                 </span>
+                            </td>
+                            <td class="px-6 py-4" style="color: black">
+                                {{ $order->created_at }}
                             </td>
                             <td class="px-6 py-4" style="color: black">
                                 <a class="btn edit icon-only" href="{{ route('orders.show', $order->id) }}">
