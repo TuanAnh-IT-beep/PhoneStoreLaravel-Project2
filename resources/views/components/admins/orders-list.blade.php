@@ -13,7 +13,7 @@ new class extends Component {
     public function setSortBy($sortByField)
     {
         if ($this->sortBy === $sortByField) {
-            $this->sortDir = ($this->sortDir === 'asc') ? 'desc' : 'asc';
+            $this->sortDir = $this->sortDir === 'asc' ? 'desc' : 'asc';
         } else {
             $this->sortBy = $sortByField;
             $this->sortDir = 'asc';
@@ -59,12 +59,37 @@ new class extends Component {
         <table class="table-auto w-full text-left rtl:text-right text-body">
             <thead class="border-default">
                 <tr>
-                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('id')">ID @if($sortBy === 'id')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
-                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('receiver')">Receiver @if($sortBy === 'receiver')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
-                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('phone')">Phone @if($sortBy === 'phone')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer"
+                        wire:click="setSortBy('id')"># @if ($sortBy === 'id')
+                            <i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>
+                        @endif
+                    </th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer"
+                        wire:click="setSortBy('receiver')">Receiver @if ($sortBy === 'receiver')
+                            <i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>
+                        @endif
+                    </th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer"
+                        wire:click="setSortBy('phone')">Phone @if ($sortBy === 'phone')
+                            <i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>
+                        @endif
+                    </th>
                     <th scope="col" class="px-6 py-3 font-medium">Items</th>
-                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('total_price')">Total @if($sortBy === 'total_price')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
-                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('status')">Status @if($sortBy === 'status')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer"
+                        wire:click="setSortBy('total_price')">Total @if ($sortBy === 'total_price')
+                            <i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>
+                        @endif
+                    </th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer"
+                        wire:click="setSortBy('status')">Status @if ($sortBy === 'status')
+                            <i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>
+                        @endif
+                    </th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer"
+                        wire:click="setSortBy('created_at')">Created at @if ($sortBy === 'created_at')
+                            <i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>
+                        @endif
+                    <th>
                     <th scope="col" class="px-6 py-3 font-medium">Actions</th>
                 </tr>
             </thead>
@@ -73,7 +98,7 @@ new class extends Component {
                     @foreach ($orders as $order)
                         <tr scope="row" class="px-6 py-4 font-medium text-heading whitespace-nowrap">
                             <th class="px-6 py-4">
-                                {{ $order->id }}
+                                {{ $orders->firstItem() + $loop->index }}
                             </th>
                             <td class="px-6 py-4" style="color: black">
                                 {{ $order->receiver }}

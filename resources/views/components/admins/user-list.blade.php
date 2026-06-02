@@ -28,12 +28,24 @@ new class extends Component {
 
     public function with(): array
     {
+        $query = User::select('users.*')
+            ->leftJoin('model_has_roles', function ($join) {
+                $join->on('users.id', '=', 'model_has_roles.model_id')->where('model_has_roles.model_type', User::class);
+            })
+            ->leftJoin('roles', 'model_has_roles.role_id', '=', 'roles.id')
+            ->where(function ($q) {
+                $q->where('users.full_name', 'like', '%' . $this->search . '%')
+                    ->orWhere('users.email', 'like', '%' . $this->search . '%')
+                    ->orWhere('users.phone', 'like', '%' . $this->search . '%');
+            });
+        if ($this->sortBy === 'role') {
+            $query->orderBy('roles.name', $this->sortDir);
+        } else {
+            $query->orderBy('users.' . $this->sortBy, $this->sortDir);
+        }
+
         return [
-            'users' => User::where('full_name', 'like', '%' . $this->search . '%')
-                ->orWhere('email', 'like', '%' . $this->search . '%')
-                ->orWhere('phone', 'like', '%' . $this->search . '%')
-                ->orderBy($this->sortBy, $this->sortDir)
-                ->paginate(10),
+            'users' => $query->with('roles')->paginate(10),
         ];
     }
 };
@@ -49,7 +61,7 @@ new class extends Component {
             <thead class="border-default">
                 <tr>
                     <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer"
-                        wire:click="setSortBy('id')">ID @if ($sortBy === 'id')
+                        wire:click="setSortBy('id')"># @if ($sortBy === 'id')
                             <i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>
                         @endif
                     </th>
@@ -70,7 +82,7 @@ new class extends Component {
                         @endif
                     </th>
                     <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer"
-                        wire:click="setSortBy('role_id')">Role @if ($sortBy === 'role_id')
+                        wire:click="setSortBy('role')">Role @if ($sortBy === 'role')
                             <i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>
                         @endif
                     </th>
@@ -81,7 +93,9 @@ new class extends Component {
                 @if (count($users) > 0)
                     @foreach ($users as $user)
                         <tr class="border-default">
-                            <th class="px-6 py-4">{{ $user->id }}</td>
+                            <th class="px-6 py-4">
+                                {{ $users->firstItem() + $loop->index }}
+                            </td>
                             <td class="px-6 py-4">
                                 @if ($user->icon)
                                     <img src="{{ asset('storage/' . $user->icon) }}" alt="{{ $user->username }}"
@@ -97,12 +111,17 @@ new class extends Component {
                             <td class="px-6 py-4">
                                 <a href="{{ route(name: 'users.edit', parameters: $user->id) }}"
                                     class="btn icon-only edit"><i class="fa-solid fa-pen-to-square"></i></a>
-                                <form method="post" action="{{ route(name: 'users.destroy', parameters: $user->id) }}"
-                                    style="display: inline-block">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn icon-only delete"><i class="fa-solid fa-trash"></i></button>
-                                </form>
+                                @if (auth('admin')->user()->id !== $user->id &&
+                                        auth('admin')->user()->roles->first()->level > $user->roles->first()->level)
+                                    <form method="post"
+                                        onsubmit="return confirm('Are you sure you want to delete this item?\nThis action cannot be undone.');"
+                                        action="{{ route(name: 'users.destroy', parameters: $user->id) }}"
+                                        style="display: inline-block">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn icon-only delete"><i class="fa-solid fa-trash"></i></button>
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

@@ -1,5 +1,5 @@
 @extends('admins.layouts.master')
-@section('pageTitle', 'Orders - New')
+@section('pageTitle', 'Orders → New')
 @section('main-content')
     <div class="w-full mb-4 flex items-center justify-between">
         <h1>Orders → New</h1>

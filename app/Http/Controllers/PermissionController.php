@@ -12,16 +12,7 @@ class PermissionController
     /**
      * Display a listing of the resource.
      */
- public function index()
-    {
-        $permissions = Permission::all();
-        return view(
-            'admins.permissions.index',
-            [
-                'permissions' => $permissions
-            ]
-        );
-    }
+ public function index(){}
 
     /**
      * Show the form for creating a new resource.

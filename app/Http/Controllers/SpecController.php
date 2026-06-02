@@ -12,11 +12,7 @@ class SpecController
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $specs = Spec::all();
-        return view("admins.specs.index", compact("specs"));
-    }
+    public function index(){}
 
     /**
      * Show the form for creating a new resource.

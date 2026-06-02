@@ -50,7 +50,7 @@ new class extends Component {
         <table class="table-auto w-full text-left rtl:text-right text-body">
             <thead class="border-default">
                 <tr>
-                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('id')">ID @if($sortBy === 'id')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('id')"># @if($sortBy === 'id')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
                     <th scope="col" class="px-6 py-3 font-medium">Icon</th>
                     <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('name')">Name @if($sortBy === 'name')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
                     <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap long cursor-pointer" wire:click="setSortBy('description')">Description @if($sortBy === 'description')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
@@ -62,7 +62,7 @@ new class extends Component {
                     @foreach ($categories as $category)
                         <tr scope="row" wire:key="category-{{ $category->id }}"
                             class="px-6 py-4 font-medium text-heading whitespace-nowrap">
-                            <th class="px-6 py-4">{{ $category->id }}</th>
+                            <th class="px-6 py-4">{{ $categories->firstItem() + $loop->index }}</th>
                             <td class="px-6 py-4">
                                 @if ($category->icon)
                                     <img src="{{ asset('storage/' . $category->icon) }}" alt="{{ $category->name }}">
@@ -74,7 +74,7 @@ new class extends Component {
                             <td class="px-6 py-4">{{ $category->description }}</td>
                             <td class="px-6 py-4">
                                 <form method="post" action="{{ route('categories.destroy', $category->id) }}"
-                                    onsubmit="return confirm('Are you sure you want to delete this category?');">
+                                    onsubmit="return confirm('Are you sure you want to delete this item?\nThis action cannot be undone.');">
                                     @csrf
                                     @method('DELETE')
                                     <a class="btn edit icon-only"

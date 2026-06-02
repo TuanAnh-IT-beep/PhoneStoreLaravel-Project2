@@ -13,7 +13,7 @@ new class extends Component {
     public function setSortBy($sortByField)
     {
         if ($this->sortBy === $sortByField) {
-            $this->sortDir = ($this->sortDir === 'asc') ? 'desc' : 'asc';
+            $this->sortDir = $this->sortDir === 'asc' ? 'desc' : 'asc';
         } else {
             $this->sortBy = $sortByField;
             $this->sortDir = 'asc';
@@ -46,11 +46,32 @@ new class extends Component {
         <table class="table-auto w-full text-left rtl:text-right text-body">
             <thead class="border-default">
                 <tr>
-                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('id')">ID @if($sortBy === 'id')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
-                    <th scope="col" class="px-6 py-3 font-medium long whitespace-nowrap cursor-pointer" wire:click="setSortBy('display_name')">Name @if($sortBy === 'display_name')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
-                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('gender')">Gender @if($sortBy === 'gender')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
-                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('email')">Email @if($sortBy === 'email')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
-                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('phone')">Phone @if($sortBy === 'phone')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer"
+                        wire:click="setSortBy('id')"># @if ($sortBy === 'id')
+                            <i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>
+                        @endif
+                    </th>
+                    <th scope="col" class="px-6 py-3 font-medium">Icon</th>
+                    <th scope="col" class="px-6 py-3 font-medium long whitespace-nowrap cursor-pointer"
+                        wire:click="setSortBy('display_name')">Name @if ($sortBy === 'display_name')
+                            <i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>
+                        @endif
+                    </th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer"
+                        wire:click="setSortBy('gender')">Gender @if ($sortBy === 'gender')
+                            <i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>
+                        @endif
+                    </th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer"
+                        wire:click="setSortBy('email')">Email @if ($sortBy === 'email')
+                            <i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>
+                        @endif
+                    </th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer"
+                        wire:click="setSortBy('phone')">Phone @if ($sortBy === 'phone')
+                            <i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>
+                        @endif
+                    </th>
                     <th scope="col" class="px-6 py-3 font-medium">Actions</th>
                 </tr>
             </thead>
@@ -59,17 +80,28 @@ new class extends Component {
                     @foreach ($customers as $customer)
                         <tr scope="row" class="px-6 py-4 font-medium text-heading whitespace-nowrap">
                             <th class="px-6 py-4">
-                                {{ $customer->id }}
+                                {{ $customers->firstItem() + $loop->index }}
                             </th>
+                            <td class="px-6 py-4" style="color: black">
+                                @if ($customer->icon)
+                                    <img src="{{ asset('storage/' . $customer->icon) }}" alt="{{ $customer->display_name }}"
+                                        class="w-12 h-12 object-cover border rounded-full">
+                                @else
+                                    <span class="text-gray-400 text-sm">No image</span>
+                                @endif
+                            </td>
                             <td class="px-6 py-4" style="color: black"> {{ $customer->display_name }}</td>
                             <td class="px-6 py-4" style="color: black"> {{ $customer->gender }}</td>
                             <td class="px-6 py-4" style="color: black"> {{ $customer->email }}</td>
                             <td class="px-6 py-4" style="color: black"> {{ $customer->phone }}</td>
                             <td class="px-6 py-4">
-                                <form method="post" action="{{ route('customers.destroy', $customer->id) }}">
+                                <form method="post"
+                                    onsubmit="return confirm('Are you sure you want to delete this item?\nThis action cannot be undone.');"
+                                    action="{{ route('customers.destroy', $customer->id) }}">
                                     @csrf
                                     @method('DELETE')
-                                    <a class="btn edit icon-only" href="{{ route('customers.edit', $customer->id) }}"><i
+                                    <a class="btn edit icon-only"
+                                        href="{{ route('customers.edit', $customer->id) }}"><i
                                             class="fa-solid fa-pencil"></i></a>
                                     <button class="btn delete icon-only"><i class="fa-solid fa-trash"></i></button>
                                 </form>

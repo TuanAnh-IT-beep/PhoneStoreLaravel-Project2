@@ -32,7 +32,8 @@
                         <label for="role_id">Role:</label><br>
                         <select required class="my-3 w-full" name="role_id">
                             @foreach ($roles as $role)
-                                <option value="{{ $role->id }}" {{ auth('admin')->user()->roles->first()->level>$role->level?'':'disabled' }}
+                                <option value="{{ $role->id }}"
+                                    {{ auth('admin')->user()->roles->first()->level > $role->level ? '' : 'disabled' }}
                                     {{ $user->roles->contains('id', $role->id) ? 'selected' : '' }}>
                                     {{ $role->name }}
                                 </option>

@@ -2,7 +2,7 @@
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\Manufacturer;
+use App\Models\Permission;
 
 new class extends Component {
     use WithPagination;
@@ -30,10 +30,9 @@ new class extends Component {
     public function with(): array
     {
         return [
-            'manufacturers' => Manufacturer::where('name', 'like', '%' . $this->search . '%')
-                ->orWhere('description', 'like', '%' . $this->search . '%')
+            'permissions' => Permission::where('name', 'like', '%' . $this->search . '%')
                 ->orderBy($this->sortBy, $this->sortDir)
-                ->paginate(10),
+                ->paginate(5),
         ];
     }
 };
@@ -41,10 +40,10 @@ new class extends Component {
 
 <div>
     <div class="mb-4">
-        <input type="text" wire:model.live="search" placeholder="Search manufacturers..."
+        <input type="text" wire:model.live="search" placeholder="Search permissions..."
             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
     </div>
-    <div class="main-container">
+    <div class="main-container my-4">
         <table class="table-auto w-full text-left rtl:text-right text-body">
             <thead class="border-default">
                 <tr>
@@ -53,14 +52,8 @@ new class extends Component {
                             <i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>
                         @endif
                     </th>
-                    <th scope="col" class="px-6 py-3 font-medium">Icon</th>
-                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer"
+                    <th scope="col" class="px-6 py-3 font-medium long whitespace-nowrap cursor-pointer"
                         wire:click="setSortBy('name')">Name @if ($sortBy === 'name')
-                            <i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>
-                        @endif
-                    </th>
-                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap long cursor-pointer"
-                        wire:click="setSortBy('description')">Description @if ($sortBy === 'description')
                             <i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>
                         @endif
                     </th>
@@ -68,31 +61,21 @@ new class extends Component {
                 </tr>
             </thead>
             <tbody>
-                @if (count($manufacturers) > 0)
-                    @foreach ($manufacturers as $manufacturer)
+                @if (count($permissions) > 0)
+                    @foreach ($permissions as $permission)
                         <tr scope="row" class="px-6 py-4 font-medium text-heading whitespace-nowrap">
                             <th class="px-6 py-4">
-                                {{ $manufacturers->firstItem() + $loop->index }} </th>
-                            <td class="px-6 py-4">
-                                @if ($manufacturer->icon)
-                                    <img src="{{ asset('storage/' . $manufacturer->icon) }}"
-                                        alt="{{ $manufacturer->name }}">
-                                @else
-                                    <span class="text-gray-400 text-sm">No image</span>
-                                @endif
-                            </td>
-                            <td class="px-6 py-4" style="color: black"> {{ $manufacturer->name }} </td>
-                            <td class="px-6 py-4">
-                                {{ $manufacturer->description }}
-                            </td>
+                                {{ $permissions->firstItem() + $loop->index }}
+                            </th>
+                            <td class="px-6 py-4" style="color: black"> {{ $permission->name }}</td>
                             <td class="px-6 py-4">
                                 <form method="post"
                                     onsubmit="return confirm('Are you sure you want to delete this item?\nThis action cannot be undone.');"
-                                    action="{{ route('manufacturers.destroy', $manufacturer->id) }}">
+                                    action="{{ route('permissions.destroy', $permission->id) }}">
                                     @csrf
                                     @method('DELETE')
                                     <a class="btn edit icon-only"
-                                        href="{{ route('manufacturers.edit', $manufacturer->id) }}"><i
+                                        href="{{ route('permissions.edit', $permission->id) }}"><i
                                             class="fa-solid fa-pencil"></i></a>
                                     <button class="btn delete icon-only"><i class="fa-solid fa-trash"></i></button>
                                 </form>
@@ -101,13 +84,13 @@ new class extends Component {
                     @endforeach
                 @else
                     <tr>
-                        <td colspan="5" class="px-6 py-4 text-center">No manufacturer found.</td>
+                        <td colspan="3" class="px-6 py-4 text-center">No permission found.</td>
                     </tr>
                 @endif
             </tbody>
             <tfoot>
                 <tr style="border: 0;">
-                    <td colspan="5" class="pt-4"> {{ $manufacturers->links() }}</td>
+                    <td colspan="3" class="pt-4"> {{ $permissions->links(data: ['scrollTo' => false]) }}</td>
                 </tr>
             </tfoot>
         </table>

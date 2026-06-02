@@ -1,5 +1,5 @@
 @extends('admins.layouts.master')
-@section('pageTitle', 'Payment Methods - Edit {{ $paymentMethod->name }}')
+@section('pageTitle', 'Payment Methods → Edit')
 @section('main-content')
     <div class="w-full mb-4 flex items-center justify-between">
         <h1>Settings → Payment Methods → {{ $paymentMethod->name }} → Edit</h1>

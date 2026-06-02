@@ -232,7 +232,7 @@
                     @endforeach
                 @else
                     <tr>
-                        <td colspan="6" class="px-6 py-4 text-center">No order found.</td>
+                        <td colspan="8" class="px-6 py-4 text-center">No order found.</td>
                     </tr>
                 @endif
             </tbody>

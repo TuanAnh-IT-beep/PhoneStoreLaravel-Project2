@@ -1,5 +1,5 @@
 @extends('admins.layouts.master')
-@section('pageTitle', 'Categories - New')
+@section('pageTitle', 'Categories → New')
 @section('main-content')
     <div class="w-full mb-4 flex items-center justify-between">
         <h1>Categories → New</h1>

@@ -10,7 +10,7 @@ $statuses = [
 ];
 ?>
 @extends('admins.layouts.master')
-@section('pageTitle', 'Orders')
+@section('pageTitle', 'Orders → Details')
 
 @section('main-content')
     <div class="w-full flex mb-4 justify-between">

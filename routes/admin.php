@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('admin')->group(function () {
     Route::get('/login', [UserController::class, 'login'])->name('admins.users.login');
     Route::post('/login', [UserController::class, 'loginProcess'])->name('admins.users.login');
-    Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+    Route::get('/logout', [UserController::class, 'logout'])->name('admins.users.logout');
 });
 Route::middleware(CheckUserLogin::class)->prefix('admin')->group(function () {
     Route::get('/', function () {

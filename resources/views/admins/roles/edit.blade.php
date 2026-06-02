@@ -1,5 +1,5 @@
 @extends('admins.layouts.master')
-@section('pageTitle', 'Roles - Edit {{ $role->name }}')
+@section('pageTitle', 'Roles → Edit')
 @section('main-content')
     <div class="w-full mb-4 flex items-center justify-between">
         <h1>Settings → Roles → {{ $role->name }} → Edit</h1>
@@ -16,11 +16,19 @@
             <div class="grid grid-cols-10 gap-4">
                 <div class="col-span-4">
                     <label for="name">Name:</label><br>
-                    <input required class="mt-2 w-full" type="text" name="name" value="{{ $role->name }}"
+                    <input required class="my-2 w-full" type="text" name="name" value="{{ $role->name }}"
                         placeholder="Input name here..."><br>
-
-                    <label class="mt-4 block" for="permissions">Permissions:</label>
-                    <div class="mt-2 grid grid-cols-2 gap-2">
+                    <label for="level">Level:</label><br>
+                    <input required class="my-2 w-full" type="number" name="level" placeholder="Input level here..."
+                        max="{{ auth('admin')->user()->roles->first()->level }}" value="{{ $role->level }}"><br>
+                    <div class="flex gap-2 mt-4">
+                        <button class="btn flex-1 icon-only">UPDATE</button>
+                        <a class="btn flex-1 icon-only negative" href="{{ route('admins.settings.index') }}">CANCEL</a>
+                    </div>
+                </div>
+                <div class="col-span-6">
+                    <label for="permissions">Permissions:</label>
+                    <div class="my-2 grid grid-cols-3 gap-2">
                         @foreach ($permissions as $permission)
                             <div>
                                 <input type="checkbox" name="permissions[]" value="{{ $permission->id }}"
@@ -29,11 +37,6 @@
                                 <label for="perm_{{ $permission->id }}">{{ $permission->name }}</label>
                             </div>
                         @endforeach
-                    </div>
-
-                    <div class="flex gap-2 mt-4">
-                        <button class="btn flex-1 icon-only">UPDATE</button>
-                        <a class="btn flex-1 icon-only negative" href="{{ route('admins.settings.index') }}">CANCEL</a>
                     </div>
                 </div>
             </div>

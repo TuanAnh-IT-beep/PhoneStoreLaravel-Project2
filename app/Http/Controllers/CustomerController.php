@@ -129,6 +129,10 @@ class CustomerController
 
     public function login()
     {
+        if (auth('client')->user()) {
+            return redirect()->route('home');
+        }
+
         return view('clients.login');
     }
 

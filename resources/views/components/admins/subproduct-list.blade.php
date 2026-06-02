@@ -74,7 +74,7 @@ new class extends Component {
             <thead class="border-default">
                 <tr>
                     <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer"
-                        wire:click="setSortBy('id')">ID @if ($sortBy === 'id')
+                        wire:click="setSortBy('id')"># @if ($sortBy === 'id')
                             <i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>
                         @endif
                     </th>
@@ -98,8 +98,7 @@ new class extends Component {
                     @foreach ($subproducts as $subproduct)
                         <tr scope="row" class="px-6 py-4 font-medium text-heading whitespace-nowrap">
                             <th class="px-6 py-4">
-                                {{ $subproduct->id }}
-                            </th>
+                                {{ $subproducts->firstItem() + $loop->index }} </th>
                             <td class="px-6 py-4">
                                 @if ($subproduct->thumbnail_path)
                                     <img src="{{ asset('storage/' . $subproduct->thumbnail_path) }}"
@@ -119,6 +118,7 @@ new class extends Component {
                             </td>
                             <td class="px-6 py-4">
                                 <form method="post"
+                                    onsubmit="return confirm('Are you sure you want to delete this item?\nThis action cannot be undone.');"
                                     action="{{ route('subproducts.destroy', [$product->id, $subproduct->id]) }}">
                                     @csrf
                                     @method('DELETE')

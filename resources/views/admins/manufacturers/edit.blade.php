@@ -1,5 +1,5 @@
 @extends('admins.layouts.master')
-@section('pageTitle', 'Manufacturers - Edit')
+@section('pageTitle', 'Manufacturers → Edit')
 @section('main-content')
     <div class="w-full mb-4 flex items-center justify-between">
         <h1>Manufacturers → {{ $manufacturer->name }} → Edit</h1>

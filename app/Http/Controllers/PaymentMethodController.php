@@ -12,11 +12,7 @@ class PaymentMethodController
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $payment_methods = PaymentMethod::all();
-        return view("admins.payment_methods.index", compact("payment_methods"));
-    }
+    public function index(){}
 
     /**
      * Show the form for creating a new resource.

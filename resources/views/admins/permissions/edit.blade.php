@@ -1,5 +1,5 @@
 @extends('admins.layouts.master')
-@section('pageTitle', 'Permissions - Edit {{ $permission->name }}')
+@section('pageTitle', 'Permissions → Edit')
 @section('main-content')
     <div class="w-full mb-4 flex items-center justify-between">
         <h1>Settings → Permissions → {{ $permission->name }} → Edit</h1>

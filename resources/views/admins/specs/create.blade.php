@@ -1,5 +1,5 @@
 @extends('admins.layouts.master')
-@section('pageTitle', 'Specs - New')
+@section('pageTitle', 'Specs → New')
 @section('main-content')
     <div class="w-full mb-4 flex items-center justify-between">
         <h1>Settings → Specs → New</h1>

@@ -30,11 +30,21 @@ header p {
     text-decoration: none;
     color: inherit;
     cursor: pointer;
-    font-family: 'BMO', sans-serif;
-    font-size: 1.75rem;
+    font-family: 'Rubik', sans-serif;
+    font-size: 1rem;
+    font-weight: light;
     color: #FFFFFF;
 }
 
+.dropdown-link {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    font-family: 'Rubik', sans-serif;
+    font-size: 1rem;
+    font-weight: light;
+    color: #000000;
+}
 .sidebar {
     padding-top: 16px;
     padding-left: 12px;
