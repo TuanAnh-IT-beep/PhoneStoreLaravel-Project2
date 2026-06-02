@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('customer_id')->nullable()->constrained()->onDelete(('set null'));
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete(('set null'));
             $table->foreignId('payment_method_id')->constrained();
             $table->string("receiver");
             $table->string("address");

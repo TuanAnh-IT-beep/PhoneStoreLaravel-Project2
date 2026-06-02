@@ -105,13 +105,13 @@ $statuses = [
                         <td class="px-6 py-4">
                             @if ($detail->subproduct->thumbnail_path)
                                 <img src="{{ asset('storage/' . $detail->subproduct->thumbnail_path) }}"
-                                    alt="{{ $detail->subproduct->name }}" class="w-16 h-16 object-cover border rounded">
+                                    alt="{{ $detail->subproduct->name() }}" class="w-16 h-16 object-cover border rounded">
                             @else
                                 <span class="text-gray-400 text-sm">No image</span>
                             @endif
                         </td>
                         <td class="px-6 py-4" style="color: black">
-                            {{ $detail->subproduct->name }}
+                            {{ $detail->subproduct->name() }}
                         </td>
                         <td class="px-6 py-4" style="color: black">
                             {{ number_format($detail->subproduct->price, 0, ',', '.') }}đ
