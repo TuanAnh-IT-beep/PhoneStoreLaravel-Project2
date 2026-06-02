@@ -33,6 +33,7 @@ class SpecController
     {
         Spec::create([
             'name' => $request->name,
+            'suffix' => $request->suffix,
         ]);
 
         return Redirect::route('admins.settings.index')->with('success', 'Spec created successfully.');
@@ -61,6 +62,7 @@ class SpecController
     {
         $spec->update([
             'name' => $request->name,
+            'suffix' => $request->suffix,
         ]);
         return Redirect::route('admins.settings.index')->with('success', 'Spec updated successfully.');
     }

@@ -11,7 +11,7 @@ class Spec extends Model
     use HasFactory;
     protected $table = 'specs';
     protected $primaryKey = 'id';
-    protected $fillable = ['name'];
+    protected $fillable = ['name','suffix'];
     public $timestamps = false;
     public function sub_specs(){
         return $this->hasMany(SubSpec::class,'spec_id','id');

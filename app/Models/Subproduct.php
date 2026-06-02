@@ -31,13 +31,12 @@ class Subproduct extends Model
         return $this->hasMany(OrderDetail::class, 'subproduct_id', 'id');
     }
 
-    /*
-                                            {{ $subproduct->product->name }}
-                                        {{ $subproduct->sub_specs->where('spec_id', 1)->first()?->value }}
-                                        {{ $subproduct->sub_specs->where('spec_id', 12)->first()?->value }}
-    */
     public function name()
     {
-        return $this->product->name . " " . $this->sub_specs->where('spec_id', 1)->first()?->value . " " . $this->sub_specs->where('spec_id', 12)->first()?->value;
+        return $this->product->name
+        . " " .
+         $this->sub_specs->where('spec_id', 12)->first()?->value()
+        . " " .
+        $this->sub_specs->where('spec_id', 1)->first()?->value();
     }
 }
