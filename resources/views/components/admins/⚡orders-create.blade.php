@@ -40,7 +40,7 @@ new class extends Component {
             if (!$exists) {
                 $this->order_details[] = [
                     'id' => $subproduct->id,
-                    'name' => $subproduct->name,
+                    'name' => $subproduct->name(),
                     'price' => $subproduct->price,
                     'quantity' => 1,
                     'stock' => $subproduct->stock,
@@ -65,6 +65,29 @@ new class extends Component {
 
     public function with()
     {
+        $query = Subproduct::query();
+        if (isset($this->id)) {
+            $query->whereHas('product', function ($q) {
+                $q->where('id', $this->id);
+            });
+        } elseif (isset($this->cateid)) {
+            $query->whereHas('product', function ($q) {
+                $q->where('category_id', $this->cateid);
+            });
+        }
+        if (!empty($this->search)) {
+            $query->where(function ($mainQuery) {
+                $mainQuery
+                    ->whereHas('product', function ($q) {
+                        $q->where('name', 'like', '%' . $this->search . '%');
+                    })
+                    ->orWhereHas('sub_specs', function ($q) {
+                        $q->where('value', 'like', '%' . $this->search . '%');
+                    })
+                    ->orWhere('price', 'like', '%' . $this->search . '%');
+            });
+        }
+
         return [
             'customers' => Customer::where('username', 'like', '%' . $this->customer_search . '%')
                 ->orWhere('display_name', 'like', '%' . $this->customer_search . '%')
@@ -72,7 +95,7 @@ new class extends Component {
                 ->orWhere('phone', 'like', '%' . $this->customer_search . '%')
                 ->orderBy('id', 'asc')
                 ->get(),
-            'subproducts' => Subproduct::where('name', 'like', '%' . $this->subproduct_search . '%')->get(),
+            'subproducts' => $query->get(),
         ];
     }
 };
@@ -192,7 +215,7 @@ new class extends Component {
                         <td colspan="3" class="px-6 py-4 text-right font-bold" style="color: black;">Total:
                         </td>
                         <td class="px-6 py-4 font-bold" style="color: black;">
-                            {{ number_format($this->total_price+40000, 0, ',', '.') }}đ</td>
+                            {{ number_format($this->total_price + 40000, 0, ',', '.') }}đ</td>
                         <input type="hidden" name="status" value="0">
                         <td></td>
                     </tr>
@@ -310,13 +333,13 @@ new class extends Component {
                                         <td class="px-6 py-4">
                                             @if ($subproduct->thumbnail_path)
                                                 <img src="{{ asset('storage/' . $subproduct->thumbnail_path) }}"
-                                                    alt="{{ $subproduct->name }}"
+                                                    alt="{{ $subproduct->name() }}"
                                                     class="w-12 h-12 object-cover border rounded">
                                             @else
                                                 <span class="text-gray-400 text-sm">No image</span>
                                             @endif
                                         </td>
-                                        <td class="px-6 py-4 text-black">{{ $subproduct->name }}</td>
+                                        <td class="px-6 py-4 text-black">{{ $subproduct->name() }}</td>
                                         <td class="px-6 py-4 text-black">
                                             {{ number_format($subproduct->price, 0, ',', '.') }}đ</td>
                                         <td class="px-6 py-4 text-black">{{ $subproduct->stock }}</td>

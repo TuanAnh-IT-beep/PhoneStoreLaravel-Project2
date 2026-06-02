@@ -1,4 +1,5 @@
 <?php
+use Carbon\Carbon;
 $statuses = [
     -1 => ['text' => 'Cancelled', 'color' => 'text-red-500'],
     0 => ['text' => 'Pending', 'color' => 'text-yellow-500'],
@@ -61,6 +62,11 @@ $statuses = [
                     <div>
                         <h3>Address</h3>
                         <p class="info mt-1">Deliver to: {{ $order->address }}</p>
+                        @if (empty($order->ship_actual_date))
+                            <p class="info mt-1">Expected arrival: {{ Carbon::parse($order->ship_expect_date)->format('d-m-Y') }}</p>
+                        @else
+                            <p class="info mt-1">Shipped at: {{ Carbon::parse($order->ship_actual_date)->format('d-m-Y') }}</p>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -105,13 +111,13 @@ $statuses = [
                         <td class="px-6 py-4">
                             @if ($detail->subproduct->thumbnail_path)
                                 <img src="{{ asset('storage/' . $detail->subproduct->thumbnail_path) }}"
-                                    alt="{{ $detail->subproduct->name }}" class="w-16 h-16 object-cover border rounded">
+                                    alt="{{ $detail->subproduct->name() }}" class="w-16 h-16 object-cover border rounded">
                             @else
                                 <span class="text-gray-400 text-sm">No image</span>
                             @endif
                         </td>
                         <td class="px-6 py-4" style="color: black">
-                            {{ $detail->subproduct->name }}
+                            {{ $detail->subproduct->name() }}
                         </td>
                         <td class="px-6 py-4" style="color: black">
                             {{ number_format($detail->subproduct->price, 0, ',', '.') }}đ
