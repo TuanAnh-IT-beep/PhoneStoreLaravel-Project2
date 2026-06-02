@@ -37,11 +37,17 @@ class SubproductController
      */
     public function store(StoreSubproductRequest $request)
     {
-        $subproduct = Subproduct::create($request->all());
+        $subproduct = Subproduct::create([
+            'product_id' => $request->product_id,
+            'price' => $request->price,
+            'stock' => $request->stock,
+            'thumbnail_path' => $request->thumbnail_path
+        ]);
+
         if ($request->has('specs')) {
             $addedSpecs = [];
-            foreach ($request->specs as $specData) {
-                if (! empty($specData['spec_id']) && ! empty($specData['value'])) {
+            foreach ($request->input('specs', []) as $specData) {
+                if (! empty($specData['spec_id']) && isset($specData['value']) && $specData['value'] !== '') {
                     if (! in_array($specData['spec_id'], $addedSpecs)) {
                         SubSpec::create([
                             'subproduct_id' => $subproduct->id,
@@ -85,9 +91,7 @@ class SubproductController
         if ($request->has('thumbnail_path')) {
             $thumbnail_path = $request->thumbnail_path;
         }
-
         $subproduct->update([
-            'name' => $request->name,
             'price' => $request->price,
             'stock' => $request->stock,
             'thumbnail_path' => $thumbnail_path

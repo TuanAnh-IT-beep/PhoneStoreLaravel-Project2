@@ -14,8 +14,18 @@
             @csrf
             <div class="grid grid-cols-10 gap-4">
                 <div class="col-span-4">
-                    <label for="name">Name:</label><br>
-                    <input required class="mt-2 w-full" type="text" name="name" placeholder="Input name here..."><br>
+                    <div class="flex gap-5">
+                        <div class="w-full">
+                            <label for="name">Name:</label><br>
+                            <input required class="mt-2 w-full" type="text" name="name"
+                                placeholder="Input name here..."><br>
+                        </div>
+                        <div class="w-full">
+                            <label for="suffix">Suffix:</label><br>
+                            <input class="my-3 w-full" type="text" name="suffix"
+                                placeholder="Input suffix here..."><br>
+                        </div>
+                    </div>
                     <div class="flex gap-2 mt-4">
                         <button class="btn flex-1 icon-only">ADD</button>
                         <a class="btn flex-1 icon-only negative" href="{{ route('admins.settings.index') }}">CANCEL</a>

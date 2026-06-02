@@ -144,6 +144,7 @@
                 <tr>
                     <th scope="col" class="px-6 py-3 font-medium">ID</th>
                     <th scope="col" class="px-6 py-3 font-medium long">Name</th>
+                    <th scope="col" class="px-6 py-3 font-medium">Suffix</th>
                     <th scope="col" class="px-6 py-3 font-medium">Actions</th>
                 </tr>
             </thead>
@@ -155,6 +156,7 @@
                                 {{ $spec->id }}
                             </th>
                             <td class="px-6 py-4" style="color: black"> {{ $spec->name }}</td>
+                            <td class="px-6 py-4" style="color: black"> {{ $spec->suffix }}</td>
                             <td class="px-6 py-4">
                                 <form method="post" action="{{ route('specs.destroy', $spec->id) }}">
                                     @csrf

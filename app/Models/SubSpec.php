@@ -18,4 +18,7 @@ class SubSpec extends Model
     public function subproduct(){
         return $this->belongsTo(Subproduct::class);
     }
+    public function value() {
+        return $this->value . $this->spec->suffix;
+    }
 }

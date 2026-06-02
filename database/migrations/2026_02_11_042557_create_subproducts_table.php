@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('subproducts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->constrained();
-            $table->string("name");
             $table->string("thumbnail_path")->nullable();
             $table->float("price");
             $table->integer("stock")->default(0);
