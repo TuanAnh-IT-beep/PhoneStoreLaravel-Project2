@@ -224,4 +224,23 @@ class CustomerController
         ]);
         return redirect()->route('getProfile')->with('success', 'Customer updated successfully.');
     }
+    public function changePassword(Request $request){
+        $currentPass = $request->currentPass;
+        $newPass= $request->newPass;
+        $newPassre= $request->newPassrepeat;
+        $customer= auth()->guard('client')->user();
+        if(!Hash::check($currentPass,$customer->password)){
+            return back()->with('error','Current Password is invalid');
+        }
+        if($newPass != $newPassre){
+            return back()->with('error','Re-enter password not match');
+        }
+        if(str($newPass)->length <8){
+             return back()->with('error','Password need at least 8 character');
+        }
+        $customer->update([
+            'password' => Hash::make($newPass)
+        ]);
+        return back()->with('success', 'Password Changed !');
+    }
 }

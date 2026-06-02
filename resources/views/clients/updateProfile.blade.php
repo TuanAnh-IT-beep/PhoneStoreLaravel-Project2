@@ -27,7 +27,6 @@
                                 <p class=" text-gray-500 mt-1" style="font-size:1rem">Username cannot be changed once
                                     created.</p>
                             </div>
-
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                                 <div>
                                     <label for="display_name"
@@ -81,12 +80,12 @@
                         </div>
 
                         <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-end pt-5 border-t border-gray-100">
-                            <a href="{{ route('home') }}"
-                                class="btn delete flex items-center justify-center gap-2">
+                            <a href="{{ route('home') }}" class="btn delete flex items-center justify-center gap-2">
                                 Cancel
                             </a>
-                            <button type="submit"
-                                class="btn flex items-center justify-center gap-2">
+                            <a class="btn create" href="#" onclick="toggleModal('{{ route('changePass') }}')">Change
+                                Password</a>
+                            <button type="submit" class="btn flex items-center justify-center gap-2">
                                 <i class="fa-solid fa-save"></i> Save Changes
                             </button>
                         </div>
@@ -117,15 +116,13 @@
                                 <input type="file" id="icon" name="icon" accept="image/*"
                                     onchange="previewIcon(event)" class="hidden">
                             </label>
-                            <p class="text-xs text-gray-500 mt-2" style="font-size: 1rem">JPG, GIF or PNG. Max size of 2MB.</p>
+                            <p class="text-xs text-gray-500 mt-2" style="font-size: 1rem">JPG, GIF or PNG. Max size of
+                                2MB.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </form>
-    </div>
-    </div>
-
     <script>
         function previewIcon(event) {
             const output = document.getElementById('icon_preview');
