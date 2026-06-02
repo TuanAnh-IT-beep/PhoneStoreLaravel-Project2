@@ -40,3 +40,4 @@ Route::get('/order_confirm', [OrderController::class, 'orderConfirm'])->name('or
 Route::get('/orders', [OrderController::class, 'showinClient'])->name('orders');
 Route::post('/confirm', [OrderController::class, 'placeOrder'])->name('order.confirm');
 Route::put('/cancel/{id}',[OrderController::class,'OrderCancel'])->name('order.cancel');
+Route::put('/change',[CustomerController::class,'changePassword'])->name('changePass');

@@ -46,6 +46,7 @@
                         <button class="btn flex-1 icon-only">Update</button>
                         <a class="btn flex-1 icon-only negative" href="{{ route('profile') }}">CANCEL</a>
                     </div>
+                    
                 </div>
                 <div class="col-span-5">
                     <label for="icon">Icon:</label><br>
