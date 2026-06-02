@@ -9,7 +9,7 @@
             <span class="font-semibold mr-2">Error</span>{{ session('error') }}
         </div>
     @endif
-    <form method="post" action="{{ route('subproducts.store') }}">
+    <form method="post" action="{{ route('subproducts.store',$product->id) }}">
         @csrf
         <div class="main-container">
             <input type="hidden" name="product_id" value="{{ $product->id }}">

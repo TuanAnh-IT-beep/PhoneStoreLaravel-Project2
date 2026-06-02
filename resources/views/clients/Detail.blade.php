@@ -14,7 +14,9 @@
 
             <div class="col-span-6 space-y-6">
                 <div>
-                    <h1 class="text-3xl font-bold">{{ $subproduct->name }}</h1>
+                    <h1 class="text-3xl font-bold">{{ $subproduct->product->name }}
+                        {{ $subproduct->sub_specs->where('spec_id', 1)->first()?->value }}
+                        {{ $subproduct->sub_specs->where('spec_id', 12)->first()?->value }}</h1>
                     <div class="text-sm text-gray-500 mt-2">product code: #{{ $subproduct->id }}</div>
                 </div>
 
@@ -35,7 +37,9 @@
                                         class="w-full h-full object-cover rounded-lg border">
                                 </div>
                                 <div class="flex-1">
-                                    <div class="font-bold text-gray-800">{{ $subs->name }}</div>
+                                    <div class="font-bold text-gray-800"> {{ $subs->product->name }}
+                                        {{ $subs->sub_specs->where('spec_id', 1)->first()?->value }}
+                                        {{ $subs->sub_specs->where('spec_id', 12)->first()?->value }}</div>
                                     <div class="text-red-600 font-semibold">{{ number_format($subs->price, 0, ',', '.') }}đ
                                     </div>
                                 </div>
@@ -45,9 +49,15 @@
                 </div>
 
                 <button class="w-full bg-red-600 text-white py-4 rounded-2xl font-bold text-lg hover:bg-red-700 transition">
-                    <a href="{{ route('add', $subproduct->id) }}" class="block text-center" style="color: white;">
-                       Add to cart
+                    @if($subproduct->stock ==0)
+                    <a href="#" class="block text-center" style="color: white;">
+                        Out of stock
                     </a>
+                    @else
+                    <a href="{{ route('add', $subproduct->id) }}" class="block text-center" style="color: white;">
+                        Add to cart
+                    </a>
+                    @endif
                 </button>
                 <div>
                     <h3 class="text-2xl font-bold mb-3 inter">Technical specifications</h3>
