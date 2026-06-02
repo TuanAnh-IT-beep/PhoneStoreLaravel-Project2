@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
-use App\Models\Permission;
 use App\Http\Requests\StoreRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
 use Illuminate\Support\Facades\Redirect;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class RoleController
 {
@@ -34,11 +34,12 @@ class RoleController
     public function store(StoreRoleRequest $request)
     {
         $role = Role::create([
-            'name' => $request->name
+            'name' => $request->name,
+            'guard_name' => 'admin'
         ]);
 
         if ($request->has('permissions')) {
-            $role->permissions()->sync($request->permissions);
+            $role->syncPermissions(array_map('intval', $request->permissions));
         }
 
         return Redirect::route('admins.settings.index')->with('success', 'Role created successfully.');
@@ -71,9 +72,9 @@ class RoleController
         ]);
 
         if ($request->has('permissions')) {
-            $role->permissions()->sync($request->permissions);
+            $role->syncPermissions(array_map('intval', $request->permissions));
         } else {
-            $role->permissions()->detach();
+            $role->syncPermissions([]);
         }
 
         return Redirect::route('admins.settings.index')->with('success', 'Role updated successfully.');
@@ -84,7 +85,6 @@ class RoleController
      */
     public function destroy(Role $role)
     {
-        $role->permissions()->detach();
         $role->delete();
         return Redirect::route('admins.settings.index')->with('success', 'Role deleted successfully.');
     }

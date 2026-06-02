@@ -13,11 +13,11 @@ class PermissionSeeder extends Seeder
     public function run(): void
     {
         $permissions = [
-            ["name" => "manage_users"],
-            ["name" => "manage_products"],
-            ["name" => "manage_orders"],
-            ["name" => "manage_customers"],
-            ["name" => "manage_settings"],
+            ["name" => "manage_users", "guard_name" => "admin"],
+            ["name" => "manage_products", "guard_name" => "admin"],
+            ["name" => "manage_orders", "guard_name" => "admin"],
+            ["name" => "manage_customers", "guard_name" => "admin"],
+            ["name" => "manage_settings", "guard_name" => "admin"],
         ];
 
         foreach ($permissions as $permission) {

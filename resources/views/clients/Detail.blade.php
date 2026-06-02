@@ -6,7 +6,7 @@
                 <div class="sticky top-4">
                     <div
                         class="relative rounded-3xl overflow-hidden bg-gray-100 aspect-square flex items-center justify-center border">
-                        <img src="{{ asset('storage/' . $subproduct->thumbnail_path) }}" alt="{{ $subproduct->name }}"
+                        <img src="{{ asset('storage/' . $subproduct->thumbnail_path) }}" alt="{{ $subproduct->name() }}"
                             class="w-full h-full object-cover">
                     </div>
                 </div>

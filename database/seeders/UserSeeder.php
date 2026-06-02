@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
 
 class UserSeeder extends Seeder
 {
@@ -12,20 +13,13 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $users = [
-            [
-                "username" => "pdn",
-                "password" => bcrypt(value: "12345678"),
-                "email" => "pdn@example.com",
-                "phone" => "0123456789",
-                "full_name" => "PDN",
-                "role_id" => 1
-            ]
-        ];
-
-        foreach ($users as $user) {
-            \App\Models\User::create($user);
-        }
+        User::create([
+            'username' => 'pdn',
+            'password' => bcrypt(value: '12345678'),
+            'email' => 'pdn@example.com',
+            'phone' => '0123456789',
+            'full_name' => 'PDN',
+        ])->assignRole(Role::findByName('Owner', 'admin'));
 
     }
 }

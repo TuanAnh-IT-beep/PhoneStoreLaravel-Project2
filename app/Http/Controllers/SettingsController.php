@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\PaymentMethod;
 use App\Models\Permission;
-use App\Models\Role;
 use App\Models\Spec;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class SettingsController
 {

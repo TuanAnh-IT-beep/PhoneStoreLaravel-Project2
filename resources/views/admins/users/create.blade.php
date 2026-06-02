@@ -32,7 +32,9 @@
                     <label for="role_id">Role:</label><br>
                     <select required class="my-3 w-full" name="role_id">
                         @foreach ($roles as $role)
-                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                            <option value="{{ $role->id }}"
+                                {{ auth('admin')->user()->roles->first()->level > $role->level ? '' : 'disabled' }}>
+                                {{ $role->name }}</option>
                         @endforeach
                     </select>
                     <div class="flex gap-2 mt-4">

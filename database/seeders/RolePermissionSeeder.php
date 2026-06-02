@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Permission;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
 
 class RolePermissionSeeder extends Seeder
 {
@@ -11,19 +13,15 @@ class RolePermissionSeeder extends Seeder
      */
     public function run(): void
     {
-
-        $role_permissions = [
-            ['role_id' => 1, 'permission_id' => 1],
-            ['role_id' => 1, 'permission_id' => 2],
-            ['role_id' => 1, 'permission_id' => 3],
-            ['role_id' => 1, 'permission_id' => 4],
-            ['role_id' => 1, 'permission_id' => 5],
-            ['role_id' => 2, 'permission_id' => 2],
-            ['role_id' => 3, 'permission_id' => 3],
-            ['role_id' => 3, 'permission_id' => 4],
-        ];
-        foreach ($role_permissions as $role_permission) {
-            \App\Models\RolePermission::create($role_permission);
-        }
+        $owner = Role::findByName('Owner', 'admin');
+        $owner->givePermissionTo(Permission::where('guard_name', 'admin')->get());
+        $admin = Role::findByName('Admin', 'admin');
+        $admin->givePermissionTo(['manage_users', 'manage_products', 'manage_orders', 'manage_customers']);
+        $pm = Role::findByName('Product Manager', 'admin');
+        $pm->givePermissionTo('manage_products');
+        $om = Role::findByName('Order Manager', 'admin');
+        $om->givePermissionTo(['manage_orders', 'manage_customers']);
+        $support = Role::findByName('Support', 'admin');
+        $support->givePermissionTo('manage_customers');
     }
 }

@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
+use Spatie\Permission\Models\Role;
 
 class UserController
 {
@@ -19,7 +19,8 @@ class UserController
      */
     public function index()
     {
-        $users = User::with('role')->get();
+        $users = User::with('roles')->get();
+
         return view('admins.users.index', compact('users'));
     }
 
@@ -29,6 +30,7 @@ class UserController
     public function create()
     {
         $roles = Role::all();
+
         return view('admins.users.create', compact('roles'));
     }
 
@@ -46,6 +48,9 @@ class UserController
         if (str($request->password)->length < 8) {
             return back()->with('error', 'Password must be at least 8 characters.');
         }
+        if (auth('admin')->user()->roles->first()->level <= Role::findById($request->role_id, 'admin')->level) {
+            return back()->with('error', 'Insufficent permissions to use this role.');
+        }
         $iconPath = null;
         if ($request->hasFile('icon')) {
             $iconPath = $request->file('icon')->store('users_avatars', 'public');
@@ -56,9 +61,12 @@ class UserController
             'password' => Hash::make($request->password),
             'full_name' => $request->full_name,
             'phone' => $request->phone,
-            'role_id' => $request->role_id,
-            'icon' => $iconPath
+            'icon' => $iconPath,
         ]);
+
+        $role = Role::findById($request->role_id, 'admin');
+        $user->assignRole($role);
+
         return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
 
@@ -85,27 +93,32 @@ class UserController
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        if (User::where('username', $request->username)->exists()) {
+        $iconPath = $user->icon;
+        if ($user->username != $request->username && User::where('username', $request->username)->exists()) {
             return back()->with('error', 'Username already exists.');
         }
-        if (User::where('email', $request->email)->exists()) {
+        if ($user->email != $request->email && User::where('email', $request->email)->exists()) {
             return back()->with('error', 'Email already exists.');
         }
-        $validated = $request->validated();
+        if (auth('admin')->user()->roles->first()->level <= Role::findById($request->role_id, 'admin')->level) {
+            return back()->with('error', 'Insufficent permissions to change role.');
+        }
         if ($request->hasFile('icon')) {
             if ($user->icon) {
                 Storage::disk('public')->delete($user->icon);
             }
-            $validated['icon'] = $request->file('icon')->store('users_icons', 'public');
+            $iconPath = $request->file('icon')->store('users_icons', 'public');
         }
+        $user->update([
+            'username' => $request->username,
+            'email' => $request->email,
+            'full_name' => $request->full_name,
+            'phone' => $request->phone,
+            'icon' => $iconPath,
+        ]);
 
-        if (! empty($validated['password'])) {
-            $validated['password'] = Hash::make($validated['password']);
-        } else {
-            unset($validated['password']);
-        }
-
-        $user->update($validated);
+        $role = Role::findById($request->role_id, 'admin');
+        $user->syncRoles([$role]);
 
         return redirect()->route('users.index')->with('success', 'User updated successfully.');
     }
@@ -115,10 +128,14 @@ class UserController
      */
     public function destroy(User $user)
     {
+        if (Auth('admin')->user()->id == $user->id) {
+            return back()->with('error', 'You cannot delete yourself.');
+        }
         if ($user->icon) {
             Storage::disk('public')->delete($user->icon);
         }
         $user->delete();
+
         return redirect()->route('users.index')->with('success', 'User deleted successfully.');
     }
 
@@ -126,20 +143,25 @@ class UserController
     {
         return view('admins.users.login');
     }
+
     // Kiểm tra đăng nhập
     public function loginProcess(Request $request)
     {
         if (Auth::guard('admin')->attempt($request->only('email', 'password'))) {
             $request->session()->regenerate();
+
             return redirect()->route('admins.home')->with('success', 'Login successful.');
         } else {
             return Redirect::back()->with('error', 'Invalid email or password.');
         }
     }
-    public function logout(Request $request){
+
+    public function logout(Request $request)
+    {
         Auth::guard('admin')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('admins.users.login')->with('success','');
+
+        return redirect()->route('admins.users.login')->with('success', '');
     }
 }
