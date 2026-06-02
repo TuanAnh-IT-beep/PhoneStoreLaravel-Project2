@@ -1,5 +1,5 @@
 <div class="sidebar">
-    <a class="item {{ request()->is('/') ? 'active' : '' }}" href="{{ route('admins.home') }}">
+    <a class="item {{ request()->routeIs('admins.home') ? 'active' : '' }}" href="{{ route('admins.home') }}">
         <img class="icon" src="/images/main/sidebar/dashboard.png" />
         <p class="text">Dashboard</p>
     </a>

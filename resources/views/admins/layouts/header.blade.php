@@ -1,7 +1,7 @@
 <header>
     <div class="mx-auto px-4 py-4 items-center justify-between bg-transparent container flex">
         <div class="flex items-center" style="gap: 5px" id="logo">
-            <a href="{{ route('home') }}">
+            <a href="{{ route('admins.home') }}">
                 <img src="{{ asset('images/main/Logo.png') }}" alt="Logo" class="logo-image">
             </a>
             <a class="logo-text" href="{{ route('admins.home') }}"><span style="color: #AFF5BF;">BMo</span>bileShop</a>

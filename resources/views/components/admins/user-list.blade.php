@@ -13,7 +13,7 @@ new class extends Component {
     public function setSortBy($sortByField)
     {
         if ($this->sortBy === $sortByField) {
-            $this->sortDir = ($this->sortDir === 'asc') ? 'desc' : 'asc';
+            $this->sortDir = $this->sortDir === 'asc' ? 'desc' : 'asc';
         } else {
             $this->sortBy = $sortByField;
             $this->sortDir = 'asc';
@@ -41,30 +41,43 @@ new class extends Component {
 
 <div>
     <div class="mb-4">
-        <input type="text" wire:model.live="search" placeholder="Search products..."
+        <input type="text" wire:model.live="search" placeholder="Search users..."
             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
     </div>
     <div class="main-container">
         <table class="table-auto w-full text-left rtl:text-right text-body">
             <thead class="border-default">
                 <tr>
-                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('id')">ID @if($sortBy === 'id')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer"
+                        wire:click="setSortBy('id')">ID @if ($sortBy === 'id')<i
+                                class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif
+                    </th>
                     <th scope="col" class="px-6 py-3 font-medium">Icon</th>
-                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('full_name')">Full Name @if($sortBy === 'full_name')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
-                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('email')">Email @if($sortBy === 'email')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
-                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('phone')">Phone @if($sortBy === 'phone')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
-                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('role_id')">Role @if($sortBy === 'role_id')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i></th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer"
+                        wire:click="setSortBy('full_name')">Full Name @if ($sortBy === 'full_name')<i
+                                class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif
+                    </th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer"
+                        wire:click="setSortBy('email')">Email @if ($sortBy === 'email')<i
+                                class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif
+                    </th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer"
+                        wire:click="setSortBy('phone')">Phone @if ($sortBy === 'phone')<i
+                                class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif
+                    </th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer"
+                        wire:click="setSortBy('role_id')">Role @if ($sortBy === 'role_id')<i
+                                class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
                     <th scope="col" class="px-6 py-3 font-medium">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @if (count($users) > 0)
-
                     @foreach ($users as $user)
                         <tr class="border-default">
                             <th class="px-6 py-4">{{ $user->id }}</td>
                             <td class="px-6 py-4">
-                                @if($user->icon)
+                                @if ($user->icon)
                                     <img src="{{ asset('storage/' . $user->icon) }}" alt="{{ $user->username }}"
                                         class="w-12 h-12 object-cover border rounded-full">
                                 @else
@@ -76,8 +89,8 @@ new class extends Component {
                             <td class="px-6 py-4">{{ $user->phone }}</td>
                             <td class="px-6 py-4">{{ $user->role->name }}</td>
                             <td class="px-6 py-4">
-                                <a href="{{ route(name: 'users.edit', parameters: $user->id) }}" class="btn icon-only edit"><i
-                                        class="fa-solid fa-pen-to-square"></i></a>
+                                <a href="{{ route(name: 'users.edit', parameters: $user->id) }}"
+                                    class="btn icon-only edit"><i class="fa-solid fa-pen-to-square"></i></a>
                                 <form method="post" action="{{ route(name: 'users.destroy', parameters: $user->id) }}"
                                     style="display: inline-block">
                                     @csrf
@@ -95,7 +108,9 @@ new class extends Component {
             </tbody>
             <tfoot>
                 <tr style="border: 0;">
-                    <td colspan="5" class="pt-4"> {{ $users->links() }}</td>
+                    <td colspan="5" class="pt-4">
+                        {{ $users->links() }}
+                    </td>
                 </tr>
             </tfoot>
         </table>

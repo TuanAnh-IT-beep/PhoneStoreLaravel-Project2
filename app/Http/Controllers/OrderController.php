@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\PaymentMethod;
 use App\Models\Subproduct;
+use Carbon\Carbon;
 
 class OrderController
 {
@@ -58,6 +59,7 @@ class OrderController
             'status' => $request->status,
             'ship_fee' => 40000,
             'total_price' => $total_price,
+            'ship_expect_date' => Carbon::now()->addDays(3)->toDateTimeString(),
         ]);
         if ($request->has('order_details')) {
             foreach ($request->order_details as $item) {
@@ -95,6 +97,7 @@ class OrderController
             'ship_fee' => 40000,
             'total_price' => $request->total_price,
             'status' => $request->status,
+            'ship_expect_date' => Carbon::now()->addDays(3)->toDateTimeString(),
         ]);
         foreach ($cart as $item) {
             OrderDetail::create([
@@ -134,6 +137,8 @@ class OrderController
         if ($status >= 0 && $status < 3) {
             $order->update([
                 'status' => $status + 1,
+                'user_id' => ($status == 0) ? auth('admin')->user()->id : $order->user_id,
+                'ship_actual_date' => ($status+1 == 3) ? Carbon::now()->toDateTime() : $order->ship_actual_date,
             ]);
         }
 
@@ -167,7 +172,6 @@ class OrderController
             $totalPrice += $item['price'] * $item['stock'];
         }
         $totalPrice += 40000;
-
         return view('clients.orderConfirm', compact('client', 'payment', 'cart', 'totalPrice'));
     }
     public function OrderCancel(UpdateOrderRequest $request, Order $order)
