@@ -1,18 +1,39 @@
 <?php
 
 use Livewire\Component;
+use Livewire\WithPagination;
 use App\Models\Manufacturer;
 
 new class extends Component {
+    use WithPagination;
+
     public string $search = '';
+    public string $sortBy = 'id';
+    public string $sortDir = 'asc';
+
+    public function setSortBy($sortByField)
+    {
+        if ($this->sortBy === $sortByField) {
+            $this->sortDir = ($this->sortDir === 'asc') ? 'desc' : 'asc';
+        } else {
+            $this->sortBy = $sortByField;
+            $this->sortDir = 'asc';
+        }
+        $this->resetPage();
+    }
+
+    public function updatedSearch()
+    {
+        $this->resetPage();
+    }
 
     public function with(): array
     {
         return [
             'manufacturers' => Manufacturer::where('name', 'like', '%' . $this->search . '%')
                 ->orWhere('description', 'like', '%' . $this->search . '%')
-                ->orderBy('id', 'asc')
-                ->get(),
+                ->orderBy($this->sortBy, $this->sortDir)
+                ->paginate(10),
         ];
     }
 };
@@ -27,10 +48,10 @@ new class extends Component {
         <table class="table-auto w-full text-left rtl:text-right text-body">
             <thead class="border-default">
                 <tr>
-                    <th scope="col" class="px-6 py-3 font-medium">ID</th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('id')">ID @if($sortBy === 'id')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
                     <th scope="col" class="px-6 py-3 font-medium">Icon</th>
-                    <th scope="col" class="px-6 py-3 font-medium">Name</th>
-                    <th scope="col" class="px-6 py-3 font-medium long">Description</th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('name')">Name @if($sortBy === 'name')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap long cursor-pointer" wire:click="setSortBy('description')">Description @if($sortBy === 'description')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
                     <th scope="col" class="px-6 py-3 font-medium">Actions</th>
                 </tr>
             </thead>
@@ -42,8 +63,9 @@ new class extends Component {
                                 {{ $manufacturer->id }}
                             </th>
                             <td class="px-6 py-4">
-                                @if($manufacturer->icon)
-                                    <img src="{{ asset('storage/' . $manufacturer->icon) }}" alt="{{ $manufacturer->name }}">
+                                @if ($manufacturer->icon)
+                                    <img src="{{ asset('storage/' . $manufacturer->icon) }}"
+                                        alt="{{ $manufacturer->name }}">
                                 @else
                                     <span class="text-gray-400 text-sm">No image</span>
                                 @endif
@@ -56,7 +78,8 @@ new class extends Component {
                                 <form method="post" action="{{ route('manufacturers.destroy', $manufacturer->id) }}">
                                     @csrf
                                     @method('DELETE')
-                                    <a class="btn edit icon-only" href="{{ route('manufacturers.edit', $manufacturer->id) }}"><i
+                                    <a class="btn edit icon-only"
+                                        href="{{ route('manufacturers.edit', $manufacturer->id) }}"><i
                                             class="fa-solid fa-pencil"></i></a>
                                     <button class="btn delete icon-only"><i class="fa-solid fa-trash"></i></button>
                                 </form>
@@ -65,10 +88,15 @@ new class extends Component {
                     @endforeach
                 @else
                     <tr>
-                        <td colspan="4" class="px-6 py-4 text-center">No manufacturer found.</td>
+                        <td colspan="5" class="px-6 py-4 text-center">No manufacturer found.</td>
                     </tr>
                 @endif
             </tbody>
+            <tfoot>
+                <tr style="border: 0;">
+                    <td colspan="5" class="pt-4"> {{ $manufacturers->links() }}</td>
+                </tr>
+            </tfoot>
         </table>
     </div>
 </div>

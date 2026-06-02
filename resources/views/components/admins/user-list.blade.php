@@ -1,9 +1,30 @@
 <?php
 
 use Livewire\Component;
+use Livewire\WithPagination;
 use App\Models\User;
 new class extends Component {
+    use WithPagination;
+
     public string $search = '';
+    public string $sortBy = 'id';
+    public string $sortDir = 'asc';
+
+    public function setSortBy($sortByField)
+    {
+        if ($this->sortBy === $sortByField) {
+            $this->sortDir = ($this->sortDir === 'asc') ? 'desc' : 'asc';
+        } else {
+            $this->sortBy = $sortByField;
+            $this->sortDir = 'asc';
+        }
+        $this->resetPage();
+    }
+
+    public function updatedSearch()
+    {
+        $this->resetPage();
+    }
 
     public function with(): array
     {
@@ -11,8 +32,8 @@ new class extends Component {
             'users' => User::where('full_name', 'like', '%' . $this->search . '%')
                 ->orWhere('email', 'like', '%' . $this->search . '%')
                 ->orWhere('phone', 'like', '%' . $this->search . '%')
-                ->orderBy('id', 'asc')
-                ->get(),
+                ->orderBy($this->sortBy, $this->sortDir)
+                ->paginate(10),
         ];
     }
 };
@@ -27,12 +48,12 @@ new class extends Component {
         <table class="table-auto w-full text-left rtl:text-right text-body">
             <thead class="border-default">
                 <tr>
-                    <th scope="col" class="px-6 py-3 font-medium">ID</th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('id')">ID @if($sortBy === 'id')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
                     <th scope="col" class="px-6 py-3 font-medium">Icon</th>
-                    <th scope="col" class="px-6 py-3 font-medium">Full Name</th>
-                    <th scope="col" class="px-6 py-3 font-medium">Email</th>
-                    <th scope="col" class="px-6 py-3 font-medium">Phone</th>
-                    <th scope="col" class="px-6 py-3 font-medium">Role</th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('full_name')">Full Name @if($sortBy === 'full_name')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('email')">Email @if($sortBy === 'email')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('phone')">Phone @if($sortBy === 'phone')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('role_id')">Role @if($sortBy === 'role_id')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i></th>
                     <th scope="col" class="px-6 py-3 font-medium">Actions</th>
                 </tr>
             </thead>
@@ -72,7 +93,11 @@ new class extends Component {
                     </tr>
                 @endif
             </tbody>
-
+            <tfoot>
+                <tr style="border: 0;">
+                    <td colspan="5" class="pt-4"> {{ $users->links() }}</td>
+                </tr>
+            </tfoot>
         </table>
     </div>
 </div>

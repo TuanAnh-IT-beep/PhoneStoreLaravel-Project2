@@ -1,9 +1,26 @@
 <?php
 
 use Livewire\Component;
+use Livewire\WithPagination;
 use App\Models\Order;
 new class extends Component {
+    use WithPagination;
+
     public string $search = '';
+    public string $sortBy = 'id';
+    public string $sortDir = 'asc';
+
+    public function setSortBy($sortByField)
+    {
+        if ($this->sortBy === $sortByField) {
+            $this->sortDir = ($this->sortDir === 'asc') ? 'desc' : 'asc';
+        } else {
+            $this->sortBy = $sortByField;
+            $this->sortDir = 'asc';
+        }
+        $this->resetPage();
+    }
+
     public $statuses = [
         -1 => ['text' => 'Cancelled', 'color' => 'text-red-500'],
         0 => ['text' => 'Pending', 'color' => 'text-yellow-500'],
@@ -12,6 +29,12 @@ new class extends Component {
         3 => ['text' => 'Delivered', 'color' => 'text-green-500'],
         4 => ['text' => 'Completed', 'color' => 'text-green-500'],
     ];
+
+    public function updatedSearch()
+    {
+        $this->resetPage();
+    }
+
     public function with(): array
     {
         return [
@@ -19,8 +42,8 @@ new class extends Component {
                 ->where('receiver', 'like', '%' . $this->search . '%')
                 ->orWhere('phone', 'like', '%' . $this->search . '%')
                 ->orWhere('address', 'like', '%' . $this->search . '%')
-                ->orderBy('id', 'asc')
-                ->get(),
+                ->orderBy($this->sortBy, $this->sortDir)
+                ->paginate(10),
         ];
     }
 };
@@ -36,12 +59,12 @@ new class extends Component {
         <table class="table-auto w-full text-left rtl:text-right text-body">
             <thead class="border-default">
                 <tr>
-                    <th scope="col" class="px-6 py-3 font-medium">ID</th>
-                    <th scope="col" class="px-6 py-3 font-medium">Receiver</th>
-                    <th scope="col" class="px-6 py-3 font-medium">Phone</th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('id')">ID @if($sortBy === 'id')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('receiver')">Receiver @if($sortBy === 'receiver')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('phone')">Phone @if($sortBy === 'phone')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
                     <th scope="col" class="px-6 py-3 font-medium">Items</th>
-                    <th scope="col" class="px-6 py-3 font-medium">Total</th>
-                    <th scope="col" class="px-6 py-3 font-medium">Status</th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('total_price')">Total @if($sortBy === 'total_price')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
+                    <th scope="col" class="px-6 py-3 font-medium whitespace-nowrap cursor-pointer" wire:click="setSortBy('status')">Status @if($sortBy === 'status')<i class="fa-solid fa-sort-{{ $sortDir === 'asc' ? 'up' : 'down' }}"></i>@endif</th>
                     <th scope="col" class="px-6 py-3 font-medium">Actions</th>
                 </tr>
             </thead>
@@ -78,10 +101,16 @@ new class extends Component {
                     @endforeach
                 @else
                     <tr>
-                        <td colspan="6" class="px-6 py-4 text-center">No order found.</td>
+                        <td colspan="7" class="px-6 py-4 text-center">No order found.</td>
                     </tr>
                 @endif
             </tbody>
+            <tfoot>
+                <tr style="border: 0;">
+                    <td colspan="7" class="pt-4"> {{ $orders->links() }}</td>
+                </tr>
+            </tfoot>
         </table>
     </div>
+
 </div>
