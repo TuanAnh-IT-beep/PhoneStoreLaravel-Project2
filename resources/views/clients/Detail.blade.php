@@ -15,7 +15,7 @@
             <div class="col-span-6 space-y-6">
                 <div>
                     <h1 class="text-3xl font-bold">{{ $subproduct->name }}</h1>
-                    <div class="text-sm text-gray-500 mt-2">Mã SP: #{{ $subproduct->id }}</div>
+                    <div class="text-sm text-gray-500 mt-2">product code: #{{ $subproduct->id }}</div>
                 </div>
 
                 <div class="bg-red-50 rounded-2xl p-6 border border-red-100">
@@ -25,7 +25,7 @@
                 </div>
 
                 <div>
-                    <label class="font-bold text-lg block mb-3 inter">Phiên bản</label>
+                    <label class="font-bold text-lg block mb-3 inter">Models</label>
                     <div class="grid grid-cols-2 gap-3">
                         @foreach ($subproducts as $subs)
                             <a href="/{{ $subs->product->id }}/{{ $subs->id }}/details"
@@ -46,11 +46,11 @@
 
                 <button class="w-full bg-red-600 text-white py-4 rounded-2xl font-bold text-lg hover:bg-red-700 transition">
                     <a href="{{ route('add', $subproduct->id) }}" class="block text-center" style="color: white;">
-                        THÊM VÀO GIỎ HÀNG
+                       Add to cart
                     </a>
                 </button>
                 <div>
-                    <h3 class="text-2xl font-bold mb-3 inter">Thông số kỹ thuật</h3>
+                    <h3 class="text-2xl font-bold mb-3 inter">Technical specifications</h3>
                     <div class="border border-gray-200 rounded-2xl overflow-hidden">
                         <table class="w-full text-sm">
                             <tbody>
@@ -72,10 +72,10 @@
         </div>
         <div class="my-3 border-t border-gray-100"></div>
         <div>
-            <h1 class="text-2xl font-bold mb-6 inter">Mô tả sản phẩm</h3>
+            <h1 class="text-2xl font-bold mb-6 inter">Descriptions</h3>
                 <div class="prose max-w-none text-gray-700">
                     <!-- Nội dung mô tả từ database -->
-                    {!! $subproduct->product->description ?? 'Đang cập nhật nội dung mô tả...' !!}
+                    {!! $subproduct->product->description ?? 'Being update....' !!}
                 </div>
         </div>
     </div>

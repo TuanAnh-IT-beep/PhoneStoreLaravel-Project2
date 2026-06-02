@@ -18,7 +18,6 @@ class HomeController
     }
     public function showAll(){
         $subproducts = Subproduct::with('product')->get();
-        $products = Product::all();
         $categories = Category::all();
         $spec =SubSpec::all();
         return view('clients.view', compact('subproducts', 'spec'));

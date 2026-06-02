@@ -19,6 +19,13 @@ Route::post('/login', [CustomerController::class, 'loginProcess'])
     ->name('clients.login');
 Route::get('/logout', [CustomerController::class, 'logout'])
     ->name('logout');
+    Route::get('/register',[CustomerController::class,'register'])
+    ->name('register');
+Route::post('/register', [CustomerController::class,'registerProcess'])
+->name('register');
+Route::get('/profile',[CustomerController::class,'viewProfile'])->name('profile');
+Route::get('/update',[CustomerController::class,'getProfile'])->name('getProfile');
+Route::put('/update',[CustomerController::class, 'updateProfile'])->name('updateProfile');
 Route::get('/view', [HomeController::class, 'showAll'])->name('all');
 Route::get('/category/{cateid}', [HomeController::class, 'showByCategory'])->name('viewbycategory');
 Route::get('/items/{id}', [HomeController::class, 'showById'])->name('viewbyid');

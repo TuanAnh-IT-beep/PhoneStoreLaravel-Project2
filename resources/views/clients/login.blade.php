@@ -25,6 +25,7 @@
                 </div>
                 <button class="btn icon-only w-full mt-10 blue">Login</button>
             </form>
+            <a href="{{ route('register') }}">Chưa có tài khoản?</a>
             <hr class="mt-10">
             <div class="my-5 flex flex-col items-center justify-center">
                 <img src="{{ asset('images/main/Logo.png') }}" alt="Logo" class="logo-image">

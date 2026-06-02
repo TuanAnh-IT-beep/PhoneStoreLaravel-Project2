@@ -90,10 +90,10 @@ class CustomerController
      */
     public function update(UpdateCustomerRequest $request, Customer $customer)
     {
-        if (Customer::where('username', $request->username)->exists()) {
+        if (Customer::where('username', $request->username)->where('id', '!=', $customer->id)->exists()) {
             return back()->with('error', 'Username already exists.');
         }
-        if (Customer::where('email', $request->email)->exists()) {
+        if (Customer::where('email', $request->email)->where('id', '!=', $customer->id)->exists()) {
             return back()->with('error', 'Email already exists.');
         }
         $iconPath = $customer->icon;
@@ -150,5 +150,86 @@ class CustomerController
         $request->session()->regenerateToken();
 
         return redirect()->route('home');
+    }
+
+    public function register()
+    {
+        return view('clients.Register');
+    }
+
+    public function registerProcess(Request $request)
+    {
+        if (Customer::where('username', $request->username)->exists()) {
+            return back()->with('error', 'Username already exists.');
+        }
+        if (Customer::where('email', $request->email)->exists()) {
+            return back()->with('error', 'Email already exists.');
+        }
+        if (str($request->password)->length < 8) {
+            return back()->with('error', 'Password must be at least 8 characters.');
+        }
+        $iconPath = null;
+        if ($request->hasFile('icon')) {
+            $iconPath = $request->file('icon')->store('customer_icons', 'public');
+        } else {
+            $iconPath = 'customer_icons/default.png';
+        }
+        Customer::create([
+            'username' => $request->username,
+            'password' => Hash::make($request->password),
+            'icon' => $iconPath,
+            'display_name' => $request->display_name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'gender' => $request->gender,
+            'birthday' => date('Y-m-d', strtotime($request->birthday)),
+            'address' => $request->address,
+        ]);
+
+        return redirect()->route('clients.login')->with('success', 'Customer created successfully.');
+    }
+
+    public function viewProfile()
+    {
+        $cus = auth()->guard('client')->user();
+
+        return view('clients.Profile', compact('cus'));
+    }
+
+    public function getProfile()
+    {
+        $cus = auth()->guard('client')->user();
+
+        return view('clients.updateProfile', compact('cus'));
+    }
+
+    public function updateProfile(UpdateCustomerRequest $request, Customer $customer)
+    {
+        $customer = auth()->guard('client')->user();
+        if (Customer::where('username', $request->username)->where('id', '!=', $customer->id)->exists()) {
+            return back()->with('error', 'Username already exists.');
+        }
+        if (Customer::where('email', $request->email)->where('id', '!=', $customer->id)->exists()) {
+            return back()->with('error', 'Email already exists.');
+        }
+        $iconPath = $customer->icon;
+        if ($request->hasFile('icon')) {
+            if ($customer->icon) {
+                Storage::disk('public')->delete($customer->icon);
+            }
+            $iconPath = $request->file('icon')->store('customer_icons', 'public');
+        }
+        $customer->update([
+            'username' => $request->username,
+            'display_name' => $request->display_name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'gender' => $request->gender,
+            'address' => $request->address,
+            'icon' => $iconPath,
+            'birthday' => $request->birthday ? date('Y-m-d', strtotime($request->birthday)) : null,
+        ]);
+
+        return redirect()->route('profile')->with('success', 'Customer updated successfully.');
     }
 }
